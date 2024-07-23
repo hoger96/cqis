@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElTable } from 'element-plus';
-import { IModalProps } from '~/types/modal';
+import { IModalProps } from '../../../types/modal';
 import Modal from '../modal/Modal.vue';
 
 interface User {

@@ -23,3 +23,9 @@ export enum MODAL_SIZE {
   XXLARGE = '2xl',
   XXXLARGE = '3xl',
 }
+
+export enum IToastType{
+  WARNING = 'warning',
+  SUCCESS = 'success',
+  ERROR = 'error'
+}

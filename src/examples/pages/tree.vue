@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import mockTreeData from '~/example/mock/treeData.js'
-import Tree from '~/example/components/tree/Tree.vue'
-import type { ITreeData } from '~/example/types/tree'
+import mockTreeData from '../mock/treeData.js'
+import Tree from '../components/tree/Tree.vue'
+import type { ITreeData } from '../types/tree'
 
 const treeData = ref<ITreeData[]>(mockTreeData)
 const checkList = ref<string[]>([])

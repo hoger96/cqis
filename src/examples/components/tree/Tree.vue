@@ -3,8 +3,8 @@ import { ElTree } from 'element-plus'
 import type Node from 'element-plus/es/components/tree/src/model/node'
 import type { DragEvents } from 'element-plus/es/components/tree/src/model/useDragNode'
 import type { NodeDropType } from 'element-plus/es/components/tree/src/tree.type'
-import type { ICheckedList, ISearchTree, ITreeProps } from '~/types/tree'
-import type { ITreeData } from '~/example/types/tree'
+import type { ICheckedList, ISearchTree, ITreeProps } from '../../../types/tree'
+import type { ITreeData } from '../../types/tree'
 
 const props = withDefaults(defineProps<ITreeProps<ITreeData>>(), {
   treeData: () => [],
@@ -115,7 +115,8 @@ const expandAll = () => {
 
 <template>
   <div v-if="props.treeData">
-    <el-input v-if="props.filterNode" v-model="filterText" class="mb-3" placeholder="Filter keyword" @keyup="searchText" />
+    <el-input v-if="props.filterNode" v-model="filterText" class="mb-3" placeholder="Filter keyword"
+      @keyup="searchText" />
     <div class="mb-3">
       <el-button @click="expandAll">
         전체 열기
@@ -124,22 +125,10 @@ const expandAll = () => {
         전체 닫기
       </el-button>
     </div>
-    <ElTree
-      ref="treeRef"
-      :data="props.treeData"
-      :filter-node-method="filterNode"
-      :draggable="props.draggable"
-      :show-checkbox="props.showCheckbox"
-      :default-expand-all="props.defaultExpandAll"
-      :node-key="props.nodeKey"
-      @node-drag-start="handleDragStart"
-      @node-drag-enter="handleDragEnter"
-      @node-drag-leave="handleDragLeave"
-      @node-drag-over="handleDragOver"
-      @node-drag-end="handleDragEnd"
-      @node-drop="handleDrop"
-      @node-click="clickNode"
-      @check="checkNode"
-    />
+    <ElTree ref="treeRef" :data="props.treeData" :filter-node-method="filterNode" :draggable="props.draggable"
+      :show-checkbox="props.showCheckbox" :default-expand-all="props.defaultExpandAll" :node-key="props.nodeKey"
+      @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave"
+      @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd" @node-drop="handleDrop" @node-click="clickNode"
+      @check="checkNode" />
   </div>
 </template>

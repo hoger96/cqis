@@ -42,16 +42,8 @@ const uiComponentData = reactive<any[]>([
     desc: 'Tree',
   },
   {
-    name: 'card',
-    desc: 'card',
-  },
-  {
     name: 'chart-js',
     desc: 'chartjs example',
-  },
-  {
-    name: 'quickPromptPopup',
-    desc: 'prompt-popup example',
   },
   {
     name: 'icon-example',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IModalProps } from '~/types/modal'
-import { MODAL_SIZE } from '~/types/modal'
+import type { IModalProps } from '../../../types/modal'
+import { MODAL_SIZE } from '../../../types/modal'
 
 const props = withDefaults(defineProps<IModalProps>(), {
   title: '',

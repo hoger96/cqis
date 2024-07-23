@@ -20,7 +20,7 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components'
 import type { ComposeOption } from 'echarts/core'
-import type { IBarChartOption } from '~/example/types/chart'
+import type { IBarChartOption } from '../../types/chart'
 
 type ECOption = ComposeOption<
   | BarSeriesOption

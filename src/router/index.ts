@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("../components/Kim.vue")
+      component: () => import("../components/main.vue")
     },
     {
       path: "/annc",
@@ -78,19 +78,9 @@ const router = createRouter({
       component: () => import("../examples/pages/tree.vue")
     },
     {
-      path: "/example/card",
-      name: "card",
-      component: () => import("../examples/pages/card.vue")
-    },
-    {
       path: "/example/chart-js",
       name: "chart-js",
       component: () => import("../examples/pages/chart-js.vue")
-    },
-    {
-      path: "/example/quickPromptPopup",
-      name: "quickPromptPopup",
-      component: () => import("../examples/pages/quickPromptPopup.vue")
     },
     {
       path: "/example/icon-example",
