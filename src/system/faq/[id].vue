@@ -3,12 +3,13 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import CustomInput from '../../components/CustomInput.vue'
 import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
+import { IFaqDetail } from '../types/faq.ts'
 
 const route = useRoute()
 const router = useRouter()
-const anncId = ref(route.params.id)
+const faqId = ref(route.params.id)
 
-const anncForm = reactive<IAnnouncementDetail>({
+const faqForm = reactive<IAnnouncementDetail>({
   title: '',
   createUser: '',
   createDate: '',
@@ -16,18 +17,18 @@ const anncForm = reactive<IAnnouncementDetail>({
   file: '',
 })
 
-const getAnncDetail = () => {
+const getFaqDetail = () => {
   try {
     // const res = await request({
     //   method: 'GET',
     //   url: `/annc/${anncId.value}`
     // })
     const res = {
-      title: '[전사공지] 안전관리',
+      title: '로그인 가이드',
       createUser: '김영현',
       createDate: '2024-07-18',
-      detail: '안전관리에 대하여 알려드리겠습니다.',
-      file: '안전관리.pdf'
+      detail: '로그인 방법에 대해 알려드리겠습니다.',
+      file: '로그인.pdf'
     }
     return res
   }
@@ -36,21 +37,21 @@ const getAnncDetail = () => {
   }
 }
 
-const setAnncDetail = () => {
-  const data = getAnncDetail()
-  anncForm.title = data.title
-  anncForm.createUser = data.createUser
-  anncForm.createDate = data.createDate
-  anncForm.detail = data.detail
-  anncForm.file = data.file
+const setFaqDetail = () => {
+  const data = getFaqDetail()
+  faqForm.title = data.title
+  faqForm.createUser = data.createUser
+  faqForm.createDate = data.createDate
+  faqForm.detail = data.detail
+  faqForm.file = data.file
 }
 
-const handleGoAnncPage = () => {
+const handleGoFaqPage = () => {
   router.push({ path: '/annc' })
 }
 
 onMounted(() => {
-  setAnncDetail()
+  setFaqDetail()
 })
 </script>
 
@@ -58,33 +59,33 @@ onMounted(() => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        공지사항
+        FAQ
       </h2>
     </div>
     <div class="mgmt__box">
       <div class="form">
         <label class="form__label">제목</label>
-        <CustomInput v-model="anncForm.title" readonly />
+        <CustomInput v-model="faqForm.title" readonly />
       </div>
       <div class="form">
         <label class="form__label">등록자</label>
-        <CustomInput v-model="anncForm.createUser" readonly />
+        <CustomInput v-model="faqForm.createUser" readonly />
       </div>
       <div class="form">
         <label class="form__label">등록일자</label>
-        <CustomInput v-model="anncForm.createDate" readonly />
+        <CustomInput v-model="faqForm.createDate" readonly />
       </div>
       <div class="form">
         <label class="form__label">첨부파일</label>
-        <CustomInput v-model="anncForm.file" readonly />
+        <CustomInput v-model="faqForm.file" readonly />
       </div>
       <div class="form">
         <label class="form__label">내용</label>
-        <CustomTextarea v-model="anncForm.detail" readonly />
+        <CustomTextarea v-model="faqForm.detail" readonly />
       </div>
     </div>
     <div class="mgmt__btn">
-      <button type="button" class="btn__primary--lg" @click="handleGoAnncPage">
+      <button type="button" class="btn__primary--lg" @click="handleGoFaqPage">
         확인
       </button>
     </div>

@@ -77,14 +77,26 @@ const getParams = (searchParam: ISearchParams) => {
   return params
 }
 
+const changePage = async (newPage: number) => {
+  searchedParam.page = newPage
+  searchParam.page = newPage
+  const params = getParams(searchedParam)
+  getAnnouncementList(params)
+}
+
 const handleReset = () => {
   searchParam.searchCondition = 'title'
   searchParam.keyword = ''
 }
 
-const getAnnouncement = (params: ISearchParams) => {
+const getAnnouncementList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
+    // const res = await request({
+    //   method: 'GET',
+    //   url: '/annc',
+    //   params,
+    // })
     announcementList.value = mockupList.value
     totalCount.value = announcementList.value.length
   }
@@ -99,7 +111,7 @@ const handleSearch = () => {
   const params = getParams(searchedParam)
   params.page = 1
   searchParam.page = 1
-  getAnnouncement(params)
+  getAnnouncementList(params)
 }
 
 const handleAnncDetail = (e) => {
@@ -112,21 +124,38 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <el-select v-model="searchParam.searchCondition" placeholder="Select" style="width: 240px">
-      <el-option v-for="item in searchConditionOptions" :key="item.value" :label="item.label" :value="item.value" />
-    </el-select>
-    <el-input v-model="searchParam.keyword" style="width: 240px" placeholder="검색어를 입력하세요."
-      @keyup.enter="handleSearch" />
-    <el-button plain @click="handleReset">초기화</el-button>
-    <el-button type="primary" plain @click="handleSearch">조회</el-button>
+  <div class="data-source">
+    <div class="mb-4">
+      <h2 class="mgmt__title">
+        공지사항
+      </h2>
+    </div>
+    <form class="form__search">
+      <div class="form">
+        <label class="form__label">검색 조건</label>
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
+      </div>
+      <div class="form flex-1">
+        <label class="form__label">검색어</label>
+        <CustomInput v-model="searchParam.keyword" placeholder="검색어를 입력하세요." @keyup.enter="handleSearch" />
+      </div>
+      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
+        초기화
+      </button>
+      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
+        검색
+      </button>
+    </form>
+    <div class="mgmt__box">
+      <el-table :data="announcementList" style="width: 100%" @row-click="handleAnncDetail">
+        <el-table-column prop="index" label="번호" min-width="200" align="center" />
+        <el-table-column prop="title" label="제목" min-width="650" align="center" />
+        <el-table-column prop="createDate" label="등록일" min-width="400" align="center" />
+      </el-table>
+      <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
+        @update:model-value="changePage" />
+    </div>
   </div>
-  <h2>{{ totalCount }}</h2>
-  <el-table :data="announcementList" style="width: 100%" @row-click="handleAnncDetail">
-    <el-table-column prop="index" label="번호" width="180" />
-    <el-table-column prop="title" label="제목" width="180" />
-    <el-table-column prop="createDate" label="등록일" />
-  </el-table>
 </template>
 
 <style></style>

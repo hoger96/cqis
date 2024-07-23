@@ -4,12 +4,13 @@ export interface ISearchParams {
   page?: number
 }
 
-export interface IAnnouncementData{
+export interface IFaqData{
   index: number
   title: string
-  anncId: string
+  faqId: string
   createUser: string
   createDate: string
+  views: number
 }
 
 export interface IAnnouncementDetail {
