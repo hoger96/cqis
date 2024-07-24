@@ -31,3 +31,11 @@ export interface IQnaDetail {
     file: any[]
   }
 }
+
+export interface IQnaCreate {
+  title: string
+  createUser: string
+  createDate: string
+  detail: string
+  file: any[]
+}

@@ -36,6 +36,10 @@ const router = createRouter({
       component: () => import("../system/qna/[id].vue")
     },
     {
+      path: "/qna/create",
+      component: () => import("../system/qna/create.vue")
+    },
+    {
       path: "/example",
       name: "example",
       component: () => import("../examples/pages/index.vue")

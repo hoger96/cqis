@@ -138,6 +138,10 @@ const handleQnaDetail = (e) => {
   router.push({ path: `/qna/${e.qnaId}` })
 }
 
+const handleCreateQna = () => {
+  router.push({ path: '/qna/create' })
+}
+
 onMounted(() => {
   handleSearch()
 })
@@ -170,6 +174,14 @@ onMounted(() => {
         검색
       </button>
     </form>
+    <div class="flex">
+      <span class="table__count">
+        총 <em>{{ totalCount }}</em>건
+      </span>
+      <button type="button" class="btn__primary-line--md" @click="handleCreateQna">
+        등록
+      </button>
+    </div>
     <div class="mgmt__box">
       <el-table :data="qnaList" style="width: 100%" @row-click="handleQnaDetail">
         <el-table-column prop="index" label="번호" min-width="200" align="center" />

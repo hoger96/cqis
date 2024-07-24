@@ -115,7 +115,6 @@ resumable.on('fileError', (file, response) => {
       <label for="upload"
         class="flex justify-center items-center cursor-pointer w-20 border border-solid border-black py-1 rounded">
         <input id="upload" type="file" hidden multiple @change="uploadFiles" @click="clearFiles">
-        <Icon name="search__line--121" width="15" height="15" />
         <span class="bold">파일첨부</span>
       </label>
     </div>

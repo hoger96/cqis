@@ -13,8 +13,8 @@ export interface IFaqData{
   views: number
 }
 
-export interface IAnnouncementDetail {
-  anncId: string
+export interface IFaqDetail {
+  faqId: string
   title: string
   createUser: string
   createDate: string
