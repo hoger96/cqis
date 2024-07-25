@@ -1,26 +1,25 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IQnaCreate } from '../types/qna.ts'
+import { IAnnouncementCreate } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
 import Editor from '../../components/Editor.vue'
-import FileUpload from '../../components/FileUpload.vue'
 
 const router = useRouter()
 
 const title = ref('')
+const postingPeriod = ref('')
 const contents = ref<string | Delta>()
-const attachedFile = ref<File>([])
 
 const onEditorChange = (value: string) => {
   contents.value = value
 }
 
-const handleGoQnaPage = () => {
-  router.push({ path: '/qna' })
+const handleGoAnncPage = () => {
+  router.push({ path: '/admin/annc' })
 }
 
-const handleCreateQna = () => {
+const handleCreateAnnc = () => {
   //FIXME: api 연결
   try {
     const data = ref({})
@@ -29,21 +28,22 @@ const handleCreateQna = () => {
       formData.append('file', attachedFile.value[0])
       data.value = {
         title: title.value,
+        startDate: postingPeriod.value[0],
+        endDate: postingPeriod.value[1],
         detail: contents,
         file: formData
       }
-      for (const x of formData) {
-        console.log(x);
-      };
     }
     else {
       data.value = {
         title: title.value,
+        startDate: postingPeriod.value[0],
+        endDate: postingPeriod.value[1],
         detail: contents,
       }
     }
     console.log('등록: ', data.value)
-    // router.push({ path: '/qna' })
+    router.push({ path: '/admin/annc' })
   }
   catch (error) {
     console.error(error)
@@ -59,13 +59,18 @@ const onFileChange = (file: File[]) => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        Q&A 등록
+        공지사항 등록
       </h2>
     </div>
     <div>
       <div class="form">
         <label class="form__label--required">제목</label>
         <CustomInput v-model="title" />
+      </div>
+      <div class="form">
+        <label class="form__label--required">게시기간</label>
+        <el-date-picker v-model="postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
+          start-placeholder="시작일" end-placeholder="종료일" />
       </div>
       <div>
         <label class="form__label--required">내용</label>
@@ -75,10 +80,10 @@ const onFileChange = (file: File[]) => {
       <FileUpload @file-change="onFileChange" />
     </div>
     <div class="mgmt__btn">
-      <button type="button" class="btn__secondary--lg" @click="handleGoQnaPage">
+      <button type="button" class="btn__secondary--lg" @click="handleGoAnncPage">
         취소
       </button>
-      <button type="button" class="btn__primary--lg" @click="handleCreateQna">
+      <button type="button" class="btn__primary--lg" @click="handleCreateAnnc">
         저장
       </button>
     </div>

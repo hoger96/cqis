@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IQnaCreate } from '../types/qna.ts'
+import { IFaqCreate } from '../types/faq.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
 import Editor from '../../components/Editor.vue'
@@ -10,17 +10,16 @@ const router = useRouter()
 
 const title = ref('')
 const contents = ref<string | Delta>()
-const attachedFile = ref<File>([])
 
 const onEditorChange = (value: string) => {
   contents.value = value
 }
 
-const handleGoQnaPage = () => {
-  router.push({ path: '/qna' })
+const handleGoFaqPage = () => {
+  router.push({ path: '/admin/faq' })
 }
 
-const handleCreateQna = () => {
+const handleCreateFaq = () => {
   //FIXME: api 연결
   try {
     const data = ref({})
@@ -32,9 +31,6 @@ const handleCreateQna = () => {
         detail: contents,
         file: formData
       }
-      for (const x of formData) {
-        console.log(x);
-      };
     }
     else {
       data.value = {
@@ -43,7 +39,7 @@ const handleCreateQna = () => {
       }
     }
     console.log('등록: ', data.value)
-    // router.push({ path: '/qna' })
+    //router.push({ path: '/admin/faq' })
   }
   catch (error) {
     console.error(error)
@@ -59,7 +55,7 @@ const onFileChange = (file: File[]) => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        Q&A 등록
+        FAQ 등록 관리자
       </h2>
     </div>
     <div>
@@ -75,10 +71,10 @@ const onFileChange = (file: File[]) => {
       <FileUpload @file-change="onFileChange" />
     </div>
     <div class="mgmt__btn">
-      <button type="button" class="btn__secondary--lg" @click="handleGoQnaPage">
+      <button type="button" class="btn__secondary--lg" @click="handleGoFaqPage">
         취소
       </button>
-      <button type="button" class="btn__primary--lg" @click="handleCreateQna">
+      <button type="button" class="btn__primary--lg" @click="handleCreateFaq">
         저장
       </button>
     </div>

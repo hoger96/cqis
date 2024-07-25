@@ -8,7 +8,7 @@ export interface ISearchParams {
 export interface IQnaData{
   index: number
   qnaId: string
-  title: string
+  title: string | Delta
   createUser: string
   createDate: string
   state: wait
@@ -20,22 +20,20 @@ export interface IQnaDetail {
     title: string
     createUser: string
     createDate: string
-    detail: string
+    detail: string | Delta
     file: any[]
   }
   answer: {
     title: string
     createUser: string
     createDate: string
-    detail: string
+    detail: string | Delta
     file: any[]
   }
 }
 
 export interface IQnaCreate {
-  title: string
-  createUser: string
-  createDate: string
-  detail: string
+  title?: string
+  detail: string | Delta
   file: any[]
 }

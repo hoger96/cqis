@@ -62,6 +62,7 @@ const setQnaDetail = () => {
   qnaForm.question.createDate = data.question.createDate
   qnaForm.question.detail = data.question.detail
   qnaForm.question.file = data.question.file
+  console.log(qnaForm.question.file)
   if (data.answer) {
     qnaForm.answer.title = data.answer.title
     qnaForm.answer.createUser = data.answer.createUser

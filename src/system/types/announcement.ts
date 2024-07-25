@@ -17,6 +17,18 @@ export interface IAnnouncementDetail {
   title: string
   createUser: string
   createDate: string
+  updateUser?: string
+  updateDate?: string
   file?: any[]
-  detail: string
+  detail: string | Delta
+  startDate: string
+  endDate: string
+}
+
+export interface IAnnouncementCreate{
+  title: string
+  startDate: string
+  endDate: string
+  contents: string | Delta
+  file?: any[]
 }

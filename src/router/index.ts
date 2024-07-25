@@ -18,6 +18,21 @@ const router = createRouter({
       component: () => import("../system/announcement/[id].vue")
     },
     {
+      path: "/admin/annc",
+      name: "admin-annc",
+      component: () => import("../system/announcement/admin-index.vue")
+    },
+    {
+      path: "/admin/annc/:id",
+      name: "admin-annc-detail",
+      component: () => import("../system/announcement/admin-[id].vue")
+    },
+    {
+      path: "/admin/annc/create",
+      name: "admin-annc-create",
+      component: () => import("../system/announcement/create.vue")
+    },
+    {
       path: "/faq",
       name: "faq",
       component: () => import("../system/faq/index.vue")
@@ -25,6 +40,21 @@ const router = createRouter({
     {
       path: "/faq/:id",
       component: () => import("../system/faq/[id].vue")
+    },
+    {
+      path: "/admin/faq",
+      name: "admin-faq",
+      component: () => import("../system/faq/admin-index.vue")
+    },
+    {
+      path: "/admin/faq/:id",
+      name: "admin-faq-detail",
+      component: () => import("../system/faq/admin-[id].vue")
+    },
+    {
+      path: "/admin/faq/create",
+      name: "admin-faq-create",
+      component: () => import("../system/faq/create.vue")
     },
     {
       path: "/qna",
@@ -38,6 +68,21 @@ const router = createRouter({
     {
       path: "/qna/create",
       component: () => import("../system/qna/create.vue")
+    },
+    {
+      path: "/admin/qna",
+      name: "admin-qna",
+      component: () => import("../system/qna/admin-index.vue")
+    },
+    {
+      path: "/admin/qna/:id",
+      name: "admin-qna-detail",
+      component: () => import("../system/qna/admin-[id].vue")
+    },
+    {
+      path: "/admin/qna/create",
+      name: "admin-qna-create",
+      component: () => import("../system/qna/admin-create.vue")
     },
     {
       path: "/example",

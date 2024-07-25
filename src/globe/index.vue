@@ -17,14 +17,9 @@ const handleClose = (done: () => void) => {
 }
 
 const handleLoadGlobe = () => {
-  const markerSvg = `<svg viewBox="-4 0 36 36">
-    <path fill="currentColor" d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"></path>
-    <circle fill="black" cx="14" cy="14" r="7"></circle>
-  </svg>`;
+  const markerSvg = `<svg viewBox="-4 0 36 36" />`;
 
   // Lat: 37.4913 Lon: 127.0165
-
-  const N = 30;
   /*
   const gData = [...Array(N).keys()].map(() => ({
       lat: (Math.random() - 0.5) * 180,
@@ -33,10 +28,15 @@ const handleLoadGlobe = () => {
       color: ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]
   }));
   */
-  const marker = {
-    lat: 37.4913, lng: 127.0165, size: 30, color: 'red'
-  };
-  const gData = [marker];
+  const marker = [
+    {
+      lat: 37.4913, lng: 127.0165, size: 30, color: 'yellow', image: '/src/assets/미국국기.jpeg'
+    },
+    {
+      lat: 37.7749295, lng: -122.4194155, size: 30, color: 'yellow', image: '/src/assets/다운로드.png'
+    },
+  ]
+  const gData = marker;
 
   const myGlobe = Globe();
   myGlobe(globeDiv.value).globeImageUrl(new URL('/src/assets/blue.jpeg', import.meta.url).href);
@@ -45,6 +45,11 @@ const handleLoadGlobe = () => {
     .htmlElement(d => {
       const el = document.createElement('div');
       el.innerHTML = markerSvg;
+      el.style.backgroundImage = `url(${d.image})`
+      el.style.backgroundSize = 'contain';
+      el.style.backgroundRepeat = 'no-repeat';
+      el.style.backgroundPosition = 'center'
+      el.style.borderRadius = '50%'
       el.style.color = d.color;
       el.style.width = `${d.size}px`;
       el.style['pointer-events'] = 'auto';

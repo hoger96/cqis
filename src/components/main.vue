@@ -4,12 +4,15 @@
 <template>
   <div>
     <h1>MENU</h1>
-    <router-link to="/example">Example</router-link>
-    <router-link to="/annc">공지사항</router-link>
-    <router-link to="/faq">FAQ</router-link>
-    <router-link to="/qna">Q&A</router-link>
-    <router-link to="/map">MAP</router-link>
-    <router-link to="/globe">Globe</router-link>
+    <router-link to="/example" class="mr-5">Example</router-link>
+    <router-link to="/annc" class="mr-5">공지사항(사용자)</router-link>
+    <router-link to="/faq" class="mr-5">FAQ(사용자)</router-link>
+    <router-link to="/qna" class="mr-5">Q&A(사용자)</router-link>
+    <router-link to="/map" class="mr-5">MAP</router-link>
+    <router-link to="/globe" class="mr-5">Globe</router-link>
+    <router-link to="/admin/annc" class="mr-5">공지사항(관리자)</router-link>
+    <router-link to="/admin/faq" class="mr-5">FAQ(관리자)</router-link>
+    <router-link to="/admin/qna" class="mr-5">Q&A(관리자)</router-link>
   </div>
 </template>
 

@@ -6,9 +6,5 @@ export interface IFileList {
 }
 
 export interface IUploadOptions {
-  progressShown?: boolean
-  pauseButtonShown?: boolean
-  progressColor?: string
-  successColor?: string
-  errorColor?: string
+  file: any[]
 }

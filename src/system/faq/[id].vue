@@ -9,7 +9,7 @@ const route = useRoute()
 const router = useRouter()
 const faqId = ref(route.params.id)
 
-const faqForm = reactive<IAnnouncementDetail>({
+const faqForm = reactive<IFaqDetail>({
   title: '',
   createUser: '',
   createDate: '',

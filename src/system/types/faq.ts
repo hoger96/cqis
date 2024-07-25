@@ -21,3 +21,9 @@ export interface IFaqDetail {
   file?: any[]
   detail: string
 }
+
+export interface IFaqCreate {
+  title: string
+  detail: string
+  file: any[]
+}

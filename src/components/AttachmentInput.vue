@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
-  modelValue: string
-  inputState: string
+  modelValue?: string
+  inputState?: string
   textareaPlaceholder?: string
   textareaMaxLength?: number
   isAnswerContentTypingCompleted?: boolean
@@ -150,7 +150,7 @@ const handleAttachment = (event: Event) => {
       <!-- 첨부파일 버튼 -->
       <label class="btn__file cursor-pointer">
         <input ref="fileInput" type="file" class="hidden" @change="handleAttachment">
-        <icon name="clip__line--666" width="32" height="32" alt="첨부" />
+        <!-- <icon name="clip__line--666" width="32" height="32" alt="첨부" /> -->
       </label>
       <!-- 전송 버튼 -->
       <button type="button" class="btn__send" :disabled="isDisabled || checkIsEmptyChatContent()"
