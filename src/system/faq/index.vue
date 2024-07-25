@@ -132,7 +132,7 @@ onMounted(() => {
   <div class="data-source">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        공지사항
+        FAQ
       </h2>
     </div>
     <form class="form__search">
