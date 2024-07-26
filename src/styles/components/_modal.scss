@@ -1,0 +1,166 @@
+/* ========================== Variables ========================== */
+
+/* ========================== Mixins ========================== */
+
+/* ========================== Styles ========================== */
+
+// Confirm
+// 팝업 오픈시 페이지 밀리는 이슈 해결을 위한 css
+.el-popup-parent--hidden {
+  width: initial !important;
+}
+
+.el-overlay-message-box {
+  .el-message-box {
+    max-width: 258px;
+    padding: 0;
+    border-radius: 2px;
+    .el-message-box {
+      &__header {
+        padding: 28px 52px 8px 20px;
+      }
+      &__headerbtn {
+        width: 20px;
+        height: 20px;
+        top: 16px;
+        right: 16px;
+      }
+      &__close {
+        @include icon($name: close__line--121);
+        width: 100%;
+        height: 100%;
+        svg {
+          display: none;
+        }
+      }
+      &__title {
+        @include font($font-size: 16, $font-weight: 600);
+      }
+      &__content {
+        @include font($font-weight: 500, $font-size: 14);
+        padding: 0 20px 24px;
+      }
+      &__message {
+        p {
+          white-space: pre-wrap;
+          &:nth-child(1) {
+            @include font($line-height: 20px);
+            color: $gray-400;
+          }
+          &:nth-child(2) {
+            @include font($font-size: 13, $line-height: 20px);
+            margin-top: 8px;
+            color: $gray-240;
+          }
+        }
+      }
+      &__btns {
+        padding-top: 0;
+        border-top: 1px solid $gray-47;
+        button {
+          @apply flex-1;
+          @include font($font-weight: 400);
+          height: 49px;
+          margin: 0;
+          padding: 17px 46px;
+          background: $white;
+          border-radius: 0;
+          border: 0;
+          color: $gray-400;
+          & + button {
+            border-left: 1px solid $gray-47;
+          }
+          &:focus-visible {
+            outline: none;
+          }
+        }
+      }
+    }
+    &--center {
+      .el-message-box {
+        &__content {
+          padding-top: 28px !important;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+//Popover
+.el-popper {
+  &.el-popover {
+    &.sidebar__cont-menu--popover {
+      padding: 15px 20px;
+      border: 1px solid $gray-80;
+      border-radius: 10px;
+      box-shadow: none;
+      .el-popper__arrow {
+        display: none;
+      }
+    }
+  }
+}
+
+// Modal
+.el-overlay {
+  background-color: rgba(0, 0, 0, 0.67) !important;
+}
+.el-overlay-dialog {
+  min-width: 1100px;
+  .el-dialog {
+    padding: 0;
+    border-radius: 20px;
+    &__title {
+      @apply flex justify-center;
+      @include font($font-size: 24, $line-height: 29px, $font-weight: 600);
+      color: $gray-430;
+    }
+    &__header {
+      position: relative;
+      padding: 20px;
+      border-bottom: 1px solid $gray-80;
+      h1 {
+        @include font($font-size: 24, $line-height: 29px, $font-weight: 600);
+        text-align: center;
+        color: $gray-430;
+      }
+    }
+    &__headerbtn {
+      top: 50%;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      transform: translateY(-50%);
+      font-size: unset;
+      &:hover,
+      &:focus {
+        .el-dialog__close {
+          color: $gray-430;
+        }
+      }
+      .el-dialog__close {
+        @include font($font-size: 26);
+        color: $gray-430;
+      }
+    }
+    &__body {
+      overflow-y: auto;
+      max-height: 600px;
+      // max-height: 665px;
+      padding: 30px 30px 0;
+      color: $gray-400;
+    }
+    &__footer {
+      @apply flex items-center justify-center;
+      padding: 20px 30px 30px;
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .prompt-setting-popup {
+    width: 1000px !important;
+  }
+}

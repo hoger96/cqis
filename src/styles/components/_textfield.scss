@@ -1,0 +1,231 @@
+/* ========================== Variables ========================== */
+
+/* ========================== Mixins ========================== */
+
+/* ========================== Styles ========================== */
+
+//  Input
+.custom-input {
+  input {
+    width: 100%;
+    height: $input-size;
+    padding: 13px 15px;
+    background: $white;
+    border: 1px solid $input-border-color;
+    border-radius: $input-radius;
+    color: $input-color;
+    transition: $transition;
+
+    &:focus:not(:read-only) {
+      border-color: $input-focus-border-color;
+    }
+
+    &::placeholder {
+      color: $input-placeholder-color;
+    }
+
+    &.custom-input__error {
+      border-color: $error;
+      &:focus {
+        border-color: $error;
+      }
+    }
+
+    &:read-only {
+      background: $input-readonly-bg-color;
+      cursor: default;
+    }
+
+    &:disabled {
+      border-color: $input-disabled-border-color;
+      color: $input-placeholder-color;
+      cursor: not-allowed;
+    }
+  }
+
+  &__wrap {
+    position: relative;
+
+    &:has(button) {
+      input {
+        padding: 13px 35px 13px 15px;
+      }
+    }
+
+    &:has(span > img) {
+      input {
+        padding-left: 31px;
+      }
+
+      span {
+        position: absolute;
+        top: 50%;
+        transform: translate(10px, -50%);
+      }
+    }
+  }
+
+  &__reset {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 16px;
+    transform: translateY(-50%);
+  }
+
+  &__valid {
+    @apply flex items-center;
+    @include font($line-height: 24px);
+    color: $error;
+  }
+
+  &[size='sm'] {
+    @include input-size($size: 'sm');
+  }
+
+  &[size='lg'] {
+    @include input-size($size: 'lg');
+  }
+
+  // FIXME :: 임시
+  &:has(.el-tag) {
+    input {
+      margin-bottom: 5px;
+    }
+  }
+  .el-tag {
+    padding: 0 10px;
+    background-color: $purple-5;
+    border: 0;
+    border-radius: 30px;
+    color: $purple-120;
+    &__content {
+      @include font($font-size: 12, $font-weight: 500);
+    }
+    &.is-closable {
+      padding-right: 0;
+      margin-right: 10px;
+      margin-top: 5px;
+    }
+    &__close {
+      margin-right: 6px;
+      color: unset !important;
+      &:hover {
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+
+// Textarea
+.custom-textarea {
+  textarea {
+    @include font($line-height: 1.3);
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    background-color: $white;
+    border: 1px solid $input-border-color;
+    border-radius: $input-radius;
+    color: $input-color;
+    transition: $transition;
+    resize: none;
+
+    &:focus:not(:read-only) {
+      border-color: $input-focus-border-color;
+    }
+
+    &::placeholder {
+      color: $input-placeholder-color;
+    }
+
+    &.custom-textarea__error {
+      border-color: $error;
+      &:focus {
+        border-color: $error;
+      }
+    }
+
+    &:read-only {
+      background-color: $input-readonly-bg-color;
+      cursor: default;
+    }
+
+    &:disabled {
+      border-color: $input-disabled-border-color;
+      color: $input-placeholder-color;
+      cursor: not-allowed;
+    }
+  }
+
+  &__wrap {
+    @apply flex flex-col;
+  }
+
+  &__valid {
+    @apply flex items-center;
+    @include font($line-height: 24px);
+    color: $error;
+  }
+}
+
+// highlightText
+.highlight-textarea {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  padding: 15px;
+  border: 1px solid $input-border-color;
+  border-radius: $input-radius;
+  background: $white;
+  &.is-disabled {
+    background: $input-disabled-bg-color;
+    border-color: $input-disabled-border-color;
+    color: $input-placeholder-color;
+    cursor: not-allowed;
+    textarea {
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+  }
+  &[readonly] {
+    background: $input-readonly-bg-color;
+    cursor: default;
+    textarea {
+      pointer-events: none;
+    }
+  }
+
+  textarea {
+    z-index: 1;
+    position: absolute;
+    padding: 0;
+    border: none;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+    background-color: transparent;
+    color: transparent;
+    caret-color: black;
+    resize: none;
+    line-height: normal;
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
+
+  &__wrap {
+    overflow-wrap: anywhere;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+    white-space: pre-wrap;
+    line-height: normal;
+  }
+
+  &__light {
+    color: $pink-50;
+  }
+}

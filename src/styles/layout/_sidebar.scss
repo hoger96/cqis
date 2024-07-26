@@ -107,7 +107,7 @@
   }
 
   &__btn {
-    @include btn-size($size: "sm");
+    // @include btn-size($size: "sm");
     @apply flex items-center;
     width: fit-content;
     background: $gray-40;
@@ -118,15 +118,15 @@
     }
     &--shorcut {
       @apply flex items-center justify-center;
-      @include font($font-size:16);
+      @include font($font-size: 16);
       width: 213px;
       padding: 15px 20px;
       margin: 25px auto 0;
       border: 1px solid $gray-80;
       border-radius: 40px;
-      color:$gray-430;
+      color: $gray-430;
       & + .sidebar__btn--shorcut {
-        margin-top:10px;
+        margin-top: 10px;
       }
     }
   }
@@ -307,7 +307,7 @@
   }
   .el-tree {
     padding: 6px 10px 6px 20px;
-  
+
     > .el-tree-node {
       position: relative;
       > .el-tree-node__children {
@@ -319,7 +319,7 @@
         }
       }
     }
-  
+
     &-node {
       &.is-current {
         > .el-tree-node__content {
@@ -329,7 +329,7 @@
             transition: $transition;
           }
         }
-        >.el-tree-node__content {
+        > .el-tree-node__content {
           .el-icon {
             @include before($w: 20, $h: 20) {
               @include icon($name: arrow-r__line--9e4);
@@ -337,7 +337,7 @@
           }
         }
       }
-  
+
       &:focus {
         > .el-tree-node__content {
           background-color: transparent !important;
@@ -355,16 +355,16 @@
           background-color: transparent !important;
         }
       }
-  
+
       &__children {
         position: relative;
-  
+
         &:empty {
           display: none !important;
         }
-  
+
         &::before {
-          content: "";
+          content: '';
           position: absolute;
           top: 0;
           left: 10px;
@@ -373,7 +373,7 @@
           background: $gray-50;
         }
       }
-  
+
       .el-icon {
         @include before($w: 20, $h: 20) {
           @include icon($name: arrow-r__line--555);
@@ -385,7 +385,7 @@
         margin-right: 5px;
         &.el-tree-node__expand-icon {
           padding: 0;
-  
+
           svg {
             display: none;
           }

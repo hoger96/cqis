@@ -1,0 +1,21 @@
+/* ========================== Variables ========================== */
+
+/* ========================== Mixins ========================== */
+
+/* ========================== Styles ========================== */
+.tab {
+  border-bottom: 1px solid $gray-80;
+  margin-bottom: 30px;
+
+  &__menu {
+    @include font($font-size: 18);
+    padding: 0 40px 20px;
+    color: $gray-330;
+
+    &--active {
+      @include font($font-size: 18, $font-weight: 600);
+      border-bottom: 2px solid $purple-50;
+      color: $purple-50;
+    }
+  }
+}

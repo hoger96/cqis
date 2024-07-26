@@ -1,0 +1,21 @@
+/* ========================== Variables ========================== */
+
+/* ========================== Mixins ========================== */
+
+/* ========================== Styles ========================== */
+.el-popper[role='tooltip'] {
+  &.is-dark {
+    @include font($line-height: 16px);
+    max-width: 246px;
+    padding: 20px;
+    background: $purple-3;
+    border-color: $purple-5;
+    color: $gray-400;
+    .el-popper__arrow {
+      &::before {
+        background: $purple-3;
+        border-color: $purple-5;
+      }
+    }
+  }
+}

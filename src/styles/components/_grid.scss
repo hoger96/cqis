@@ -1,4 +1,9 @@
-/* ========================== Table ========================== */
+/* ========================== Variables ========================== */
+
+/* ========================== Mixins ========================== */
+
+/* ========================== Styles ========================== */
+// Table
 .total {
   @apply flex items-end justify-between;
   margin-bottom: 22px;
@@ -15,13 +20,13 @@
   }
   &__state {
     &--success {
-      color: #00A31A;
+      color: #00a31a;
     }
     &--fail {
       color: $error;
     }
     &--wait {
-      color: #FF7E35;
+      color: #ff7e35;
     }
   }
 }
@@ -34,7 +39,7 @@
     }
     &__header {
       thead {
-        @include font($font-size:15,$font-weight:600);
+        @include font($font-size: 15, $font-weight: 600);
         color: $gray-400;
       }
       .el-table__cell.is-leaf {
@@ -48,7 +53,7 @@
 
     &__body {
       .el-table__cell {
-        @include font($font-size:14);
+        @include font($font-size: 14);
         height: 56px;
         padding: 10px 0;
         border-bottom: 1px solid $gray-80;
@@ -70,27 +75,15 @@
   &--small {
     .el-table__body {
       .el-table__cell {
-        @include font($font-size:14);
+        @include font($font-size: 14);
         height: 50px;
         padding: 6px 0;
       }
     }
   }
-
-  &.no-hover {
-    .el-table__body {
-      .el-table__row {
-        &:hover {
-          td.el-table__cell {
-            background: none;
-          }
-        }
-      }
-    }
-  }
 }
 
-/* ========================== Pagination ========================== */
+// Pagination
 .pagination {
   @apply flex justify-center;
   margin-top: 20px;
@@ -103,7 +96,7 @@
     .paginate-buttons {
       width: 32px;
       height: 32px;
-      border:0;
+      border: 0;
       border-radius: 2px;
       color: $gray-330;
       transition: $transition;
@@ -111,17 +104,18 @@
         background: $white;
       }
       &.active-page {
-        @include font($font-weight:600);
+        @include font($font-weight: 600);
         background: $purple-50;
         color: $white;
       }
       &.back-button {
-        @include icon($name:"arrow-l__line--555");
-        color:transparent;
+        @include icon($name: 'arrow-l__line--555');
+        color: transparent;
       }
       &.next-button {
-        @include icon($name:"arrow-r__line--555");
-        color:transparent;
+        @include icon($name: 'arrow-l__line--555');
+        transform: rotate(180deg);
+        color: transparent;
       }
     }
   }
