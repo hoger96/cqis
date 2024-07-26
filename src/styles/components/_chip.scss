@@ -1,0 +1,41 @@
+/* ========================== Variables ========================== */
+
+/* ========================== Mixins ========================== */
+
+/* ========================== Styles ========================== */
+.chip {
+  @apply flex items-center justify-center;
+  @include typo($font-size: 12, $line-height: 24px, $font-weight: 500);
+  min-width: 45px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 30px;
+  box-sizing: border-box;
+  white-space: nowrap;
+
+  $colorList: (
+    'green': (
+      #caf9cf,
+      #1e7d4b
+    ),
+    'pink': (
+      #ffe4f3,
+      #e152a1
+    ),
+    'blue': (
+      #e2e1ff,
+      #6764cd
+    )
+  );
+
+  @each $color, $values in $colorList {
+    $background-color: nth($values, 1);
+    $text-color: nth($values, 2);
+
+    &--#{$color} {
+      @extend .chip;
+      background: $background-color;
+      color: $text-color;
+    }
+  }
+}

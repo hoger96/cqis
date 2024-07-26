@@ -1,0 +1,139 @@
+.form {
+  @apply flex;
+
+  & + & {
+    margin-top: 20px;
+  }
+
+  &__label {
+    @include typo($font-size: 15, $font-weight: 500, $line-height: 36px);
+    position: relative;
+    min-width: 140px;
+    margin-right: 20px;
+    color: $gray-400;
+    align-self: normal;
+
+    &--required {
+      @extend .form__label;
+
+      &::after {
+        content: '*';
+        position: absolute;
+        padding-left: 2px;
+        padding-right: 2px;
+        color: $error;
+      }
+    }
+
+    &:has(.tooltip) {
+      .tooltip {
+        position: absolute;
+        top: 8px;
+        margin-left: 5px;
+      }
+    }
+
+    & + div {
+      &:has(.el-table) {
+        width: calc(100% - 140px);
+      }
+    }
+  }
+
+  &__box {
+    @apply flex-1;
+    padding: 30px;
+    background: $gray-30;
+    border-radius: 6px;
+
+    &-btns {
+      @apply flex items-center;
+      width: 74px;
+      margin-left: 20px;
+      button {
+        & + button {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
+  &__upload {
+    @apply flex flex-col items-center justify-center;
+    width: 100%;
+    padding: 25px 0;
+    background: $white;
+    border: 1px solid $gray-90;
+    border-radius: 2px;
+    color: $gray-300;
+    &--file {
+      margin-top: 15px;
+    }
+    &--info {
+      margin-top: 15px;
+      color: $orange-30;
+    }
+    .drop-area__upload {
+      margin-bottom: 5px;
+    }
+  }
+  &__search {
+    @apply flex justify-between;
+    padding: 20px 30px;
+    margin-top: 30px;
+    background: $white;
+    border-radius: 10px;
+
+    .form__label {
+      @include typo($font-size: 14, $font-weight: 500, $line-height: 36px);
+      min-width: fit-content;
+    }
+
+    .form {
+      & + .form {
+        margin-top: 0;
+        margin-left: 40px;
+      }
+    }
+    .el-select {
+      width: 167px;
+    }
+  }
+
+  &__link {
+    text-decoration: underline;
+  }
+}
+
+.popup-form {
+  @apply flex;
+
+  .form__label {
+    @include typo($font-weight: 500);
+    width: 100px;
+    min-width: 100px;
+    margin-right: 10px;
+    color: $gray-400;
+
+    & + div {
+      @include typo($line-height: 36px);
+    }
+  }
+
+  & + & {
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .form__search {
+    .form {
+      & + .form {
+        margin-left: 20px;
+      }
+    }
+    .el-select {
+      width: 140px;
+    }
+  }
+}

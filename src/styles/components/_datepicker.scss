@@ -1,0 +1,205 @@
+/* ========================== Variables ========================== */
+
+/* ========================== Mixins ========================== */
+
+/* ========================== Styles ========================== */
+.datepicker {
+  @apply flex;
+  &__btns {
+    @apply flex;
+    button {
+      @include btn-size($size: 'md');
+      min-width: 78px;
+      height: $input-size;
+      border: 1px solid $gray-47;
+      transition: $transition;
+      box-sizing: border-box;
+      &:first-child {
+        border-radius: 2px 0 0 2px;
+      }
+      &:last-child {
+        border-radius: 0 2px 2px 0;
+      }
+      & + button {
+        margin-left: 0;
+        border-left: 0;
+      }
+      &.is-selected {
+        border: 1px solid #121212;
+        color: #121212;
+      }
+    }
+
+    & + .dp__main {
+      margin-left: 20px;
+    }
+  }
+  .dp {
+    &__main {
+      min-width: 240px;
+    }
+    &__input {
+      &_wrap {
+        position: relative;
+        > div {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 30px;
+        }
+      }
+      width: 100%;
+      height: $input-size;
+      padding: 10px 40px 10px 15px;
+      border-radius: $input-radius;
+      border: 1px solid $input-border-color;
+      color: $input-color;
+
+      &::placeholder {
+        color: $input-placeholder-color;
+      }
+      &:read-only {
+        background: $input-readonly-bg-color;
+      }
+    }
+    &__disabled {
+      background: $input-disabled-bg-color;
+      border-color: $input-disabled-border-color;
+      color: $input-placeholder-color;
+    }
+    &__input_icon {
+      @include icon($name: calendar__line--c7c);
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      path {
+        display: none;
+      }
+    }
+    &__clear_icon {
+      display: none;
+    }
+    //calendar
+    &__menu {
+      @include typo($font-family: $font-family);
+      min-width: 300px;
+      border: 1px solid $gray-60;
+      border-radius: 2px;
+      .dp__arrow_top {
+        display: none;
+      }
+      &_inner {
+        padding: 0;
+      }
+    }
+    &__month_year_wrap {
+      @apply items-center;
+      height: 40px;
+
+      .dp__month_year_wrap {
+        width: calc(100% - 80px);
+        button {
+          &:first-child {
+            @apply flex justify-end;
+            &::after {
+              content: '년';
+            }
+          }
+          &:last-child {
+            @apply flex justify-start;
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+    &__month_year_select {
+      @include typo($font-size: 15, $font-weight: 600);
+      color: $gray-400;
+      &:hover {
+        background: transparent;
+      }
+    }
+    &--arrow-btn-nav {
+      @apply flex items-center justify-center;
+      width: 40px;
+      &:first-child {
+        @include before($w: 32, $h: 32) {
+          @include icon($name: arrow-l__line--555);
+        }
+      }
+      &:last-child {
+        @include before($w: 32, $h: 32) {
+          @include icon($name: arrow-l__line--555);
+          transform: rotate(-180deg);
+        }
+      }
+      .dp__inner_nav {
+        display: none;
+      }
+    }
+    &__calendar {
+      &_header {
+        @include typo($font-size: 10, $line-height: 25px, $font-weight: 600);
+        color: $gray-330;
+        &_item {
+          height: 25px;
+          padding: 0;
+        }
+        &_separator {
+          display: none;
+        }
+      }
+      &_row {
+        margin: 0;
+      }
+      &_item {
+        @apply flex items-center justify-center;
+        width: 42px;
+        height: 42px;
+        color: $gray-330;
+      }
+    }
+    &__cell {
+      &_inner {
+        @include typo($font-size: 12, $font-weight: 500);
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 2px;
+        color: $gray-180;
+        transition: $transition;
+        &.dp__date_hover:not(.dp__cell_disabled),
+        &.dp__range_start,
+        &.dp__range_between,
+        &.dp__range_end {
+          background: $purple-5;
+          color: $purple-50;
+        }
+        &.dp__cell_disabled {
+          &:hover {
+            color: $gray-180;
+            background: transparent;
+          }
+        }
+        &.dp__today {
+          border: 0;
+        }
+      }
+    }
+    &__overlay {
+      &_cell {
+        &:hover {
+          background: $purple-5;
+          color: $purple-50;
+        }
+      }
+      &_cell_active {
+        background: $purple-5;
+        color: $purple-50;
+      }
+    }
+    &__overlay_action {
+      display: none !important;
+    }
+  }
+}
