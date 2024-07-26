@@ -5,6 +5,8 @@ const icons = [
   { fileName: 'arrow-l__line--555' },
   { fileName: 'arrow-b__line--555' },
   { fileName: 'arrow-b__line--999' },
+  { fileName: 'reset__line--fb4' },
+  { fileName: 'search__line--fff' },
 ]
 </script>
 

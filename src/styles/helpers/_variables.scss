@@ -64,11 +64,12 @@ $input-radius: 2px;
 $input-border-color: $gray-90;
 $input-placeholder-color: $gray-180;
 $input-focus-border-color: $gray-400;
+$input-disabled-color: $gray-180;
 $input-disabled-border-color: $gray-45;
 $input-disabled-bg-color: $gray-30;
 $input-readonly-bg-color: $gray-30;
 
-//Layout 
+//Layout
 $header-height: 90px;
 $mgmt-header-height: 70px;
 $sidebar-width: 280px;
@@ -76,5 +77,19 @@ $scrollbar-width: 20px;
 
 // ETC
 $transition: all 0.2s linear;
-$font-family: 'Pretendard',-apple-system,system-ui,Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-$font-family-nanum: 'NanumSquareRound',-apple-system,system-ui,Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+$font-family:
+  'Pretendard',
+  -apple-system,
+  system-ui,
+  Roboto,
+  'Apple SD Gothic Neo',
+  'Malgun Gothic',
+  sans-serif;
+$font-family-nanum:
+  'NanumSquareRound',
+  -apple-system,
+  system-ui,
+  Roboto,
+  'Apple SD Gothic Neo',
+  'Malgun Gothic',
+  sans-serif;

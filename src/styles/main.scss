@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+// Helpers
 @import './helpers/mixins';
 @import './helpers/variables';
-@import './helpers/mixins/typography';
+@import './helpers/mixins/index';
 
 //Base
 @import './base/reset';
@@ -22,7 +23,7 @@
 @import './components/grid';
 @import './components/datepicker';
 @import './components/textfield';
-@import './components/dropdown';
+@import './components/select-box';
 @import './components/selector';
 @import './components/switch';
 @import './components/modal';

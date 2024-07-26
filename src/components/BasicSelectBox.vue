@@ -31,19 +31,19 @@ const selectBoxRef = computed({
 
 <template>
   <el-select v-model="selectBoxRef" :placeholder="props.placeholder" :size="props.size" :clearable="props.clearable"
-    :multiple="props.multiple" :disabled="props.disabled"
-    :class="{ 'el-select__reset': clearable, 'el-select__readonly': props.readonly }"
+    :multiple="props.multiple" :disabled="props.disabled || props.readonly" :class="{ 'is-readonly': props.readonly }"
     @change="(value) => emit('change', value)">
     <!-- FIXME: 시연 후 수정 필요 -->
     <el-option v-for=" item in props.options " :key="item.value" :label="item.label" :value="item.value"
       :disabled="item.disabled">
-      <p v-if="!multiple" :class="{ 'text-gray-300': item.disabled }">
+      <p v-if="!multiple">
         {{ item.label }}
       </p>
-      <el-checkbox v-else v-model="selectBoxRef" :value="item.value" :disabled="item.disabled"
+      <!-- FIXME 개발자 :: 미사용히여 임시 주석처리하였습니다. -->
+      <!-- <el-checkbox v-else v-model="selectBoxRef" :value="item.value" :disabled="item.disabled"
         @click="(e: any) => e.preventDefault()">
         {{ item.label }}
-      </el-checkbox>
+      </el-checkbox> -->
     </el-option>
   </el-select>
 </template>

@@ -30,12 +30,12 @@ const sendChatFile = () => {
 
 // select
 const options = ref<IOptions[]>(mockOptions)
-const treeData = ref<ITreeData[]>(mockTreeData)
+// const treeData = ref<ITreeData[]>(mockTreeData)
 
 const noData = ref()
 const initData = ref(3)
-const initMultiData = ref([1, 2])
-const initTreeData = ref('1-1-1')
+// const initMultiData = ref([1, 2])
+// const initTreeData = ref('1-1-1')
 </script>
 
 <template>
