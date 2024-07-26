@@ -130,27 +130,17 @@ onMounted(() => {
 
 <template>
   <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        FAQ
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form">
-        <label class="form__label">검색 조건</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">검색어</label>
+    <h2 class="mb-4 mgmt__title">
+      FAQ
+    </h2>
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+      <SearchItem label="검색 조건">
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+      </SearchItem>
+      <SearchItem label="검색어">
         <CustomInput v-model="searchParam.keyword" placeholder="검색어를 입력하세요." @keyup.enter="handleSearch" />
-      </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        초기화
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        검색
-      </button>
-    </form>
+      </SearchItem>
+    </SearchForm>
     <div class="mgmt__box">
       <el-table :data="faqList" style="width: 100%" @row-click="handleFaqDetail">
         <el-table-column prop="index" label="번호" min-width="200" align="center" />
