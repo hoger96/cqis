@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './helper/mixins';
-@import './helper/variables';
+@import './helpers/mixins';
+@import './helpers/variables';
+@import './helpers/mixins/typography';
 
 //Base
 @import './base/reset';

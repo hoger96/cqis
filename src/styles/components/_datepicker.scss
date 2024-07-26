@@ -81,7 +81,7 @@
     }
     //calendar
     &__menu {
-      @include font($font-family: $font-family);
+      @include typo($font-family: $font-family);
       min-width: 300px;
       border: 1px solid $gray-60;
       border-radius: 2px;
@@ -113,7 +113,7 @@
       }
     }
     &__month_year_select {
-      @include font($font-size: 15, $font-weight: 600);
+      @include typo($font-size: 15, $font-weight: 600);
       color: $gray-400;
       &:hover {
         background: transparent;
@@ -139,7 +139,7 @@
     }
     &__calendar {
       &_header {
-        @include font($font-size: 10, $line-height: 25px, $font-weight: 600);
+        @include typo($font-size: 10, $line-height: 25px, $font-weight: 600);
         color: $gray-330;
         &_item {
           height: 25px;
@@ -161,7 +161,7 @@
     }
     &__cell {
       &_inner {
-        @include font($font-size: 12, $font-weight: 500);
+        @include typo($font-size: 12, $font-weight: 500);
         width: 30px;
         height: 30px;
         padding: 0;

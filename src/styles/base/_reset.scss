@@ -163,7 +163,7 @@ body,
 }
 
 body {
-  @include font($font-size: 14, $line-height: 1.2);
+  @include typo($font-size: 14, $line-height: 1.2);
   overflow-x: auto;
   font-family: $font-family;
   background-color: $gray-35;

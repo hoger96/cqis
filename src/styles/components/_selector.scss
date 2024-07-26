@@ -50,12 +50,12 @@
   }
 
   .el-checkbox__label {
-    @include font($font-weight: 500);
+    @include typo($font-weight: 500);
     padding-left: 10px;
     color: $gray-400 !important;
 
     em {
-      @include font($font-weight: 400);
+      @include typo($font-weight: 400);
       color: $gray-300;
     }
   }
@@ -99,7 +99,7 @@
 
     // padding-left:0;
     em {
-      @include font($font-weight: 400);
+      @include typo($font-weight: 400);
       color: $gray-300;
     }
   }

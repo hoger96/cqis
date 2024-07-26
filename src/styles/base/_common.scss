@@ -15,7 +15,7 @@
     border-radius: 2px;
     .el-upload__text {
       @apply flex flex-col items-center justify-center;
-      @include font($font-size: 13, $line-height: 18px);
+      @include typo($font-size: 13, $line-height: 18px);
       color: $gray-300;
     }
   }
@@ -23,13 +23,13 @@
 
 /* ========================== page ========================== */
 .title {
-  @include font($font-size: 36, $font-weight: 600, $line-height: normal);
+  @include typo($font-size: 36, $font-weight: 600, $line-height: normal);
   margin-bottom: 60px;
   color: $gray-430;
 
   &__underline {
     @apply inline-block;
-    @include font($font-size: 20, $font-weight: 600);
+    @include typo($font-size: 20, $font-weight: 600);
     position: relative;
     padding-left: 8px;
 
@@ -53,7 +53,7 @@
   }
 
   &--desc {
-    @include font($font-size: 15);
+    @include typo($font-size: 15);
     margin-top: 5px;
     color: $gray-300;
   }
@@ -61,12 +61,12 @@
 
 /* ========================== info-box ========================== */
 .info {
-  @include font($font-size: 15);
+  @include typo($font-size: 15);
   margin: 20px 0 50px;
 
   &-box {
     @apply flex flex-col;
-    @include font($font-size: 15);
+    @include typo($font-size: 15);
     padding: 20px 30px;
     margin-top: 25px;
     background: $gray-5;
@@ -82,7 +82,7 @@
 /* ========================== mgmt========================== */
 .mgmt {
   &__title {
-    @include font($font-size: 36, $font-weight: 700);
+    @include typo($font-size: 36, $font-weight: 700);
     color: $gray-430;
   }
   &__box {

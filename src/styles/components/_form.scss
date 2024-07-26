@@ -6,7 +6,7 @@
   }
 
   &__label {
-    @include font($font-size: 15, $font-weight: 500, $line-height: 36px);
+    @include typo($font-size: 15, $font-weight: 500, $line-height: 36px);
     position: relative;
     min-width: 140px;
     margin-right: 20px;
@@ -85,7 +85,7 @@
     border-radius: 10px;
 
     .form__label {
-      @include font($font-size: 14, $font-weight: 500, $line-height: 36px);
+      @include typo($font-size: 14, $font-weight: 500, $line-height: 36px);
       min-width: fit-content;
     }
 
@@ -109,14 +109,14 @@
   @apply flex;
 
   .form__label {
-    @include font($font-weight: 500);
+    @include typo($font-weight: 500);
     width: 100px;
     min-width: 100px;
     margin-right: 10px;
     color: $gray-400;
 
     & + div {
-      @include font($line-height: 36px);
+      @include typo($line-height: 36px);
     }
   }
 

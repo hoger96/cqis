@@ -39,7 +39,7 @@
     }
     &__header {
       thead {
-        @include font($font-size: 15, $font-weight: 600);
+        @include typo($font-size: 15, $font-weight: 600);
         color: $gray-400;
       }
       .el-table__cell.is-leaf {
@@ -53,7 +53,7 @@
 
     &__body {
       .el-table__cell {
-        @include font($font-size: 14);
+        @include typo($font-size: 14);
         height: 56px;
         padding: 10px 0;
         border-bottom: 1px solid $gray-80;
@@ -75,7 +75,7 @@
   &--small {
     .el-table__body {
       .el-table__cell {
-        @include font($font-size: 14);
+        @include typo($font-size: 14);
         height: 50px;
         padding: 6px 0;
       }
@@ -104,7 +104,7 @@
         background: $white;
       }
       &.active-page {
-        @include font($font-weight: 600);
+        @include typo($font-weight: 600);
         background: $purple-50;
         color: $white;
       }

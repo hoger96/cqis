@@ -28,7 +28,7 @@
       }
       &-item,
       .el-sub-menu__title {
-        @include font($font-size: 15, $font-weight: 600);
+        @include typo($font-size: 15, $font-weight: 600);
         border-radius: 6px;
 
         .icon {
@@ -118,7 +118,7 @@
     }
     &--shorcut {
       @apply flex items-center justify-center;
-      @include font($font-size: 16);
+      @include typo($font-size: 16);
       width: 213px;
       padding: 15px 20px;
       margin: 25px auto 0;
@@ -145,7 +145,7 @@
       padding: 28px 20px 10px;
       margin: 6px 0;
       span {
-        @include font($font-size: 16);
+        @include typo($font-size: 16);
         margin-left: 10px;
       }
     }
@@ -159,7 +159,7 @@
 
       &-item,
       .el-sub-menu__title {
-        @include font($font-size: 15);
+        @include typo($font-size: 15);
         border-radius: 30px;
         color: $gray-400;
 
@@ -286,7 +286,7 @@
         padding: 0;
       }
       .el-menu-item {
-        @include font($font-size: 14);
+        @include typo($font-size: 14);
         height: 20px;
         padding: 0 !important;
         color: $gray-400;

@@ -34,21 +34,21 @@
         }
       }
       &__title {
-        @include font($font-size: 16, $font-weight: 600);
+        @include typo($font-size: 16, $font-weight: 600);
       }
       &__content {
-        @include font($font-weight: 500, $font-size: 14);
+        @include typo($font-weight: 500, $font-size: 14);
         padding: 0 20px 24px;
       }
       &__message {
         p {
           white-space: pre-wrap;
           &:nth-child(1) {
-            @include font($line-height: 20px);
+            @include typo($line-height: 20px);
             color: $gray-400;
           }
           &:nth-child(2) {
-            @include font($font-size: 13, $line-height: 20px);
+            @include typo($font-size: 13, $line-height: 20px);
             margin-top: 8px;
             color: $gray-240;
           }
@@ -59,7 +59,7 @@
         border-top: 1px solid $gray-47;
         button {
           @apply flex-1;
-          @include font($font-weight: 400);
+          @include typo($font-weight: 400);
           height: 49px;
           margin: 0;
           padding: 17px 46px;
@@ -113,7 +113,7 @@
     border-radius: 20px;
     &__title {
       @apply flex justify-center;
-      @include font($font-size: 24, $line-height: 29px, $font-weight: 600);
+      @include typo($font-size: 24, $line-height: 29px, $font-weight: 600);
       color: $gray-430;
     }
     &__header {
@@ -121,7 +121,7 @@
       padding: 20px;
       border-bottom: 1px solid $gray-80;
       h1 {
-        @include font($font-size: 24, $line-height: 29px, $font-weight: 600);
+        @include typo($font-size: 24, $line-height: 29px, $font-weight: 600);
         text-align: center;
         color: $gray-430;
       }
@@ -140,7 +140,7 @@
         }
       }
       .el-dialog__close {
-        @include font($font-size: 26);
+        @include typo($font-size: 26);
         color: $gray-430;
       }
     }

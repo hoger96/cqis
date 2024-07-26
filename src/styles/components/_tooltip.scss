@@ -5,7 +5,7 @@
 /* ========================== Styles ========================== */
 .el-popper[role='tooltip'] {
   &.is-dark {
-    @include font($line-height: 16px);
+    @include typo($line-height: 16px);
     max-width: 246px;
     padding: 20px;
     background: $purple-3;

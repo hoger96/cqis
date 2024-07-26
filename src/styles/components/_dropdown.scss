@@ -51,7 +51,7 @@
     //   color: $gray-400;
 
     //   .el-tag {
-    //     @include font($font-size: 13);
+    //     @include typo($font-size: 13);
     //     padding: 0 4px 0 8px;
     //     background: $purple-50;
     //     border-radius: 24px;
@@ -110,7 +110,7 @@
   &.el-select--sm,
   &.el-select--lg {
     .el-select__wrapper {
-      @include font($font-size: 14);
+      @include typo($font-size: 14);
       padding: 6px 10px 6px 15px;
     }
   }
@@ -147,7 +147,7 @@
         }
 
         &__item {
-          @include font($line-height: 40px);
+          @include typo($line-height: 40px);
           height: 40px;
           padding: 0 13px;
           color: $gray-330;
@@ -156,7 +156,7 @@
             vertical-align: middle;
 
             &__label {
-              @include font($font-weight: 400);
+              @include typo($font-weight: 400);
               color: $gray-330 !important;
             }
           }

@@ -13,14 +13,6 @@ $prefix-list: webkit, moz, ms, o;
   background: url('#{$path}#{$name}.#{$format}') no-repeat center center/#{$size};
 }
 
-/* ========================== Font ========================== */
-@mixin font($font-size: null, $line-height: null, $font-weight: normal, $font-family: null) {
-  font-size: if($font-size==null, 14px, $font-size * 1px);
-  line-height: if($line-height==null, null, $line-height);
-  font-weight: $font-weight;
-  font-family: $font-family;
-}
-
 /* ========================== 가상선택자 ========================== */
 @mixin before($w, $h) {
   position: relative;
@@ -29,8 +21,8 @@ $prefix-list: webkit, moz, ms, o;
     display: inline-block;
     position: absolute;
     content: '';
-    width: $w * 1px;
-    height: $h * 1px;
+    width: $w;
+    height: $h;
     @content;
   }
 }
@@ -41,19 +33,8 @@ $prefix-list: webkit, moz, ms, o;
     display: inline-block;
     position: absolute;
     content: '';
-    width: $w * 1px;
-    height: $h * 1px;
+    width: $w;
+    height: $h;
     @content;
-  }
-}
-
-/* ========================== Form ========================== */
-@mixin input-size($size: $input-size) {
-  input {
-    @if $size == 'sm' {
-      height: $input-size-sm;
-    } @else if $size == 'lg' {
-      height: $input-size-lg;
-    }
   }
 }
