@@ -1,4 +1,4 @@
-@mixin box($padding, $bd-color: transparant, $radius: 20px, $bg-color: $white) {
+@mixin box($padding, $bd-color: transparent, $radius: 10px, $bg-color: $white) {
   padding: $padding;
   background-color: $bg-color;
   border: 1px solid $bd-color;
