@@ -79,11 +79,11 @@ const router = createRouter({
       name: "admin-qna-detail",
       component: () => import("../system/qna/admin-[id].vue")
     },
-    {
-      path: "/admin/qna/create",
-      name: "admin-qna-create",
-      component: () => import("../system/qna/admin-create.vue")
-    },
+    // {
+    //   path: "/admin/qna/create",
+    //   name: "admin-qna-create",
+    //   component: () => import("../system/qna/admin-create.vue")
+    // },
     {
       path: "/example",
       name: "example",
@@ -153,6 +153,11 @@ const router = createRouter({
       path: "/globe",
       name: "globe",
       component: () => import("../globe/index.vue")
+    },
+    {
+      path: "/admin/user-mgmt",
+      name: "user-mgmt",
+      component: () => import("../admin/pages/user-mgmt.vue")
     },
   ]
 })

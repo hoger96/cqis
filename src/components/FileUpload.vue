@@ -9,7 +9,7 @@ const fileUrl = ref('')
 
 const props = withDefaults(defineProps<IUploadProps>(), {
   show: true,
-  file: ''
+  file: []
 })
 const emit = defineEmits<{
   (e: 'file-change', file: File[]): void
@@ -33,7 +33,8 @@ const openFileUpload = (e: Event) => {
 }
 
 const setFileName = () => {
-  fileName.value = attachedFile.value[0].name
+  if (attachedFile.value.length > 0)
+    fileName.value = attachedFile.value[0].name
 }
 
 const createDownloadLink = (file: File) => {

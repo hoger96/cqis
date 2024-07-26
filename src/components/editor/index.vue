@@ -56,11 +56,11 @@ const onEditorFocus = (quill: undefined) => {
 }
 
 const onEditorReady = (quill: undefined) => {
-  console.log('editor ready', quill)
+  //console.log('editor ready', quill)
 }
 
 const onEditorChange = (quill: undefined) => {
-  console.log('editor change', quill)
+  //console.log('editor change', quill)
 }
 
 const onUpdateContent = (quill: string) => {

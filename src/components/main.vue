@@ -13,6 +13,7 @@
     <router-link to="/admin/annc" class="mr-5">공지사항(관리자)</router-link>
     <router-link to="/admin/faq" class="mr-5">FAQ(관리자)</router-link>
     <router-link to="/admin/qna" class="mr-5">Q&A(관리자)</router-link>
+    <router-link to="/admin/user-mgmt" class="mr-5">사용자 관리</router-link>
   </div>
 </template>
 

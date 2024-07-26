@@ -1,4 +1,4 @@
 export interface IUploadProps{
-  show: boolean
-  file: File[]
+  show?: boolean
+  file?: File[]
 }
