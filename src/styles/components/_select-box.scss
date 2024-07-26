@@ -1,9 +1,23 @@
 /* ========================== Variables ========================== */
+$selectbox-size: (
+  sm: $input-size-sm,
+  default: $input-size,
+  lg: $input-size-lg
+);
 
 /* ========================== Mixins ========================== */
+@mixin selectbox-size($size: default) {
+  @each $key, $value in $selectbox-size {
+    &--#{$key} {
+      height: $value;
+    }
+  }
+}
 
 /* ========================== Styles ========================== */
+
 .el-select {
+  @include selectbox-size();
   height: $input-size;
 
   .el-select {
@@ -23,7 +37,7 @@
         background: $input-disabled-bg-color;
 
         .el-select__selected-item {
-          color: $input-placeholder-color;
+          @include typo($color: $input-placeholder-color);
         }
 
         .el-select__suffix {
@@ -47,35 +61,10 @@
       }
     }
 
-    // &__selected-item {
-    //   color: $gray-400;
-
-    //   .el-tag {
-    //     @include typo($font-size: 13);
-    //     padding: 0 4px 0 8px;
-    //     background: $purple-50;
-    //     border-radius: 24px;
-    //     color: $white;
-
-    //     &__close {
-    //       @include icon($name: close__line--fff);
-    //       width: 16px;
-    //       margin-left: 10px;
-
-    //       svg {
-    //         display: none;
-    //       }
-
-    //       &:hover {
-    //         background-color: transparent;
-    //       }
-    //     }
-    //   }
-    // }
-
     &__placeholder {
+      @include typo($color: $input-color);
       &.is-transparent {
-        color: $input-placeholder-color;
+        @include typo($color: $input-placeholder-color);
       }
     }
   }
@@ -91,47 +80,8 @@
       }
     }
   }
-
-  // &.el-select__reset {
-  //   .el-select__wrapper {
-  //     &.is-hovering {
-  //       .el-select__suffix {
-  //         .el-icon {
-  //           @include icon($name: delete__circle--eae);
-  //           right: 22px;
-  //           width: 16px;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
-  // size
-  &.el-select--sm,
-  &.el-select--lg {
-    .el-select__wrapper {
-      @include typo($font-size: 14);
-      padding: 6px 10px 6px 15px;
-    }
-  }
-
-  &.el-select--sm {
-    height: $input-size-sm;
-  }
-
-  &.el-select--lg {
-    height: $input-size-lg;
-  }
-
-  // $widthList: 200, 250;
-  // @each $width in $widthList {
-  //   &.input--#{$width} {
-  //     width: #{$width}px;
-  //   }
-  // }
 }
 
-// el-select dropdown
 .el-select__popper {
   &.el-popper {
     &.is-pure {
@@ -140,33 +90,24 @@
       box-shadow: 3px 4px 6px 0px rgba(0, 0, 0, 0.1);
 
       .el-select-dropdown {
-        border-radius: 2px;
+        border-radius: $input-radius;
 
         &__list {
           padding: 0;
         }
 
         &__item {
-          @include typo($line-height: 40px);
+          @include typo($line-height: 40px, $color: $gray-330);
           height: 40px;
           padding: 0 13px;
-          color: $gray-330;
-
-          .el-checkbox {
-            vertical-align: middle;
-
-            &__label {
-              @include typo($font-weight: 400);
-              color: $gray-330 !important;
-            }
-          }
+          transition: $transition;
 
           &.is-hovering {
             background: $purple-5;
           }
 
           &.is-disabled {
-            color: $gray-180;
+            @include typo($color: $input-disabled-color);
           }
 
           &.is-selected {
@@ -176,7 +117,6 @@
           }
         }
       }
-
       .el-popper__arrow {
         display: none;
       }
