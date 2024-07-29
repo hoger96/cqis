@@ -6,9 +6,8 @@ import { MODAL_SIZE } from '../../types/modal.ts'
 import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
 import UserPopup from '../components/UserPopup.vue'
 
-const { showFromFile, catchNotError } = useReturnMessage()
 const router = useRouter()
-
+const { t } = useI18n()
 const searchCondition = ref('id')
 const useState = ref('Y')
 const keyword = ref('')
@@ -181,48 +180,51 @@ onMounted(() => {
   <div class="data-source">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        사용자 관리
+        {{ t('user.title') }}
       </h2>
     </div>
     <form class="form__search">
       <div class="form">
-        <label class="form__label">검색 조건</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
+        <label class="form__label"> {{ t('common.search-bar.condition') }}</label>
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions"
+          :label="t('common.search-bar.condition')" />
       </div>
       <div class="form">
-        <label class="form__label">사용 여부</label>
-        <basic-select-box v-model="searchParam.use" :options="useStateOptions" label="답변 상태" />
+        <label class="form__label">{{ t('common.search-bar.use') }}</label>
+        <basic-select-box v-model="searchParam.use" :options="useStateOptions"
+          :label="t('common.search-bar.condition')" />
       </div>
       <div class="form flex-1">
-        <label class="form__label">검색어</label>
-        <CustomInput v-model="searchParam.keyword" placeholder="검색어를 입력하세요." @keyup.enter="handleSearch" />
+        <label class="form__label">{{ t('common.search-bar.keyword') }}</label>
+        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
+          @keyup.enter="handleSearch" />
       </div>
       <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        초기화
+        {{ t('common.button.reset') }}
       </button>
       <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        검색
+        {{ t('common.button.search') }}
       </button>
     </form>
     <div class="flex">
       <span class="table__count">
-        총 <em>{{ totalCount }}</em>건
+        {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
       </span>
     </div>
     <div class="mgmt__box">
       <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
-        <el-table-column prop="index" label="번호" min-width="50" align="center" />
-        <el-table-column prop="userId" label="아이디" min-width="150" align="center" />
-        <el-table-column prop="name" label="이름" min-width="150" align="center" />
-        <el-table-column prop="team" label="부서" min-width="150" align="center" />
-        <el-table-column prop="use" label="사용여부" min-width="100" align="center">
+        <el-table-column prop="index" :label="t('common.label.title')" min-width="50" align="center" />
+        <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />
+        <el-table-column prop="name" :label="t('common.label.name')" min-width="150" align="center" />
+        <el-table-column prop="team" :label="t('common.label.team')" min-width="150" align="center" />
+        <el-table-column prop="use" :label="t('common.search-bar.use')" min-width="100" align="center">
           <template v-slot="scope">
             <p>
-              {{ scope.row.use === 'Y' ? '사용' : '사용중지' }}
+              {{ scope.row.use === 'Y' ? t('common.label.use-yes') : t('common.label.use-no') }}
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="loginDate" label="최근 로그인 일시" min-width="150" align="center" />
+        <el-table-column prop="loginDate" :label="t('common.label.login')" min-width="150" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />

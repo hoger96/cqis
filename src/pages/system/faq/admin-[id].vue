@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import CustomInput from '../../components/CustomInput.vue'
-import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
+import CustomInput from '~/components/CustomInput.vue'
+import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 import { IFaqDetail } from '../types/faq.ts'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const faqId = ref(route.params.id)
@@ -126,7 +127,7 @@ const handleChangeUpdateMode = () => {
 }
 
 const handleGoFaqPage = () => {
-  router.push({ path: '/admin/faq' })
+  router.push({ path: '/system/faq/admin-index' })
 }
 
 const handleCancel = () => {
@@ -142,7 +143,7 @@ onMounted(() => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        FAQ 관리자
+        {{ t('faq.admin-title') }}
       </h2>
     </div>
     <div class="mgmt__box">
@@ -151,50 +152,51 @@ onMounted(() => {
         <CustomInput v-model="faqForm.title" :readonly="updateMode" />
       </div>
       <div class="form">
-        <label class="form__label">등록자</label>
+        <label class="form__label">{{ t('common.label.create-user') }}</label>
         <CustomInput v-model="faqForm.createUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록일자</label>
+        <label class="form__label">{{ t('common.label.create-date') }}</label>
         <CustomInput v-model="faqForm.createDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">수정자</label>
+        <label class="form__label">{{ t('common.label.update-user') }}</label>
         <CustomInput v-model="faqForm.updateUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">수정일자</label>
+        <label class="form__label">{{ t('common.label.update-date') }}</label>
         <CustomInput v-model="faqForm.updateDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">첨부파일</label>
+        <label class="form__label">{{ t('common.label.file') }}</label>
         <div ref="dropZoneRef" class="form__upload">
           <button v-if="!updateMode" class="btn__secondary-line--md" @click="openFileUpload">
-            파일첨부
+            {{ t('common.button.file') }}
           </button>
-          <p v-if="!updateMode">파일을 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+          <p v-if="!updateMode">{{ t('common.label.file-placeholder') }}</p>
           <p>{{ fileName }}</p>
           <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
         </div>
       </div>
       <div>
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">내용</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow" placeholder="내용을 입력해주세요." content-type="text"
-          @change="onEditorChange" :read-only="updateMode" />
+        <label :class="updateMode ? 'form__label' : 'form__label--required'">{{ t('common.label.content') }}</label>
+        <Editor v-model:content="contents" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+          :read-only="updateMode" />
       </div>
     </div>
     <div class="mgmt__btn">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoFaqPage">
-        취소
+        {{ t('common.button.cancel') }}
       </button>
       <button v-if="updateMode" type="button" class="btn__primary--lg" @click="handleChangeUpdateMode">
-        수정
+        {{ t('common.button.update') }}
       </button>
       <button v-if="!updateMode" type="button" class="btn__secondary-line--lg" @click="handleCancel">
-        취소
+        {{ t('common.button.cancel') }}
       </button>
       <button v-if="!updateMode" type="button" class="btn__primary--lg" @click="handleUpdateFaq">
-        확인
+        {{ t('common.button.confirm') }}
       </button>
     </div>
   </div>

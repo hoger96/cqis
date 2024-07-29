@@ -3,6 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { ISearchParams, IQnaData } from '../types/qna.ts'
 import { useRouter } from 'vue-router'
 
+const { t } = useI18n()
 const router = useRouter()
 const searchCondition = ref('제목')
 const keyword = ref('')
@@ -136,7 +137,7 @@ const handleSearch = () => {
 }
 
 const handleQnaDetail = (e) => {
-  router.push({ path: `/admin/qna/${e.qnaId}` })
+  router.push({ path: `/system/qna/admin-${e.qnaId}` })
 }
 
 const handleSelectionChange = (target: IQnaData[]) => {
@@ -168,49 +169,52 @@ onMounted(() => {
   <div class="data-source">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        Q&A 관리자
+        {{ t('qna.admin-title') }}
       </h2>
     </div>
     <form class="form__search">
       <div class="form">
-        <label class="form__label">검색 조건</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
+        <label class="form__label">{{ t('common.search-bar.condition') }}</label>
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions"
+          :label="t('common.search-bar.condition')" />
       </div>
       <div class="form">
-        <label class="form__label">답변 상태</label>
-        <basic-select-box v-model="searchParam.state" :options="searchStateOptions" label="답변 상태" />
+        <label class="form__label">{{ t('common.search-bar.state') }}</label>
+        <basic-select-box v-model="searchParam.state" :options="searchStateOptions"
+          :label="t('common.search-bar.state')" />
       </div>
       <div class="form flex-1">
-        <label class="form__label">검색어</label>
-        <CustomInput v-model="searchParam.keyword" placeholder="검색어를 입력하세요." @keyup.enter="handleSearch" />
+        <label class="form__label">{{ t('common.search-bar.keyword') }}</label>
+        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
+          @keyup.enter="handleSearch" />
       </div>
       <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        초기화
+        {{ t('common.button.reset') }}
       </button>
       <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        검색
+        {{ t('common.button.search') }}
       </button>
     </form>
     <div class="flex">
       <span class="table__count">
-        총 <em>{{ totalCount }}</em>건
+        {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
       </span>
       <button type="button" class="btn__secondary--md" @click="handleDeleteQna">
-        삭제
+        {{ t('common.button.delete') }}
       </button>
     </div>
     <div class="mgmt__box">
       <el-table :data="qnaList" style="width: 100%" @row-click="handleQnaDetail"
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="index" label="번호" min-width="200" align="center" />
-        <el-table-column prop="title" label="제목" min-width="450" align="center" />
-        <el-table-column prop="createUser" label="등록자" min-width="200" align="center" />
-        <el-table-column prop="createDate" label="등록일" min-width="200" align="center" />
-        <el-table-column prop="state" label="상태" min-width="200" align="center">
+        <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
+        <el-table-column prop="title" :label="t('common.label.title')" min-width="400" align="center" />
+        <el-table-column prop="createUser" :label="t('common.label.create-user')" min-width="150" align="center" />
+        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="200" align="center" />
+        <el-table-column prop="state" :label="t('common.label.state')" min-width="100" align="center">
           <template v-slot="scope">
             <p>
-              {{ scope.row.state === 'wait' ? '대기' : '완료' }}
+              {{ scope.row.state === 'wait' ? t('common.label.wait') : t('common.label.complete') }}
             </p>
           </template>
         </el-table-column>

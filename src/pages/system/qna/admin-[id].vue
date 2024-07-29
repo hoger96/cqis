@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import CustomInput from '../../components/CustomInput.vue'
-import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
+import CustomInput from '~/components/CustomInput.vue'
+import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 import { IQnaDetail } from '../types/qna.ts'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const qnaId = ref(route.params.id)
@@ -141,7 +142,7 @@ const handleAnswerQna = () => {
 }
 
 const handleGoQnaPage = () => {
-  router.push({ path: '/admin/qna' })
+  router.push({ path: '/system/qna/admin-index' })
 }
 
 onMounted(() => {
@@ -153,71 +154,74 @@ onMounted(() => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        Q&A 관리자
+        {{ t('qna.admin-title') }}
       </h2>
     </div>
     <div class="mgmt__box">
       <div class="form">
-        <label class="form__label">제목</label>
+        <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.question.title" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록자</label>
+        <label class="form__label">{{ t('common.label.create-user') }}</label>
         <CustomInput v-model="qnaForm.question.createUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록일자</label>
+        <label class="form__label">{{ t('common.label.create-date') }}</label>
         <CustomInput v-model="qnaForm.question.createDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">첨부파일</label>
+        <label class="form__label">{{ t('common.label.file') }}</label>
         <div class="form__upload">
           <p>{{ qnaForm.question.file }}</p>
           <input id="file-upload" ref="fileRef" type="file" style="display: none;">
         </div>
       </div>
       <div>
-        <label class='form__label'>내용</label>
-        <Editor v-model:content="qnaForm.question.detail" toolbar="full" theme="snow" placeholder="내용을 입력해주세요."
-          content-type="text" @change="onEditorChange" read-only="true" />
+        <label class='form__label'>{{ t('common.label.content') }}</label>
+        <Editor v-model:content="qnaForm.question.detail" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+          :read-only="true" />
       </div>
     </div>
     <div class="mgmt__box">
       <div v-if="createAnwerMode" class="form">
-        <label class='form__label'>제목</label>
+        <label class='form__label'>{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.answer.title" readonly />
       </div>
       <div v-if="createAnwerMode" class="form">
-        <label class="form__label">등록자</label>
+        <label class="form__label">{{ t('common.label.create-user') }}</label>
         <CustomInput v-model="qnaForm.answer.createUser" readonly />
       </div>
       <div v-if="createAnwerMode" class="form">
-        <label class="form__label">등록일자</label>
+        <label class="form__label">{{ t('common.label.create-date') }}</label>
         <CustomInput v-model="qnaForm.answer.createDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">첨부파일</label>
+        <label class="form__label">{{ t('common.label.file') }}</label>
         <div ref="dropZoneRef" class="form__upload">
           <button v-if="!createAnwerMode" class="btn__secondary-line--md" @click="openFileUpload">
-            파일첨부
+            {{ t('common.button.file') }}
           </button>
-          <p v-if="!createAnwerMode">파일을 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+          <p v-if="!createAnwerMode">{{ t('common.label.file-placeholder') }}</p>
           <p>{{ qnaForm.answer.file }}</p>
           <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
         </div>
       </div>
       <div>
-        <label :class="createAnwerMode ? 'form__label' : 'form__label--required'">내용</label>
-        <Editor v-model:content="qnaForm.answer.detail" toolbar="full" theme="snow" placeholder="내용을 입력해주세요."
-          content-type="text" @change="onEditorChange" :read-only="createAnwerMode" />
+        <label :class="createAnwerMode ? 'form__label' : 'form__label--required'">{{ t('common.label.content')
+          }}</label>
+        <Editor v-model:content="qnaForm.answer.detail" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+          :read-only="createAnwerMode" />
       </div>
     </div>
     <div class="mgmt__btn">
       <button type="button" class="btn__secondary-line--lg" @click="handleGoQnaPage">
-        취소
+        {{ t('common.button.cancel') }}
       </button>
       <button v-if="!createAnwerMode" type="button" class="btn__primary--lg" @click="handleAnswerQna">
-        확인
+        {{ t('common.button.confirm') }}
       </button>
     </div>
   </div>
