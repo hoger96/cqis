@@ -91,11 +91,11 @@ watchEffect(() => {
     <template #content>
       <div>
         <form>
-          <div>
+          <div div class="form">
             <label class="form__label">{{ t('common.label.name') }}</label>
             <CustomInput v-model="userInfo.name" max-length="10" readonly />
           </div>
-          <div>
+          <div div class="form">
             <label class="form__label">{{ t('common.search-bar.use') }}</label>
             <div class="form">
               <el-radio-group v-model="userInfo.use">
@@ -108,7 +108,7 @@ watchEffect(() => {
               </el-radio-group>
             </div>
           </div>
-          <div>
+          <div div class="form">
             <label class="form__label">{{ t('common.label.reason') }}</label>
             <CustomTextarea v-model="userInfo.reason" max-length="20" />
           </div>
@@ -116,14 +116,12 @@ watchEffect(() => {
       </div>
     </template>
     <template #footer>
-      <div class="flex">
-        <button type="button" class="btn__negative--md" @click="handleCancel">
-          {{ t('common.button.cancel') }}
-        </button>
-        <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
-          {{ t('common.button.save') }}
-        </button>
-      </div>
+      <button type="button" class="btn__negative--md" @click="handleCancel">
+        {{ t('common.button.cancel') }}
+      </button>
+      <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
+        {{ t('common.button.save') }}
+      </button>
     </template>
   </common-modal>
 </template>
