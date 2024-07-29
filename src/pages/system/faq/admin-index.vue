@@ -154,48 +154,40 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        FAQ 관리자
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form">
-        <label class="form__label">검색 조건</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">검색어</label>
+  <div>
+    <h2 class="title">
+      FAQ 관리자
+    </h2>
+    <SearchForm user-reset @search="handleSearch" @clear="handleSearch">
+      <SearchItem label="검색 조건">
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+      </SearchItem>
+      <SearchItem label="검색어">
         <CustomInput v-model="searchParam.keyword" placeholder="검색어를 입력하세요." @keyup.enter="handleSearch" />
+      </SearchItem>
+    </SearchForm>
+    <div class="content__box">
+      <div class="total__bar">
+        <span class="total">
+          총 <em>{{ totalCount }}</em>건
+        </span>
+        <div class="flex">
+          <button type="button" class="btn__secondary-line--sm" @click="handleDeleteFaq">
+            삭제
+          </button>
+          <button type="button" class="btn__secondary--sm" @click="handleCreateFaq">
+            등록
+          </button>
+        </div>
       </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        초기화
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        검색
-      </button>
-    </form>
-    <div class="flex">
-      <span class="table__count">
-        총 <em>{{ totalCount }}</em>건
-      </span>
-      <button type="button" class="btn__secondary--md" @click="handleDeleteFaq">
-        삭제
-      </button>
-      <button type="button" class="btn__primary-line--md" @click="handleCreateFaq">
-        등록
-      </button>
-    </div>
-    <div class="mgmt__box">
       <el-table :data="faqList" style="width: 100%" @row-click="handleFaqDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="index" label="번호" min-width="200" align="center" />
-        <el-table-column prop="title" label="제목" min-width="500" align="center" />
-        <el-table-column prop="createUser" label="등록자" min-width="200" align="center" />
-        <el-table-column prop="createDate" label="등록일" min-width="200" align="center" />
-        <el-table-column prop="views" label="조회수" min-width="100" align="center" />
+        <el-table-column type="selection" min-width="5" />
+        <el-table-column prop="index" label="번호" min-width="10" align="center" />
+        <el-table-column prop="title" label="제목" min-width="35" align="center" />
+        <el-table-column prop="createUser" label="등록자" min-width="20" align="center" />
+        <el-table-column prop="createDate" label="등록일" min-width="20" align="center" />
+        <el-table-column prop="views" label="조회수" min-width="10" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
