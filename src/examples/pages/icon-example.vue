@@ -9,6 +9,8 @@ const icons = [
   { fileName: 'search__line--fff' },
   { fileName: 'logout__line--333' },
   { fileName: 'user__full--fff' },
+  { fileName: 'delete__circle--eae' },
+  { fileName: 'caution__full--fe3' },
 ]
 </script>
 

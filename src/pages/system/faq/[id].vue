@@ -57,13 +57,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('faq.title') }}
-      </h2>
-    </div>
-    <div class="mgmt__box">
+  <div>
+    <h2 class="title">
+      {{ t('faq.title') }}
+    </h2>
+    <div class="content__box">
       <div class="form">
         <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="faqForm.title" readonly />
@@ -85,7 +83,7 @@ onMounted(() => {
         <CustomTextarea v-model="faqForm.detail" readonly />
       </div>
     </div>
-    <div class="mgmt__btn">
+    <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoFaqPage">
         {{ t('common.button.confirm') }}
       </button>

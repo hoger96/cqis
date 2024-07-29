@@ -89,31 +89,29 @@ watchEffect(() => {
 <template>
   <common-modal v-model="isShow" :title="t('user.popup.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
     <template #content>
-      <div>
-        <form>
-          <div div class="form">
-            <label class="form__label">{{ t('common.label.name') }}</label>
-            <CustomInput v-model="userInfo.name" max-length="10" readonly />
+      <form>
+        <div div class="form">
+          <label class="form__label">{{ t('common.label.name') }}</label>
+          <CustomInput v-model="userInfo.name" max-length="10" readonly />
+        </div>
+        <div div class="form">
+          <label class="form__label">{{ t('common.search-bar.use') }}</label>
+          <div class="form">
+            <el-radio-group v-model="userInfo.use">
+              <el-radio value="Y">
+                {{ t('common.label.use-yes') }}
+              </el-radio>
+              <el-radio value="N">
+                {{ t('common.label.use-no') }}
+              </el-radio>
+            </el-radio-group>
           </div>
-          <div div class="form">
-            <label class="form__label">{{ t('common.search-bar.use') }}</label>
-            <div class="form">
-              <el-radio-group v-model="userInfo.use">
-                <el-radio value="Y">
-                  {{ t('common.label.use-yes') }}
-                </el-radio>
-                <el-radio value="N">
-                  {{ t('common.label.use-no') }}
-                </el-radio>
-              </el-radio-group>
-            </div>
-          </div>
-          <div div class="form">
-            <label class="form__label">{{ t('common.label.reason') }}</label>
-            <CustomTextarea v-model="userInfo.reason" max-length="20" />
-          </div>
-        </form>
-      </div>
+        </div>
+        <div div class="form">
+          <label class="form__label">{{ t('common.label.reason') }}</label>
+          <CustomTextarea v-model="userInfo.reason" max-length="20" />
+        </div>
+      </form>
     </template>
     <template #footer>
       <button type="button" class="btn__negative--md" @click="handleCancel">

@@ -8,11 +8,17 @@ const props = defineProps({
   },
   resetText: {
     type: String,
-    default: '',
+    default: () => {
+      const { t } = useI18n()
+      return t('common.button.reset')
+    },
   },
   searchText: {
     type: String,
-    default: '',
+    default: () => {
+      const { t } = useI18n()
+      return t('common.button.search')
+    },
   },
 })
 const emit = defineEmits(['clear', 'search'])
@@ -27,11 +33,11 @@ const emit = defineEmits(['clear', 'search'])
     </div>
     <div class="search-form__btn-area">
       <button v-if="useReset" type="button" class="btn__primary-line--md" @click="emit('clear')">
-        <!-- <Icon name="reset__line--9e4" width="24" height="24" alt="" /> -->
+        <Icon name="reset__line--9e4" width="24" height="24" alt="" area-hidden="true" />
         {{ resetText }}
       </button>
       <button type="button" class="btn__primary--md" @click="emit('search')">
-        <!-- <Icon name="search__line--fff" width="24" height="24" alt="" /> -->
+        <Icon name="search__line--fff" width="24" height="24" alt="" area-hidden="true" />
         {{ searchText }}
       </button>
       <slot name="search-form__btn" />

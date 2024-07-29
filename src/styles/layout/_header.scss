@@ -1,14 +1,12 @@
 .header {
-  // @include flex-box(justify-end);
-  @apply flex justify-end;
+  @include flex-box(justify-end);
   height: $header-height;
   margin: 0 60px;
   border-bottom: 1px solid $gray-75;
   box-sizing: border-box;
 
   &__user {
-    // @include flex-box(items-center);
-    @apply flex items-center;
+    @include flex-box(items-center);
     @include typo(15px, $color: $gray-430);
     padding-right: 20px;
     margin-right: 20px;

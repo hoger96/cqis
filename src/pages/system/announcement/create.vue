@@ -56,12 +56,10 @@ const onFileChange = (file: File[]) => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('annc.title') }} {{ t('common.button.create') }}
-      </h2>
-    </div>
+  <div>
+    <h2 class="title">
+      {{ t('annc.title') }} {{ t('common.button.create') }}
+    </h2>
     <div>
       <div class="form">
         <label class="form__label--required">{{ t('common.label.title') }}</label>
@@ -79,7 +77,7 @@ const onFileChange = (file: File[]) => {
       </div>
       <FileUpload @file-change="onFileChange" />
     </div>
-    <div class="mgmt__btn">
+    <div class="content__btns">
       <button type="button" class="btn__secondary--lg" @click="handleGoAnncPage">
         {{ t('common.button.cancel') }}
       </button>
