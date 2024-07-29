@@ -5,6 +5,7 @@ import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 import { IQnaDetail } from '~/types/qna.ts'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const qnaId = ref(route.params.id)
@@ -73,7 +74,7 @@ const setQnaDetail = () => {
 }
 
 const handleGoQnaPage = () => {
-  router.push({ path: '/qna' })
+  router.push({ path: '/system/qna' })
 }
 
 onMounted(() => {
@@ -85,59 +86,59 @@ onMounted(() => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        Q&A
+        {{ t('qna.title') }}
       </h2>
     </div>
     <div class="mgmt__box">
       <div class="form">
-        <label class="form__label">제목</label>
+        <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.question.title" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록자</label>
+        <label class="form__label">{{ t('common.label.create-user') }}</label>
         <CustomInput v-model="qnaForm.question.createUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록일자</label>
+        <label class="form__label">{{ t('common.label.create-date') }}</label>
         <CustomInput v-model="qnaForm.question.createDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">첨부파일</label>
+        <label class="form__label">{{ t('common.label.file') }}</label>
         <CustomInput v-model="qnaForm.question.file" readonly />
       </div>
       <div class="form">
-        <label class="form__label">내용</label>
+        <label class="form__label">{{ t('common.label.content') }}</label>
         <CustomTextarea v-model="qnaForm.question.detail" readonly />
       </div>
     </div>
     <div v-if="qnaForm.answer.title !== ''" class="mgmt__box">
       <div class="form">
-        <label class="form__label">제목</label>
+        <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.answer.title" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록자</label>
+        <label class="form__label">{{ t('common.label.create-user') }}</label>
         <CustomInput v-model="qnaForm.answer.createUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록일자</label>
+        <label class="form__label">{{ t('common.label.create-date') }}</label>
         <CustomInput v-model="qnaForm.answer.createDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">첨부파일</label>
+        <label class="form__label">{{ t('common.label.file') }}</label>
         <CustomInput v-model="qnaForm.answer.file" readonly />
       </div>
       <div class="form">
-        <label class="form__label">내용</label>
+        <label class="form__label">{{ t('common.label.content') }}</label>
         <CustomTextarea v-model="qnaForm.answer.detail" readonly />
       </div>
     </div>
     <div v-else class="mgmt__box">
-      <p>등록된 답변이 없습니다.</p>
+      <p>{{ t('qna.no-answer') }}</p>
     </div>
     <div class="mgmt__btn">
       <button type="button" class="btn__primary--lg" @click="handleGoQnaPage">
-        확인
+        {{ t('common.button.confirm') }}
       </button>
     </div>
   </div>

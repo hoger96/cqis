@@ -5,12 +5,12 @@ import { useRouter } from 'vue-router'
 import { MODAL_SIZE } from '~/types/modal.ts'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 
+
+const { t } = useI18n()
 const props = defineProps<{
   modelValue: boolean
   userId: string
 }>()
-
-
 const emits = defineEmits<{
   (e: 'update:modelValue', modelValue: boolean): void
   (e: 'cancel'): void
@@ -87,39 +87,43 @@ watchEffect(() => {
 </script>
 
 <template>
-  <common-modal v-model="isShow" title="사용자 설정" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
+  <common-modal v-model="isShow" :title="t('user.popup.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
     <template #content>
-      <form>
-        <div class="form">
-          <label class="form__label">이름</label>
-          <CustomInput v-model="userInfo.name" max-length="10" readonly />
-        </div>
-        <div class="form">
-          <label class="form__label">사용 여부</label>
-          <div class="form">
-            <el-radio-group v-model="userInfo.use">
-              <el-radio value="Y">
-                사용
-              </el-radio>
-              <el-radio value="N">
-                사용중지
-              </el-radio>
-            </el-radio-group>
+      <div>
+        <form>
+          <div>
+            <label class="form__label">{{ t('common.label.name') }}</label>
+            <CustomInput v-model="userInfo.name" max-length="10" readonly />
           </div>
-        </div>
-        <div class="form">
-          <label class="form__label">사유</label>
-          <CustomTextarea v-model="userInfo.reason" max-length="20" />
-        </div>
-      </form>
+          <div>
+            <label class="form__label">{{ t('common.search-bar.use') }}</label>
+            <div class="form">
+              <el-radio-group v-model="userInfo.use">
+                <el-radio value="Y">
+                  {{ t('common.label.use-yes') }}
+                </el-radio>
+                <el-radio value="N">
+                  {{ t('common.label.use-no') }}
+                </el-radio>
+              </el-radio-group>
+            </div>
+          </div>
+          <div>
+            <label class="form__label">{{ t('common.label.reason') }}</label>
+            <CustomTextarea v-model="userInfo.reason" max-length="20" />
+          </div>
+        </form>
+      </div>
     </template>
     <template #footer>
-      <button type="button" class="btn__negative--md" @click="handleCancel">
-        취소
-      </button>
-      <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
-        저장
-      </button>
+      <div class="flex">
+        <button type="button" class="btn__negative--md" @click="handleCancel">
+          {{ t('common.button.cancel') }}
+        </button>
+        <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
+          {{ t('common.button.save') }}
+        </button>
+      </div>
     </template>
   </common-modal>
 </template>

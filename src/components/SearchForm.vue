@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n()
+
 const props = defineProps({
   useReset: {
     type: Boolean,
@@ -6,11 +8,11 @@ const props = defineProps({
   },
   resetText: {
     type: String,
-    default: '초기화',
+    default: '',
   },
   searchText: {
     type: String,
-    default: '검색',
+    default: '',
   },
 })
 const emit = defineEmits(['clear', 'search'])

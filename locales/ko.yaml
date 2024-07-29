@@ -1,4 +1,5 @@
 annc:
+  admin-title: 공지사항 관리자
   title: 공지사항
 
 common:
@@ -8,23 +9,52 @@ common:
     confirm: 확인
     create: 등록
     delete: 삭제
+    file: 파일첨부
     reset: 초기화
     save: 저장
     search: 검색
     update: 수정
   label:
+    complete: 완료
     content: 내용
+    content-placeholder: 내용을 입력해주세요.
+    count: 건
     create-date: 등록일자
-    create-user: 등록일자
+    create-user: 등록자
+    end-date: 종료일
     file: 첨부파일
+    file-placeholder: 파일을 드래그 앤 드롭 하거나 클릭하여 업로드하세요.
+    id: 아이디
     index: 번호
+    login: 최근 로그인 일시
+    name: 이름
     period: 게시기간
+    reason: 사유
+    state: 상태
+    start-date: 시작일
+    team: 부서
     title: 제목
+    total: 총
+    use-no: 사용중지
+    use-yes: 사용
     update-date: 수정일자
     update-user: 수정자
     views: 조회수
+    wait: 대기
   search-bar:
     condition: 검색 조건
     keyword: 검색어
     placeholder: 검색어를 입력하세요.
+    state: 답변 상태
     use: 사용 여부
+faq:
+  admin-title: FAQ 관리자
+  title: FAQ
+user:
+  popup:
+    title: 사용자 설정
+  title: 사용자 관리
+qna:
+  admin-title: Q&A 관리자
+  no-answer: 등록된 답변이 없습니다.
+  title: Q&A

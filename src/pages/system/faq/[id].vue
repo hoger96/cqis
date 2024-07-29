@@ -5,6 +5,7 @@ import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 import { IFaqDetail } from '~/types/faq.ts'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const faqId = ref(route.params.id)
@@ -47,7 +48,7 @@ const setFaqDetail = () => {
 }
 
 const handleGoFaqPage = () => {
-  router.push({ path: '/annc' })
+  router.push({ path: '/system/announcement' })
 }
 
 onMounted(() => {
@@ -59,34 +60,34 @@ onMounted(() => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        FAQ
+        {{ t('faq.title') }}
       </h2>
     </div>
     <div class="mgmt__box">
       <div class="form">
-        <label class="form__label">제목</label>
+        <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="faqForm.title" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록자</label>
+        <label class="form__label">{{ t('common.label.create-user') }}</label>
         <CustomInput v-model="faqForm.createUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록일자</label>
+        <label class="form__label">{{ t('common.label.create-date') }}</label>
         <CustomInput v-model="faqForm.createDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">첨부파일</label>
+        <label class="form__label">{{ t('common.label.file') }}</label>
         <CustomInput v-model="faqForm.file" readonly />
       </div>
       <div class="form">
-        <label class="form__label">내용</label>
+        <label class="form__label">{{ t('common.label.content') }}</label>
         <CustomTextarea v-model="faqForm.detail" readonly />
       </div>
     </div>
     <div class="mgmt__btn">
       <button type="button" class="btn__primary--lg" @click="handleGoFaqPage">
-        확인
+        {{ t('common.button.confirm') }}
       </button>
     </div>
   </div>

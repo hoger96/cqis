@@ -3,11 +3,11 @@ import { ref, reactive, onMounted } from 'vue'
 import { IQnaCreate } from '../types/qna.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
-import Editor from '../../components/Editor.vue'
-import FileUpload from '../../components/FileUpload.vue'
+import Editor from '~/components/Editor.vue'
+import FileUpload from '~/components/FileUpload.vue'
 
 const router = useRouter()
-
+const { t } = useI18n()
 const title = ref('')
 const contents = ref<string | Delta>()
 const attachedFile = ref<File>([])
@@ -17,7 +17,7 @@ const onEditorChange = (value: string) => {
 }
 
 const handleGoQnaPage = () => {
-  router.push({ path: '/qna' })
+  router.push({ path: '/system/qna' })
 }
 
 const handleCreateQna = () => {
@@ -43,7 +43,7 @@ const handleCreateQna = () => {
       }
     }
     console.log('등록: ', data.value)
-    // router.push({ path: '/qna' })
+    // router.push({ path: '/system/qna' })
   }
   catch (error) {
     console.error(error)
@@ -59,27 +59,27 @@ const onFileChange = (file: File[]) => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        Q&A 등록
+        {{ t('qna.title') }} {{ t('common.button.create') }}
       </h2>
     </div>
     <div>
       <div class="form">
-        <label class="form__label--required">제목</label>
+        <label class="form__label--required">{{ t('common.label.title') }}</label>
         <CustomInput v-model="title" />
       </div>
       <div>
-        <label class="form__label--required">내용</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow" placeholder="내용을 입력해주세요." content-type="text"
-          @change="onEditorChange" />
+        <label class="form__label--required">{{ t('common.label.content') }}</label>
+        <Editor v-model:content="contents" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
       </div>
       <FileUpload @file-change="onFileChange" />
     </div>
     <div class="mgmt__btn">
       <button type="button" class="btn__secondary--lg" @click="handleGoQnaPage">
-        취소
+        {{ t('common.button.cancel') }}
       </button>
       <button type="button" class="btn__primary--lg" @click="handleCreateQna">
-        저장
+        {{ t('common.button.save') }}
       </button>
     </div>
   </div>

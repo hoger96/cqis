@@ -55,7 +55,7 @@ const setAnncDetail = () => {
 }
 
 const handleGoAnncPage = () => {
-  router.push({ path: '/system/announcement/index' })
+  router.push({ path: '/system/announcement' })
 }
 
 onMounted(() => {

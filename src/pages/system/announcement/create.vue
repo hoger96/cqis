@@ -3,7 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { IAnnouncementCreate } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
-import Editor from '../../components/Editor.vue'
+import Editor from '~/components/Editor.vue'
 
 const router = useRouter()
 
