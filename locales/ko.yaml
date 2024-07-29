@@ -54,6 +54,13 @@ user:
   popup:
     title: 사용자 설정
   title: 사용자 관리
+user-auth:
+  label:
+    auth-date: 최종 권한 부여 일시
+  popup:
+    title: 사용자 권한 설정
+    auth: 권한 그룹 설정
+  title: 사용자 권한 관리
 qna:
   admin-title: Q&A 관리자
   no-answer: 등록된 답변이 없습니다.

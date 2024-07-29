@@ -53,6 +53,12 @@ const menuList = reactive([
     menuIndex: '7',
     menuUrl: '/admin/pages/user-mgmt',
   },
+  {
+    menuId: '사용자 권한 관리',
+    menuName: '사용자 권한 관리',
+    menuIndex: '8',
+    menuUrl: '/admin/pages/user-auth',
+  },
 ])
 
 const router = useRouter()
