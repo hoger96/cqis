@@ -70,7 +70,7 @@ onMounted(() => {
         공지사항
       </h2>
     </div>
-    <div class="mgmt__box">
+    <div class="content__box">
       <div class="form">
         <label class="form__label">제목</label>
         <CustomInput v-model="anncForm.title" readonly />
@@ -100,7 +100,7 @@ onMounted(() => {
         <label class="form__label">첨부파일</label>
         <CustomInput v-model="anncForm.file" readonly />
       </div>
-      <div>
+      <div class="form">
         <label class="form__label">내용</label>
         <Editor v-model:content="anncForm.detail" toolbar="full" theme="snow" placeholder="내용을 입력해주세요."
           content-type="text" @change="onEditorChange" :read-only="true" />

@@ -34,10 +34,10 @@
         }
       }
       &__title {
-        @include typo($font-size: 16, $font-weight: 600);
+        @include typo(16px, 600);
       }
       &__content {
-        @include typo($font-weight: 500, $font-size: 14);
+        @include typo($font-weight: 500);
         padding: 0 20px 24px;
       }
       &__message {
@@ -48,7 +48,7 @@
             color: $gray-400;
           }
           &:nth-child(2) {
-            @include typo($font-size: 13, $line-height: 20px);
+            @include typo(13px, $line-height: 20px);
             margin-top: 8px;
             color: $gray-240;
           }
@@ -113,17 +113,15 @@
     border-radius: 20px;
     &__title {
       @apply flex justify-center;
-      @include typo($font-size: 24, $line-height: 29px, $font-weight: 600);
-      color: $gray-430;
+      @include typo(24px, 600, $gray-430, 29px);
     }
     &__header {
       position: relative;
       padding: 20px;
       border-bottom: 1px solid $gray-80;
       h1 {
-        @include typo($font-size: 24, $line-height: 29px, $font-weight: 600);
+        @include typo(24px, 600, $gray-430, 29px);
         text-align: center;
-        color: $gray-430;
       }
     }
     &__headerbtn {
@@ -140,14 +138,13 @@
         }
       }
       .el-dialog__close {
-        @include typo($font-size: 26);
+        @include typo(26px);
         color: $gray-430;
       }
     }
     &__body {
       overflow-y: auto;
       max-height: 600px;
-      // max-height: 665px;
       padding: 30px 30px 0;
       color: $gray-400;
     }
@@ -156,11 +153,5 @@
       padding: 20px 30px 30px;
       text-align: center;
     }
-  }
-}
-
-@media screen and (max-width: 1440px) {
-  .prompt-setting-popup {
-    width: 1000px !important;
   }
 }

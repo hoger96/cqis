@@ -129,8 +129,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <h2 class="mb-4 mgmt__title">
+  <div>
+    <h2 class="title">
       FAQ
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
@@ -141,13 +141,13 @@ onMounted(() => {
         <CustomInput v-model="searchParam.keyword" placeholder="검색어를 입력하세요." @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
-    <div class="mgmt__box">
+    <div class="content__box">
       <el-table :data="faqList" style="width: 100%" @row-click="handleFaqDetail">
-        <el-table-column prop="index" label="번호" min-width="200" align="center" />
-        <el-table-column prop="title" label="제목" min-width="500" align="center" />
-        <el-table-column prop="createUser" label="등록자" min-width="200" align="center" />
-        <el-table-column prop="createDate" label="등록일" min-width="200" align="center" />
-        <el-table-column prop="views" label="조회수" min-width="100" align="center" />
+        <el-table-column prop="index" label="번호" min-width="10" align="center" />
+        <el-table-column prop="title" label="제목" min-width="50" align="center" />
+        <el-table-column prop="createUser" label="등록자" min-width="20" align="center" />
+        <el-table-column prop="createDate" label="등록일" min-width="20" align="center" />
+        <el-table-column prop="views" label="조회수" min-width="10" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />

@@ -5,31 +5,15 @@
 /* ========================== Styles ========================== */
 // Table
 .total {
-  @apply flex items-end justify-between;
-  margin-bottom: 22px;
-  span {
+  em {
     color: $purple-50;
   }
-}
-.table {
-  &__underline {
-    color: $gray-330;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-  }
-  &__state {
-    &--success {
-      color: #00a31a;
-    }
-    &--fail {
-      color: $error;
-    }
-    &--wait {
-      color: #ff7e35;
-    }
+  &__bar {
+    @apply flex items-end justify-between;
+    margin-bottom: 10px;
   }
 }
+
 .el-table {
   .el-table {
     &__inner-wrapper {
@@ -39,11 +23,10 @@
     }
     &__header {
       thead {
-        @include typo($font-size: 15, $font-weight: 600);
-        color: $gray-400;
+        @include typo(15px, 600, $gray-400);
+        height: 43px;
       }
       .el-table__cell.is-leaf {
-        height: 33px;
         padding: 0;
         border-bottom: 1px solid $gray-400;
         text-align: center;
@@ -53,11 +36,13 @@
 
     &__body {
       .el-table__cell {
-        @include typo($font-size: 14);
+        @include typo(14px, $color: gray-400);
         height: 56px;
         padding: 10px 0;
         border-bottom: 1px solid $gray-80;
-        color: $gray-400;
+        &:has(.el-checkbox) {
+          @apply flex items-center justify-center;
+        }
       }
 
       .el-table__row {
@@ -75,7 +60,7 @@
   &--small {
     .el-table__body {
       .el-table__cell {
-        @include typo($font-size: 14);
+        @include typo(14px);
         height: 50px;
         padding: 6px 0;
       }

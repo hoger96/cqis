@@ -89,41 +89,37 @@ watchEffect(() => {
 <template>
   <common-modal v-model="isShow" title="사용자 설정" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
     <template #content>
-      <div>
-        <form>
-          <div>
-            <label class="form__label">이름</label>
-            <CustomInput v-model="userInfo.name" max-length="10" readonly />
+      <form>
+        <div class="form">
+          <label class="form__label">이름</label>
+          <CustomInput v-model="userInfo.name" max-length="10" readonly />
+        </div>
+        <div class="form">
+          <label class="form__label">사용 여부</label>
+          <div class="form">
+            <el-radio-group v-model="userInfo.use">
+              <el-radio value="Y">
+                사용
+              </el-radio>
+              <el-radio value="N">
+                사용중지
+              </el-radio>
+            </el-radio-group>
           </div>
-          <div>
-            <label class="form__label">사용 여부</label>
-            <div class="form">
-              <el-radio-group v-model="userInfo.use">
-                <el-radio value="Y">
-                  사용
-                </el-radio>
-                <el-radio value="N">
-                  사용중지
-                </el-radio>
-              </el-radio-group>
-            </div>
-          </div>
-          <div>
-            <label class="form__label">사유</label>
-            <CustomTextarea v-model="userInfo.reason" max-length="20" />
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="form">
+          <label class="form__label">사유</label>
+          <CustomTextarea v-model="userInfo.reason" max-length="20" />
+        </div>
+      </form>
     </template>
     <template #footer>
-      <div class="flex">
-        <button type="button" class="btn__negative--md" @click="handleCancel">
-          취소
-        </button>
-        <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
-          저장
-        </button>
-      </div>
+      <button type="button" class="btn__negative--md" @click="handleCancel">
+        취소
+      </button>
+      <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
+        저장
+      </button>
     </template>
   </common-modal>
 </template>

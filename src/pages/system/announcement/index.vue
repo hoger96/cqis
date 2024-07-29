@@ -125,34 +125,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('annc.title') }}
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form">
-        <label class="form__label">{{ t('common.search-bar.condition') }}</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('common.search-bar.keyword') }}</label>
+  <div>
+    <h2 class="title">
+      {{ t('annc.title') }}
+    </h2>
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+      <SearchItem :label="t('common.search-bar.condition')">
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+      </SearchItem>
+      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
-      </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        {{ t('common.button.reset') }}
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        {{ t('common.button.search') }}
-      </button>
-    </form>
-    <div class="mgmt__box">
+      </SearchItem>
+    </SearchForm>
+    <div class="content__box">
       <el-table :data="announcementList" style="width: 100%" @row-click="handleAnncDetail">
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="200" align="center" />
-        <el-table-column prop="title" :label="t('common.label.title')" min-width="650" align="center" />
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="400" align="center" />
+        <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
+        <el-table-column prop="title" :label="t('common.label.title')" min-width="70" align="center" />
+        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="20" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
