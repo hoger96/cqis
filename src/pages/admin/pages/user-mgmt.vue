@@ -4,6 +4,7 @@ import { ISearchParams, IUserData } from '../types/user-mgmt.ts'
 import { useRouter } from 'vue-router'
 import { MODAL_SIZE } from '../../types/modal.ts'
 import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
+import UserPopup from '../components/UserPopup.vue'
 
 const { showFromFile, catchNotError } = useReturnMessage()
 const router = useRouter()
@@ -142,25 +143,33 @@ const handleSearch = () => {
   getUserList(params)
 }
 
-const UserPopup = defineAsyncComponent(() => import('../components/UserPopup.vue'))
 const handleUserDetail = (data: IUserData) => {
   userId.value = data.userId
-  try {
-    showFromFile({
-      component: UserPopup,
-      title: '사용자 설정',
-      props: { userId },
-      width: 'var(--modal-width-md)',
-      showClose: true,
-    })
-  }
-  catch (error) {
-    console.error(error)
-  }
+  userPopupSignal.value = true
 }
 
 const handleCancel = () => {
   userPopupSignal.value = false
+}
+
+const handleUpdateUser = (data) => {
+  try {
+    // FIXME: api 연결
+    console.log(data)
+    const userInfo = {
+      use: data.userInfo.use,
+      reason: data.userInfo.reason
+    }
+    // const res = await request({
+    //   method: 'POST',
+    //   url: '/user/${userId.value}',
+    //   userInfo,
+    // })
+    console.log('수정', userInfo)
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
 onMounted(() => {
@@ -218,6 +227,8 @@ onMounted(() => {
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
+    <UserPopup v-model:model-value="userPopupSignal" :user-id="userId" @cancel="handleCancel"
+      @confirm="handleUpdateUser" />
   </div>
 </template>
 <style></style>

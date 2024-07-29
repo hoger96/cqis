@@ -5,15 +5,19 @@ import { useRouter } from 'vue-router'
 import { MODAL_SIZE } from '~/types/modal.ts'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 
-const props = withDefaults(defineProps<IUserPopup>(), {
-  modelValue: false,
-})
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', modelValue: boolean): void
-  (e: 'close-popup'): void
+const props = defineProps<{
+  modelValue: boolean
+  userId: string
 }>()
 
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', modelValue: boolean): void
+  (e: 'cancel'): void
+  (e: 'confirm', value: { userInfo: IUserDetail }): void
+}>()
+
+const userId = ref('')
 const userInfo = reactive<IUserDetail>({
   name: '',
   use: '',
@@ -21,7 +25,8 @@ const userInfo = reactive<IUserDetail>({
 })
 
 const handleCancel = () => {
-  emit('close-popup')
+  console.log('취소 버튼 누르기, x누르기')
+  emits('cancel')
 }
 
 const setUserDetail = () => {
@@ -32,8 +37,7 @@ const setUserDetail = () => {
     //   url: '/user/${props.userId}',
     //   userInfo,
     // })
-    console.log('id눈', props.userId)
-    userInfo.name = props.userId
+    userInfo.name = '홍길동'
     userInfo.use = 'Y'
     userInfo.reason = '그냥'
   }
@@ -50,12 +54,13 @@ const handleUpdateUser = () => {
     //   url: '/user/${props.userId}',
     //   userInfo,
     // })
-    const data = {
-      use: userInfo.use,
-      reason: userInfo.reason
-    }
-    console.log('수정', data)
-    emit('close-popup')
+    // const data = {
+    //   use: userInfo.use,
+    //   reason: userInfo.reason
+    // }
+    // console.log('수정', data)
+    emits('confirm', { userInfo })
+    emits('cancel')
   }
   catch (error) {
     console.error(error)
@@ -67,16 +72,17 @@ const isShow = computed({
     return props.modelValue
   },
   set(val) {
-    emit('update:modelValue', val)
+    emits('update:modelValue', val)
   }
 })
 
-onMounted(() => {
-  console.log(props)
-  if (props.modelValue === true) {
-    console.log(props)
-    setUserDetail()
+watchEffect(() => {
+  userId.value = props.userId
+  if (!userId.value) {
+    return
   }
+
+  setUserDetail()
 })
 </script>
 
@@ -85,11 +91,11 @@ onMounted(() => {
     <template #content>
       <div>
         <form>
-          <div class="popup-form">
+          <div>
             <label class="form__label">이름</label>
             <CustomInput v-model="userInfo.name" max-length="10" readonly />
           </div>
-          <div class="popup-form">
+          <div>
             <label class="form__label">사용 여부</label>
             <div class="form">
               <el-radio-group v-model="userInfo.use">
@@ -102,7 +108,7 @@ onMounted(() => {
               </el-radio-group>
             </div>
           </div>
-          <div class="popup-form">
+          <div>
             <label class="form__label">사유</label>
             <CustomTextarea v-model="userInfo.reason" max-length="20" />
           </div>
@@ -110,12 +116,14 @@ onMounted(() => {
       </div>
     </template>
     <template #footer>
-      <button type="button" class="btn__negative--md" @click="handleCancel">
-        취소
-      </button>
-      <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
-        저장
-      </button>
+      <div class="flex">
+        <button type="button" class="btn__negative--md" @click="handleCancel">
+          취소
+        </button>
+        <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
+          저장
+        </button>
+      </div>
     </template>
   </common-modal>
 </template>
