@@ -177,41 +177,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('user.title') }}
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form">
-        <label class="form__label"> {{ t('common.search-bar.condition') }}</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions"
-          :label="t('common.search-bar.condition')" />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.search-bar.use') }}</label>
-        <basic-select-box v-model="searchParam.use" :options="useStateOptions"
-          :label="t('common.search-bar.condition')" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('common.search-bar.keyword') }}</label>
+  <div>
+    <h2 class="title">
+      {{ t('user.title') }}
+    </h2>
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+      <SearchItem :label="t('common.search-bar.condition')">
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+      </SearchItem>
+      <SearchItem :label="t('common.search-bar.use')">
+        <basic-select-box v-model="searchParam.use" :options="useStateOptions" />
+      </SearchItem>
+      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
-      </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        {{ t('common.button.reset') }}
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        {{ t('common.button.search') }}
-      </button>
-    </form>
-    <div class="flex">
-      <span class="table__count">
+      </SearchItem>
+    </SearchForm>
+    <div class="content__box">
+      <span class="total">
         {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
       </span>
-    </div>
-    <div class="mgmt__box">
       <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />

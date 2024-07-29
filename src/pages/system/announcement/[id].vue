@@ -65,12 +65,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('annc.title') }}
-      </h2>
-    </div>
+  <div>
+    <h2 class="title">
+      {{ t('annc.title') }}
+    </h2>
     <div class="content__box">
       <div class="form">
         <label class="form__label">{{ t('common.label.title') }}</label>
@@ -108,7 +106,7 @@ onMounted(() => {
           :read-only="true" />
       </div>
     </div>
-    <div class="mgmt__btn">
+    <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoAnncPage">
         {{ t('common.button.confirm') }}
       </button>

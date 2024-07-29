@@ -45,24 +45,3 @@
     margin-top: 30px;
   }
 }
-
-/* ========================== mgmt========================== */
-// TODO :: 추후 삭제 필요
-.mgmt {
-  &__title {
-    @include typo(36px, 700, $gray-430);
-  }
-  &__box {
-    margin-top: 31px;
-
-    &:has(.total) {
-      &:has(button) {
-        padding-top: 30px;
-      }
-    }
-  }
-  &__btn {
-    @apply flex items-center justify-center;
-    margin-top: 30px;
-  }
-}

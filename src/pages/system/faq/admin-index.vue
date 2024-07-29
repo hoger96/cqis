@@ -155,12 +155,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('faq.admin-title') }}
-      </h2>
-    </div>
+  <div>
+    <h2 class="title">
+      {{ t('faq.admin-title') }}
+    </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
       <SearchItem :label="t('common.search-bar.condition')">
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
@@ -170,26 +168,28 @@ onMounted(() => {
           @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
-    <div class="flex">
-      <span class="table__count">
-        {{ t('common.label.total') }} <em>{{ totalCount }}</em> {{ t('common.label.count') }}
-      </span>
-      <button type="button" class="btn__secondary--md" @click="handleDeleteFaq">
-        {{ t('common.button.delete') }}
-      </button>
-      <button type="button" class="btn__primary-line--md" @click="handleCreateFaq">
-        {{ t('common.button.create') }}
-      </button>
-    </div>
-    <div class="mgmt__box">
+    <div class="content__box">
+      <div class="total__bar">
+        <span class="total">
+          {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
+        </span>
+        <div class="flex">
+          <button type="button" class="btn__secondary--md" @click="handleDeleteFaq">
+            {{ t('common.button.delete') }}
+          </button>
+          <button type="button" class="btn__primary-line--md" @click="handleCreateFaq">
+            {{ t('common.button.create') }}
+          </button>
+        </div>
+      </div>
       <el-table :data="faqList" style="width: 100%" @row-click="handleFaqDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" min-width="50" />
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
-        <el-table-column prop="title" :label="t('common.label.title')" min-width="150" align="center" />
-        <el-table-column prop="createUser" :label="t('common.label.create-user')" min-width="100" align="center" />
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="100" align="center" />
-        <el-table-column prop="views" :label="t('common.label.views')" min-width="100" align="center" />
+        <el-table-column type="selection" min-width="5" />
+        <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
+        <el-table-column prop="title" :label="t('common.label.title')" min-width="35" align="center" />
+        <el-table-column prop="createUser" :label="t('common.label.create-user')" min-width="20" align="center" />
+        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="20" align="center" />
+        <el-table-column prop="views" :label="t('common.label.views')" min-width="10" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />

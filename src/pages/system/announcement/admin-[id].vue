@@ -148,13 +148,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('annc.admin-title') }}
-      </h2>
-    </div>
-    <div class="mgmt__box">
+  <div>
+    <h2 class="title">
+      {{ t('annc.admin-title') }}
+    </h2>
+    <div class="content__box">
       <div class="form">
         <label :class="updateMode ? 'form__label' : 'form__label--required'"> {{ t('common.label.title') }}</label>
         <CustomInput v-model="anncForm.title" :readonly="updateMode" />
@@ -199,7 +197,7 @@ onMounted(() => {
           :read-only="updateMode" />
       </div>
     </div>
-    <div class="mgmt__btn">
+    <div class="content__btns">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoAnncPage">
         {{ t('common.button.cancel') }}
       </button>

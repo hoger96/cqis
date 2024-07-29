@@ -78,31 +78,10 @@
       margin-bottom: 5px;
     }
   }
-  // TODO :: 추후 삭제 필요
-  &__search {
-    @apply flex justify-between;
-    padding: 20px 30px;
-    margin-top: 30px;
-    background: $white;
-    border-radius: 10px;
-
-    .form__label {
-      @include typo($font-weight: 500, $line-height: $input-size);
-      min-width: fit-content;
-    }
-
-    .form {
-      & + .form {
-        margin-top: 0;
-        margin-left: 40px;
-      }
-    }
-  }
-  //
 }
 
 .search-form {
-  @include flex-box(justify-between, items-center);
+  @include flex-box(justify-between items-center);
   @include box(20px 40px);
   width: 100%;
 

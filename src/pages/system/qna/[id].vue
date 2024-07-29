@@ -83,13 +83,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('qna.title') }}
-      </h2>
-    </div>
-    <div class="mgmt__box">
+  <div>
+    <h2 class="title">
+      {{ t('qna.title') }}
+    </h2>
+    <div class="content__box">
       <div class="form">
         <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.question.title" readonly />
@@ -111,7 +109,7 @@ onMounted(() => {
         <CustomTextarea v-model="qnaForm.question.detail" readonly />
       </div>
     </div>
-    <div v-if="qnaForm.answer.title !== ''" class="mgmt__box">
+    <div v-if="qnaForm.answer.title !== ''" class="content__box">
       <div class="form">
         <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.answer.title" readonly />
@@ -133,10 +131,10 @@ onMounted(() => {
         <CustomTextarea v-model="qnaForm.answer.detail" readonly />
       </div>
     </div>
-    <div v-else class="mgmt__box">
+    <div v-else class="content__box">
       <p>{{ t('qna.no-answer') }}</p>
     </div>
-    <div class="mgmt__btn">
+    <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoQnaPage">
         {{ t('common.button.confirm') }}
       </button>

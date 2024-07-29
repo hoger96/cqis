@@ -151,13 +151,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('qna.admin-title') }}
-      </h2>
-    </div>
-    <div class="mgmt__box">
+  <div>
+    <h2 class="title">
+      {{ t('qna.admin-title') }}
+    </h2>
+    <div class="content__box">
       <div class="form">
         <label class="form__label">{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.question.title" readonly />
@@ -184,7 +182,7 @@ onMounted(() => {
           :read-only="true" />
       </div>
     </div>
-    <div class="mgmt__box">
+    <div class="content__box">
       <div v-if="createAnwerMode" class="form">
         <label class='form__label'>{{ t('common.label.title') }}</label>
         <CustomInput v-model="qnaForm.answer.title" readonly />
@@ -216,7 +214,7 @@ onMounted(() => {
           :read-only="createAnwerMode" />
       </div>
     </div>
-    <div class="mgmt__btn">
+    <div class="content__btns">
       <button type="button" class="btn__secondary-line--lg" @click="handleGoQnaPage">
         {{ t('common.button.cancel') }}
       </button>

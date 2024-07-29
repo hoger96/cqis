@@ -163,24 +163,26 @@ onMounted(() => {
           @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
-    <div class="flex">
-      <span class="table__count">
-        {{ t('common.label.total') }} <em>{{ totalCount }}</em> {{ t('common.label.count') }}
-      </span>
-      <button type="button" class="btn__secondary--md" @click="handleDeleteAnnc">
-        {{ t('common.button.delete') }}
-      </button>
-      <button type="button" class="btn__primary-line--md" @click="handleCreateAnnc">
-        {{ t('common.button.create') }}
-      </button>
-    </div>
-    <div class="mgmt__box">
+    <div class="content__box">
+      <div class="total__bar">
+        <span class="total">
+          {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
+        </span>
+        <div class="flex">
+          <button type="button" class="btn__secondary--md" @click="handleDeleteAnnc">
+            {{ t('common.button.delete') }}
+          </button>
+          <button type="button" class="btn__primary-line--md" @click="handleCreateAnnc">
+            {{ t('common.button.create') }}
+          </button>
+        </div>
+      </div>
       <el-table :data="announcementList" style="width: 100%" @row-click="handleAnncDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
-        <el-table-column prop="title" :label="t('common.label.title')" min-width="650" align="center" />
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="400" align="center" />
+        <el-table-column type="selection" min-width="10" />
+        <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
+        <el-table-column prop="title" :label="t('common.label.title')" min-width="50" align="center" />
+        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="30" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />

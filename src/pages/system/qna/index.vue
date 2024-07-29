@@ -149,44 +149,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('qna.title') }}
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form">
-        <label class="form__label">{{ t('common.search-bar.condition') }}</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions"
-          :label="t('common.search-bar.condition')" />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.search-bar.state') }}</label>
-        <basic-select-box v-model="searchParam.state" :options="searchStateOptions"
-          :label="t('common.search-bar.state')" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('common.search-bar.keyword') }}</label>
+  <div>
+    <h2 class="title">
+      {{ t('qna.title') }}
+    </h2>
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+      <SearchItem :label="t('common.search-bar.condition')">
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+      </SearchItem>
+      <SearchItem :label="t('common.search-bar.state')">
+        <basic-select-box v-model="searchParam.state" :options="searchStateOptions" />
+      </SearchItem>
+      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
+      </SearchItem>
+    </SearchForm>
+    <div class="content__box">
+      <div class="total__bar">
+        <span class="total">
+          {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
+        </span>
+        <button type="button" class="btn__primary-line--md" @click="handleCreateQna">
+          {{ t('common.button.create') }}
+        </button>
       </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        {{ t('common.button.reset') }}
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        {{ t('common.button.search') }}
-      </button>
-    </form>
-    <div class="flex">
-      <span class="table__count">
-        {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
-      </span>
-      <button type="button" class="btn__primary-line--md" @click="handleCreateQna">
-        {{ t('common.button.create') }}
-      </button>
-    </div>
-    <div class="mgmt__box">
       <el-table :data="qnaList" style="width: 100%" @row-click="handleQnaDetail">
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="title" :label="t('common.label.title')" min-width="400" align="center" />

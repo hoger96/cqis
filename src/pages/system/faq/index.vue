@@ -130,8 +130,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <h2 class="mb-4 mgmt__title">
+  <div>
+    <h2 class="title">
       {{ t('faq.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
