@@ -4,6 +4,7 @@ import { useRouter, useRoute } from 'vue-router'
 import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const anncId = ref(route.params.id)
@@ -150,64 +151,66 @@ onMounted(() => {
   <div class="document">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        공지사항
+        {{ t('annc.admin-title') }}
       </h2>
     </div>
     <div class="mgmt__box">
       <div class="form">
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">제목</label>
+        <label :class="updateMode ? 'form__label' : 'form__label--required'"> {{ t('common.label.title') }}</label>
         <CustomInput v-model="anncForm.title" :readonly="updateMode" />
       </div>
       <div class="form">
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">게시기간</label>
+        <label :class="updateMode ? 'form__label' : 'form__label--required'">{{ t('common.label.period') }}</label>
         <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
-          start-placeholder="시작일" end-placeholder="종료일" :readonly="updateMode" />
+          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')"
+          :readonly="updateMode" />
       </div>
       <div class="form">
-        <label class="form__label">등록자</label>
+        <label class="form__label">{{ t('common.label.create-user') }}</label>
         <CustomInput v-model="anncForm.createUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">등록일자</label>
+        <label class="form__label">{{ t('common.label.create-date') }}</label>
         <CustomInput v-model="anncForm.createDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">수정자</label>
+        <label class="form__label">{{ t('common.label.update-user') }}</label>
         <CustomInput v-model="anncForm.updateUser" readonly />
       </div>
       <div class="form">
-        <label class="form__label">수정일자</label>
+        <label class="form__label">{{ t('common.label.update-date') }}</label>
         <CustomInput v-model="anncForm.updateDate" readonly />
       </div>
       <div class="form">
-        <label class="form__label">첨부파일</label>
+        <label class="form__label">{{ t('common.label.file') }}</label>
         <div ref="dropZoneRef" class="form__upload">
           <button v-if="!updateMode" class="btn__secondary-line--md" @click="openFileUpload">
-            파일첨부
+            {{ t('common.button.file') }}
           </button>
-          <p v-if="!updateMode">파일을 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+          <p v-if="!updateMode">{{ t('common.label.file-placeholder') }}</p>
           <p>{{ fileName }}</p>
           <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
         </div>
       </div>
       <div>
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">내용</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow" placeholder="내용을 입력해주세요." content-type="text"
-          @change="onEditorChange" :read-only="updateMode" />
+        <label :class="updateMode ? 'form__label' : 'form__label--required'">{{ t('common.label.content') }}</label>
+        <Editor v-model:content="contents" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+          :read-only="updateMode" />
       </div>
     </div>
     <div class="mgmt__btn">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoAnncPage">
-        취소
+        {{ t('common.button.cancel') }}
       </button>
       <button v-if="updateMode" type="button" class="btn__primary--lg" @click="handleChangeUpdateMode">
-        수정
+        {{ t('common.button.update') }}
       </button>
       <button v-if="!updateMode" type="button" class="btn__secondary-line--lg" @click="handleCancel">
-        취소
+        {{ t('common.button.cancel') }}
       </button>
       <button v-if="!updateMode" type="button" class="btn__primary--lg" @click="handleUpdateAnnc">
-        확인
+        {{ t('common.button.confirm') }}
       </button>
     </div>
   </div>

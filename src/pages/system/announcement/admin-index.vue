@@ -3,6 +3,8 @@ import { ref, reactive, onMounted } from 'vue'
 import { ISearchParams, IAnnouncementData } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 
+
+const { t } = useI18n()
 const router = useRouter()
 const searchCondition = ref('제목')
 const keyword = ref('')
@@ -148,46 +150,37 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        공지사항 관리자
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form">
-        <label class="form__label">검색 조건</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">검색어</label>
-        <CustomInput v-model="searchParam.keyword" placeholder="검색어를 입력하세요." @keyup.enter="handleSearch" />
-      </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        초기화
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        검색
-      </button>
-    </form>
+  <div>
+    <h2 class="title">
+      {{ t('annc.admin-title') }}
+    </h2>
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+      <SearchItem :label="t('common.search-bar.condition')">
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+      </SearchItem>
+      <SearchItem :label="t('common.search-bar.keyword')">
+        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
+          @keyup.enter="handleSearch" />
+      </SearchItem>
+    </SearchForm>
     <div class="flex">
       <span class="table__count">
-        총 <em>{{ totalCount }}</em>건
+        {{ t('common.label.total') }} <em>{{ totalCount }}</em> {{ t('common.label.count') }}
       </span>
       <button type="button" class="btn__secondary--md" @click="handleDeleteAnnc">
-        삭제
+        {{ t('common.button.delete') }}
       </button>
       <button type="button" class="btn__primary-line--md" @click="handleCreateAnnc">
-        등록
+        {{ t('common.button.create') }}
       </button>
     </div>
     <div class="mgmt__box">
       <el-table :data="announcementList" style="width: 100%" @row-click="handleAnncDetail"
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="index" label="번호" min-width="200" align="center" />
-        <el-table-column prop="title" label="제목" min-width="650" align="center" />
-        <el-table-column prop="createDate" label="등록일" min-width="400" align="center" />
+        <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
+        <el-table-column prop="title" :label="t('common.label.title')" min-width="650" align="center" />
+        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="400" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />

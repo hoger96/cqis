@@ -161,8 +161,7 @@ onMounted(() => {
         {{ t('faq.admin-title') }}
       </h2>
     </div>
-    <SearchForm use-reset @search="handleSearch" @clear="handleReset" :reset-text="t('common.button.reset')"
-      :search-text="t('common.button.search')">
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
       <SearchItem :label="t('common.search-bar.condition')">
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
       </SearchItem>

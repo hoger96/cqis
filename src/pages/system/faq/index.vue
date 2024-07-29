@@ -134,8 +134,7 @@ onMounted(() => {
     <h2 class="mb-4 mgmt__title">
       {{ t('faq.title') }}
     </h2>
-    <SearchForm use-reset @search="handleSearch" @clear="handleReset" :reset-text="t('common.button.reset')"
-      :search-text="t('common.button.search')">
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
       <SearchItem :label="t('common.search-bar.condition')">
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
       </SearchItem>
