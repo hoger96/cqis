@@ -7,7 +7,7 @@
     // @include flex-box(items-center justify-center);
     @apply flex items-center justify-center;
     @include typo(36px, 700);
-    height: $header-height;
+    min-height: $header-height;
     margin: 0 20px;
     border-bottom: 1px solid $gray-75;
     cursor: pointer;
@@ -15,7 +15,6 @@
 
   .el-menu {
     overflow-y: auto;
-    flex: 1 1 0%;
     padding: 36px 20px 20px;
     border-right: none;
 
