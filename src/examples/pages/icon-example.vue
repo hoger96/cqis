@@ -7,6 +7,8 @@ const icons = [
   { fileName: 'arrow-b__line--999' },
   { fileName: 'reset__line--fb4' },
   { fileName: 'search__line--fff' },
+  { fileName: 'logout__line--333' },
+  { fileName: 'user__full--fff' },
 ]
 </script>
 
