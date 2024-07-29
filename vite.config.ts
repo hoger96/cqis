@@ -19,6 +19,7 @@ export default defineConfig({
         routesFolder: [
           { src: 'src/pages', path: '' },
           { src: 'src/examples/pages', path: 'examples/' },
+          {src: 'public/icon', path: 'icon'}
         ],
         // extensions: ['.vue', '.md'],
         // importMode: (filepath: string) => 'async',

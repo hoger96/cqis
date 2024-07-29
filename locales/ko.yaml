@@ -1,2 +1,30 @@
+annc:
+  title: 공지사항
+
 common:
-  hello: 'd임규리규리'
+  button:
+    cancel: 취소
+    close: 닫기
+    confirm: 확인
+    create: 등록
+    delete: 삭제
+    reset: 초기화
+    save: 저장
+    search: 검색
+    update: 수정
+  label:
+    content: 내용
+    create-date: 등록일자
+    create-user: 등록일자
+    file: 첨부파일
+    index: 번호
+    period: 게시기간
+    title: 제목
+    update-date: 수정일자
+    update-user: 수정자
+    views: 조회수
+  search-bar:
+    condition: 검색 조건
+    keyword: 검색어
+    placeholder: 검색어를 입력하세요.
+    use: 사용 여부

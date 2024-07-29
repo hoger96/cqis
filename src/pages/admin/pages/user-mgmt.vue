@@ -143,25 +143,33 @@ const handleSearch = () => {
   getUserList(params)
 }
 
-const UserPopup = defineAsyncComponent(() => import('../components/UserPopup.vue'))
 const handleUserDetail = (data: IUserData) => {
   userId.value = data.userId
-  try {
-    showFromFile({
-      component: UserPopup,
-      title: '사용자 설정',
-      props: { userId },
-      width: 'var(--modal-width-md)',
-      showClose: true,
-    })
-  }
-  catch (error) {
-    console.error(error)
-  }
+  userPopupSignal.value = true
 }
 
 const handleCancel = () => {
   userPopupSignal.value = false
+}
+
+const handleUpdateUser = (data) => {
+  try {
+    // FIXME: api 연결
+    console.log(data)
+    const userInfo = {
+      use: data.userInfo.use,
+      reason: data.userInfo.reason
+    }
+    // const res = await request({
+    //   method: 'POST',
+    //   url: '/user/${userId.value}',
+    //   userInfo,
+    // })
+    console.log('수정', userInfo)
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
 onMounted(() => {
@@ -203,10 +211,10 @@ onMounted(() => {
     </div>
     <div class="mgmt__box">
       <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
-        <el-table-column prop="index" label="번호" min-width="100" align="center" />
-        <el-table-column prop="userId" label="아이디" min-width="200" align="center" />
-        <el-table-column prop="name" label="이름" min-width="200" align="center" />
-        <el-table-column prop="team" label="부서" min-width="300" align="center" />
+        <el-table-column prop="index" label="번호" min-width="50" align="center" />
+        <el-table-column prop="userId" label="아이디" min-width="150" align="center" />
+        <el-table-column prop="name" label="이름" min-width="150" align="center" />
+        <el-table-column prop="team" label="부서" min-width="150" align="center" />
         <el-table-column prop="use" label="사용여부" min-width="100" align="center">
           <template v-slot="scope">
             <p>
@@ -214,12 +222,13 @@ onMounted(() => {
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="loginDate" label="최근 로그인 일시" min-width="300" align="center" />
+        <el-table-column prop="loginDate" label="최근 로그인 일시" min-width="150" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
-    <UserPopup @close-popup="handleCancel" v-model="userPopupSignal" :user-id="userId" />
+    <UserPopup v-model:model-value="userPopupSignal" :user-id="userId" @cancel="handleCancel"
+      @confirm="handleUpdateUser" />
   </div>
 </template>
 <style></style>

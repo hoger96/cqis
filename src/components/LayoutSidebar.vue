@@ -1,52 +1,58 @@
 <script setup lang="ts">
 const menuList = reactive([
   {
+    menuId: 'Example',
+    menuName: 'Example',
+    menuIndex: '0',
+    menuUrl: '/examples',
+    disabled: false,
+  },
+  {
     menuId: '공지사항(관리자)',
     menuName: '공지사항(관리자)',
-    menuIndex: '0',
-    menuUrl: 'admin/annc',
+    menuIndex: '1',
+    menuUrl: '/system/announcement/admin-index',
     disabled: false,
   },
   {
     menuId: 'FAQ(관리자)',
     menuName: 'FAQ(관리자)',
-    menuIndex: '1',
-    menuUrl: 'admin/faq',
-    disabled: false,
-  },
-  {
-    menuId: 'Q&A(관리자)',
-    menuName: '사용자 관리',
     menuIndex: '2',
-    menuUrl: 'admin/user-mgmt',
+    menuUrl: '/system/faq/admin-index',
+    disabled: false,
   },
   {
     menuId: 'Q&A(관리자)',
     menuName: 'Q&A(관리자)',
     menuIndex: '3',
-    menuUrl: '/admin/qna',
+    menuUrl: '/system/qna/admin-index',
   },
   {
-    menuId: '2depth',
-    menuName: '2depth',
+    menuId: '공지사항(사용자)',
+    menuName: '공지사항(사용자)',
     menuIndex: '4',
-    menuUrl: '/admin/qna',
-    children: [
-      {
-        menuId: 'synonym',
-        menuName: '동의어',
-        menuIndex: '4-1',
-        menuUrl: '/mgmt/word-mgmt/synonym',
-      },
-      {
-        menuId: 'userDictionary',
-        menuName: '사용자 사전',
-        menuIndex: '4-2',
-        menuUrl: '/mgmt/word-mgmt/user-dictionary',
-      },
-    ],
+    menuUrl: '/system/announcement',
+    disabled: false,
   },
-
+  {
+    menuId: 'FAQ(사용자)',
+    menuName: 'FAQ(사용자)',
+    menuIndex: '5',
+    menuUrl: '/system/faq',
+    disabled: false,
+  },
+  {
+    menuId: 'Q&A(사용자)',
+    menuName: 'Q&A(사용자)',
+    menuIndex: '6',
+    menuUrl: '/system/qna',
+  },
+  {
+    menuId: '사용자 관리',
+    menuName: '사용자 관리',
+    menuIndex: '7',
+    menuUrl: '/admin/pages/user-mgmt',
+  },
 ])
 
 const router = useRouter()
