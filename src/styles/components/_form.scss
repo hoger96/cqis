@@ -1,63 +1,48 @@
 .form {
-  @apply flex;
-  width: 100%;
+  &__item {
+    @include flex-box(flex);
+    width: 100%;
 
-  & + & {
-    margin-top: 20px;
+    & + & {
+      margin-top: 20px;
+    }
   }
 
   &__label {
-    @include typo($font-size: 15, $font-weight: 500, $line-height: 36px);
+    @include typo(15px, 500, $gray-400, $input-size);
     position: relative;
     min-width: 140px;
     margin-right: 20px;
     color: $gray-400;
     align-self: normal;
 
-    &--required {
-      @extend .form__label;
-
-      &::after {
+    &.is-required {
+      @include after {
+        @include typo(15px, 500, $error, $input-size);
         content: '*';
-        position: absolute;
         padding-left: 2px;
         padding-right: 2px;
-        color: $error;
-      }
-    }
-
-    &:has(.tooltip) {
-      .tooltip {
-        position: absolute;
-        top: 8px;
-        margin-left: 5px;
-      }
-    }
-
-    & + div {
-      &:has(.el-table) {
-        width: calc(100% - 140px);
       }
     }
   }
 
-  &__box {
-    @apply flex-1;
-    padding: 30px;
-    background: $gray-30;
-    border-radius: 6px;
+  // &__box {
+  //   @apply flex-1;
+  //   padding: 30px;
+  //   background: $gray-30;
+  //   border-radius: 6px;
 
-    &-btns {
-      @apply flex items-center;
-      width: 74px;
-      margin-left: 20px;
-      button {
-        & + button {
-          margin-left: 10px;
-        }
-      }
-    }
-  }
+  //   &-btns {
+  //     @apply flex items-center;
+  //     width: 74px;
+  //     margin-left: 20px;
+  //     button {
+  //       & + button {
+  //         margin-left: 10px;
+  //       }
+  //     }
+  //   }
+  // }
 
   &__upload {
     @apply flex flex-col items-center justify-center;

@@ -88,13 +88,11 @@ watchEffect(() => {
 <template>
   <common-modal v-model="isShow" :title="t('user.popup.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
     <template #content>
-      <form>
-        <div div class="form">
-          <label class="form__label">{{ t('common.label.name') }}</label>
+      <form class="form">
+        <FormItem :label="t('common.label.name')">
           <CustomInput v-model="userInfo.name" max-length="10" readonly />
-        </div>
-        <div div class="form">
-          <label class="form__label">{{ t('common.search-bar.use') }}</label>
+        </FormItem>
+        <FormItem :label="t('common.search-bar.use')">
           <div class="form">
             <el-radio-group v-model="userInfo.use">
               <el-radio value="Y">
@@ -105,11 +103,10 @@ watchEffect(() => {
               </el-radio>
             </el-radio-group>
           </div>
-        </div>
-        <div div class="form">
-          <label class="form__label">{{ t('common.label.reason') }}</label>
+        </FormItem>
+        <FormItem :label="t('common.label.reason')">
           <CustomTextarea v-model="userInfo.reason" max-length="20" />
-        </div>
+        </FormItem>
       </form>
     </template>
     <template #footer>
