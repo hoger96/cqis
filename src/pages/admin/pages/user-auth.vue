@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IUserData } from '../types/user-mgmt.ts'
+import { ISearchParams, IUserAuthData } from '../types/user-auth.ts'
 import { useRouter } from 'vue-router'
-import { MODAL_SIZE } from '../../types/modal.ts'
-import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
-import UserPopup from '../components/UserPopup.vue'
+import { MODAL_SIZE } from '~/types/modal.ts'
+import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
+import UserAuthPopup from '../components/UserAuthPopup.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -24,24 +24,13 @@ const searchConditionOptions = [
     label: '이름'
   },
 ]
-const useStateOptions = [
-  {
-    value: 'Y',
-    label: '사용'
-  },
-  {
-    value: 'N',
-    label: '사용중지'
-  },
-]
 const mockupList = ref([
   {
     index: 1,
     userId: 'id_1',
     name: '홍길동',
     team: '마케팅전략담당',
-    use: 'Y',
-    loginDate: '2024-05-29 10:12:31'
+    authDate: '2024-05-29 10:12:31'
   },
   {
     index: 2,
@@ -49,7 +38,7 @@ const mockupList = ref([
     name: '김길동',
     team: '고객유지담당',
     use: 'Y',
-    loginDate: '2024-05-29 10:12:31'
+    authDate: '2024-05-29 10:12:31'
   },
   {
     index: 3,
@@ -57,7 +46,7 @@ const mockupList = ref([
     name: '남길동',
     team: '영업정책담당',
     use: 'N',
-    loginDate: '2024-05-29 10:12:31'
+    authDate: '2024-05-29 10:12:31'
   },
   {
     index: 4,
@@ -65,7 +54,7 @@ const mockupList = ref([
     name: '강길동',
     team: '채널혁신담당',
     use: 'N',
-    loginDate: '2024-05-29 10:12:31'
+    authDate: '2024-05-29 10:12:31'
   },
   {
     index: 5,
@@ -73,7 +62,7 @@ const mockupList = ref([
     name: '마길동',
     team: '마케팅전략담당',
     use: 'Y',
-    loginDate: '2024-05-29 10:12:31'
+    authDate: '2024-05-29 10:12:31'
   }
 ])
 
@@ -154,14 +143,13 @@ const handleCancel = () => {
 const handleUpdateUser = (data) => {
   try {
     // FIXME: api 연결
-    console.log(data)
     const userInfo = {
-      use: data.userInfo.use,
+      auth: data.userInfo.auth,
       reason: data.userInfo.reason
     }
     // const res = await request({
     //   method: 'POST',
-    //   url: '/user/${userId.value}',
+    //   url: '/user-auth/${userId.value}',
     //   userInfo,
     // })
     console.log('수정', userInfo)
@@ -177,35 +165,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('user.title') }}
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form">
-        <label class="form__label"> {{ t('common.search-bar.condition') }}</label>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions"
-          :label="t('common.search-bar.condition')" />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.search-bar.use') }}</label>
-        <basic-select-box v-model="searchParam.use" :options="useStateOptions"
-          :label="t('common.search-bar.condition')" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('common.search-bar.keyword') }}</label>
+  <div>
+    <h2 class="title">
+      {{ t('user-auth.title') }}
+    </h2>
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+      <SearchItem :label="t('common.search-bar.condition')">
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+      </SearchItem>
+      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
-      </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        {{ t('common.button.reset') }}
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        {{ t('common.button.search') }}
-      </button>
-    </form>
+      </SearchItem>
+    </SearchForm>
     <div class="flex">
       <span class="table__count">
         {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
@@ -217,19 +189,12 @@ onMounted(() => {
         <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />
         <el-table-column prop="name" :label="t('common.label.name')" min-width="150" align="center" />
         <el-table-column prop="team" :label="t('common.label.team')" min-width="150" align="center" />
-        <el-table-column prop="use" :label="t('common.search-bar.use')" min-width="100" align="center">
-          <template v-slot="scope">
-            <p>
-              {{ scope.row.use === 'Y' ? t('common.label.use-yes') : t('common.label.use-no') }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column prop="loginDate" :label="t('common.label.login')" min-width="150" align="center" />
+        <el-table-column prop="authDate" :label="t('user-auth.label.auth-date')" min-width="150" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
-    <UserPopup v-model:model-value="userPopupSignal" :user-id="userId" @cancel="handleCancel"
+    <UserAuthPopup v-model:model-value="userPopupSignal" :user-id="userId" @cancel="handleCancel"
       @confirm="handleUpdateUser" />
   </div>
 </template>

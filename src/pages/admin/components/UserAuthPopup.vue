@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IUserDetail, IUserPopup } from '../types/user-mgmt.ts'
+import { IUserAuthDetail, IUserAuthPopup } from '../types/user-auth.ts'
 import { useRouter } from 'vue-router'
 import { MODAL_SIZE } from '~/types/modal.ts'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
@@ -17,15 +17,48 @@ const emits = defineEmits<{
   (e: 'confirm', value: { userInfo: IUserDetail }): void
 }>()
 
+const mockupAuth = ref([
+  {
+    value: 'admin',
+    label: '관리자'
+  },
+  {
+    value: 'user',
+    label: '사용자'
+  },
+  {
+    value: 'visitor',
+    label: '방문자'
+  },
+  {
+    value: 'robot',
+    label: '로봇'
+  },
+])
 const userId = ref('')
 const userInfo = reactive<IUserDetail>({
   name: '',
-  use: '',
+  auth: [],
   reason: ''
 })
+const authOptions = ref<[]>([])
 
 const handleCancel = () => {
   emits('cancel')
+}
+
+const setAuthOption = () => {
+  try {
+    // FIXME: api 연결
+    // const res = await request({
+    //   method: 'GET',
+    //   url: '/user/auth',
+    // })
+    authOptions.value = mockupAuth.value
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
 const setUserDetail = () => {
@@ -36,8 +69,9 @@ const setUserDetail = () => {
     //   url: '/user/${props.userId}',
     //   userInfo,
     // })
+    const auth = ['admin', 'user', 'robot']
     userInfo.name = '홍길동'
-    userInfo.use = 'Y'
+    userInfo.auth = auth
     userInfo.reason = '그냥'
   }
   catch (error) {
@@ -45,7 +79,7 @@ const setUserDetail = () => {
   }
 }
 
-const handleUpdateUser = () => {
+const handleUpdateUserAuth = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
@@ -80,13 +114,16 @@ watchEffect(() => {
   if (!userId.value) {
     return
   }
-
   setUserDetail()
+})
+
+onMounted(() => {
+  setAuthOption()
 })
 </script>
 
 <template>
-  <common-modal v-model="isShow" :title="t('user.popup.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
+  <common-modal v-model="isShow" :title="t('user-auth.popup.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
     <template #content>
       <div>
         <form>
@@ -95,20 +132,17 @@ watchEffect(() => {
             <CustomInput v-model="userInfo.name" max-length="10" readonly />
           </div>
           <div div class="form">
-            <label class="form__label">{{ t('common.search-bar.use') }}</label>
+            <label class="form__label">{{ t('user-auth.popup.auth') }}</label>
             <div class="form">
-              <el-radio-group v-model="userInfo.use">
-                <el-radio value="Y">
-                  {{ t('common.label.use-yes') }}
-                </el-radio>
-                <el-radio value="N">
-                  {{ t('common.label.use-no') }}
-                </el-radio>
-              </el-radio-group>
+              <el-checkbox-group v-model="userInfo.auth">
+                <el-checkbox v-for="(auth, index) in authOptions" :key="auth.value" :value="auth.value">
+                  {{ auth.label }}
+                </el-checkbox>
+              </el-checkbox-group>
             </div>
           </div>
           <div div class="form">
-            <label class="form__label">{{ t('common.label.reason') }}</label>
+            <label class="form__label--required">{{ t('common.label.reason') }}</label>
             <CustomTextarea v-model="userInfo.reason" max-length="20" />
           </div>
         </form>
@@ -118,7 +152,7 @@ watchEffect(() => {
       <button type="button" class="btn__negative--md" @click="handleCancel">
         {{ t('common.button.cancel') }}
       </button>
-      <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
+      <button type="button" class="btn__secondary--md" @click="handleUpdateUserAuth">
         {{ t('common.button.save') }}
       </button>
     </template>
