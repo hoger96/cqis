@@ -2,12 +2,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // import { createApp } from 'vue'
 import App from './App.vue'
-<<<<<<< HEAD
-import router from './router'
-=======
 // import router from "./router"
 import { routes } from 'vue-router/auto-routes'
->>>>>>> e45f6f8 (feat: 레이아웃, 라우터 변경)
 
 import { ViteSSG } from 'vite-ssg'
 import { setupLayouts } from 'virtual:generated-layouts'
