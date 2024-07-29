@@ -50,6 +50,7 @@ declare module 'vue' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    FileUpload: typeof import('./components/FileUpload.vue')['default']
     Globe: typeof import('./components/Globe.vue')['default']
     HeaderChatHeader: typeof import('./components/header/ChatHeader.vue')['default']
     HeaderMgmtHeader: typeof import('./components/header/MgmtHeader.vue')['default']

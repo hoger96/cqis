@@ -52,7 +52,7 @@ const uiComponentData = reactive<any[]>([
 ])
 
 const movePage = (target: any) => {
-  router.push(`/example/${target.name}`)
+  router.push(`/examples/${target.name}`)
 }
 </script>
 
@@ -76,4 +76,5 @@ const movePage = (target: any) => {
 name: ui-examples
 meta:
   isPublicPath: true
+  layout: empty
 </route>
