@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams } from '../types/uset-mgmt.ts'
+import { ISearchParams, IUserData } from '../types/user-mgmt.ts'
 import { useRouter } from 'vue-router'
+import { MODAL_SIZE } from '../../types/modal.ts'
+import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
+import UserPopup from '../components/UserPopup.vue'
 
+const { showFromFile, catchNotError } = useReturnMessage()
 const router = useRouter()
-const searchCondition = ref('아이디')
+
+const searchCondition = ref('id')
+const useState = ref('Y')
 const keyword = ref('')
+const userPopupSignal = ref(false)
+const userId = ref('')
+
 const searchConditionOptions = [
   {
     value: 'id',
@@ -29,66 +38,66 @@ const useStateOptions = [
 const mockupList = ref([
   {
     index: 1,
-    qnaId: 'qna_1',
-    title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    state: 'wait'
+    userId: 'id_1',
+    name: '홍길동',
+    team: '마케팅전략담당',
+    use: 'Y',
+    loginDate: '2024-05-29 10:12:31'
   },
   {
     index: 2,
-    qnaId: 'qna_2',
-    title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    state: 'complete'
+    userId: 'id_2',
+    name: '김길동',
+    team: '고객유지담당',
+    use: 'Y',
+    loginDate: '2024-05-29 10:12:31'
   },
   {
     index: 3,
-    qnaId: 'qna_3',
-    title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    state: 'wait'
+    userId: 'id_3',
+    name: '남길동',
+    team: '영업정책담당',
+    use: 'N',
+    loginDate: '2024-05-29 10:12:31'
   },
   {
     index: 4,
-    qnaId: 'qna_4',
-    title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    state: 'complete'
+    userId: 'id_4',
+    name: '강길동',
+    team: '채널혁신담당',
+    use: 'N',
+    loginDate: '2024-05-29 10:12:31'
   },
   {
     index: 5,
-    qnaId: 'qna_5',
-    title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    state: 'wait'
+    userId: 'id_5',
+    name: '마길동',
+    team: '마케팅전략담당',
+    use: 'Y',
+    loginDate: '2024-05-29 10:12:31'
   }
 ])
 
 
 const searchParam = reactive<ISearchParams>({
-  searchCondition: 'title',
-  state: 'wait',
+  searchCondition: 'id',
+  use: 'Y',
   keyword: '',
   page: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
-  state: '',
+  use: '',
   keyword: '',
   page: 1,
 })
 const totalCount = ref(0)
-const qnaList = ref<IQnaData[]>([])
+const userList = ref<IUserData[]>([])
 
 const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
-    state: searchParam.state,
+    use: searchParam.use,
     keyword: searchParam.keyword,
     page: searchParam.page,
   }
@@ -99,16 +108,16 @@ const changePage = async (newPage: number) => {
   searchedParam.page = newPage
   searchParam.page = newPage
   const params = getParams(searchedParam)
-  getQnaList(params)
+  getUserList(params)
 }
 
 const handleReset = () => {
-  searchParam.searchCondition = 'title'
-  searchParam.state = 'wait'
+  searchParam.searchCondition = 'id'
+  searchParam.use = 'Y'
   searchParam.keyword = ''
 }
 
-const getQnaList = (params: ISearchParams) => {
+const getUserList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
     // const res = await request({
@@ -116,8 +125,8 @@ const getQnaList = (params: ISearchParams) => {
     //   url: '/qna',
     //   params,
     // })
-    qnaList.value = mockupList.value
-    totalCount.value = qnaList.value.length
+    userList.value = mockupList.value
+    totalCount.value = userList.value.length
   }
   catch (error) {
     console.error(error)
@@ -126,20 +135,33 @@ const getQnaList = (params: ISearchParams) => {
 
 const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
-  searchedParam.state = searchParam.state
+  searchedParam.use = searchParam.use
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
   params.page = 1
   searchParam.page = 1
-  getQnaList(params)
+  getUserList(params)
 }
 
-const handleQnaDetail = (e) => {
-  router.push({ path: `/qna/${e.qnaId}` })
+const UserPopup = defineAsyncComponent(() => import('../components/UserPopup.vue'))
+const handleUserDetail = (data: IUserData) => {
+  userId.value = data.userId
+  try {
+    showFromFile({
+      component: UserPopup,
+      title: '사용자 설정',
+      props: { userId },
+      width: 'var(--modal-width-md)',
+      showClose: true,
+    })
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
-const handleCreateQna = () => {
-  router.push({ path: '/qna/create' })
+const handleCancel = () => {
+  userPopupSignal.value = false
 }
 
 onMounted(() => {
@@ -151,7 +173,7 @@ onMounted(() => {
   <div class="data-source">
     <div class="mb-4">
       <h2 class="mgmt__title">
-        Q&A
+        사용자 관리
       </h2>
     </div>
     <form class="form__search">
@@ -160,8 +182,8 @@ onMounted(() => {
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" label="검색 조건" />
       </div>
       <div class="form">
-        <label class="form__label">답변 상태</label>
-        <basic-select-box v-model="searchParam.state" :options="searchStateOptions" label="답변 상태" />
+        <label class="form__label">사용 여부</label>
+        <basic-select-box v-model="searchParam.use" :options="useStateOptions" label="답변 상태" />
       </div>
       <div class="form flex-1">
         <label class="form__label">검색어</label>
@@ -178,27 +200,26 @@ onMounted(() => {
       <span class="table__count">
         총 <em>{{ totalCount }}</em>건
       </span>
-      <button type="button" class="btn__primary-line--md" @click="handleCreateQna">
-        등록
-      </button>
     </div>
     <div class="mgmt__box">
-      <el-table :data="qnaList" style="width: 100%" @row-click="handleQnaDetail">
-        <el-table-column prop="index" label="번호" min-width="200" align="center" />
-        <el-table-column prop="title" label="제목" min-width="450" align="center" />
-        <el-table-column prop="createUser" label="등록자" min-width="200" align="center" />
-        <el-table-column prop="createDate" label="등록일" min-width="200" align="center" />
-        <el-table-column prop="state" label="상태" min-width="200" align="center">
+      <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
+        <el-table-column prop="index" label="번호" min-width="100" align="center" />
+        <el-table-column prop="userId" label="아이디" min-width="200" align="center" />
+        <el-table-column prop="name" label="이름" min-width="200" align="center" />
+        <el-table-column prop="team" label="부서" min-width="300" align="center" />
+        <el-table-column prop="use" label="사용여부" min-width="100" align="center">
           <template v-slot="scope">
             <p>
-              {{ scope.row.state === 'wait' ? '대기' : '완료' }}
+              {{ scope.row.use === 'Y' ? '사용' : '사용중지' }}
             </p>
           </template>
         </el-table-column>
+        <el-table-column prop="loginDate" label="최근 로그인 일시" min-width="300" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
+    <UserPopup @close-popup="handleCancel" v-model="userPopupSignal" :user-id="userId" />
   </div>
 </template>
 <style></style>

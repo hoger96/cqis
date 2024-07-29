@@ -115,7 +115,7 @@ const handleSearch = () => {
 }
 
 const handleAnncDetail = (e) => {
-  router.push({ path: `/annc/${e.anncId}` })
+  router.push({ path: `/system/announcement/${e.anncId}` })
 }
 
 onMounted(() => {
