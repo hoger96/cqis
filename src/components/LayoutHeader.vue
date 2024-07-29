@@ -8,7 +8,7 @@
       <span class="ml-1">사용자</span>
     </div>
     <button type="button">
-      <Icon name="logout__line--222" width="24" height="24" alt="로그아웃" />
+      <Icon name="logout__line--333" width="24" height="24" alt="로그아웃" />
     </button>
   </header>
 </template>

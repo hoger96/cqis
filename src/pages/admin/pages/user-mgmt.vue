@@ -4,7 +4,6 @@ import { ISearchParams, IUserData } from '../types/user-mgmt.ts'
 import { useRouter } from 'vue-router'
 import { MODAL_SIZE } from '../../types/modal.ts'
 import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
-import UserPopup from '../components/UserPopup.vue'
 
 const { showFromFile, catchNotError } = useReturnMessage()
 const router = useRouter()
@@ -203,10 +202,10 @@ onMounted(() => {
     </div>
     <div class="mgmt__box">
       <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
-        <el-table-column prop="index" label="번호" min-width="100" align="center" />
-        <el-table-column prop="userId" label="아이디" min-width="200" align="center" />
-        <el-table-column prop="name" label="이름" min-width="200" align="center" />
-        <el-table-column prop="team" label="부서" min-width="300" align="center" />
+        <el-table-column prop="index" label="번호" min-width="50" align="center" />
+        <el-table-column prop="userId" label="아이디" min-width="150" align="center" />
+        <el-table-column prop="name" label="이름" min-width="150" align="center" />
+        <el-table-column prop="team" label="부서" min-width="150" align="center" />
         <el-table-column prop="use" label="사용여부" min-width="100" align="center">
           <template v-slot="scope">
             <p>
@@ -214,12 +213,11 @@ onMounted(() => {
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="loginDate" label="최근 로그인 일시" min-width="300" align="center" />
+        <el-table-column prop="loginDate" label="최근 로그인 일시" min-width="150" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
-    <UserPopup @close-popup="handleCancel" v-model="userPopupSignal" :user-id="userId" />
   </div>
 </template>
 <style></style>

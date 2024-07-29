@@ -16,7 +16,7 @@ const onEditorChange = (value: string) => {
 }
 
 const handleGoAnncPage = () => {
-  router.push({ path: '/admin/annc' })
+  router.push({ path: '/system/announcement/admin-index' })
 }
 
 const handleCreateAnnc = () => {
@@ -43,7 +43,7 @@ const handleCreateAnnc = () => {
       }
     }
     console.log('등록: ', data.value)
-    router.push({ path: '/admin/annc' })
+    router.push({ path: '/system/announcement/admin-index' })
   }
   catch (error) {
     console.error(error)

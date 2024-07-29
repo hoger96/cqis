@@ -20,7 +20,7 @@ const props = defineProps({
   },
 })
 
-const imageSrc = ref(`${import.meta.env.VITE_ICON_SRC_PATH}/${props.name}.${props.extension}`)
+const imageSrc = ref(`/icon/${props.name}.${props.extension}`)
 </script>
 
 <template>

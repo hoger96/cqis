@@ -116,11 +116,11 @@ const handleSearch = () => {
 }
 
 const handleAnncDetail = (e) => {
-  router.push({ path: `/admin/annc/${e.anncId}` })
+  router.push({ path: `/system/announcement/admin-${e.anncId}` })
 }
 
 const handleCreateAnnc = () => {
-  router.push({ path: '/admin/annc/create' })
+  router.push({ path: '/system/announcement/create' })
 }
 
 const handleSelectionChange = (target: IAnnouncementData[]) => {
