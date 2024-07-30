@@ -3,14 +3,15 @@ import Icon from '../../components/Icon.vue'
 
 const icons = [
   { fileName: 'arrow-l__line--555' },
-  { fileName: 'arrow-b__line--555' },
+  { fileName: 'arrow-b__line--333' },
   { fileName: 'arrow-b__line--999' },
-  { fileName: 'reset__line--fb4' },
+  { fileName: 'reset__line--9e4' },
   { fileName: 'search__line--fff' },
   { fileName: 'logout__line--333' },
   { fileName: 'user__full--fff' },
   { fileName: 'delete__circle--eae' },
   { fileName: 'caution__full--fe3' },
+  { fileName: 'file__line--bbb' },
 ]
 </script>
 
@@ -46,7 +47,7 @@ const icons = [
       @apply flex items-center justify-center;
       width: 100%;
       padding: 10px;
-      background: #075617;
+      background: #745736;
     }
 
     &-name {

@@ -30,6 +30,14 @@ const uiComponentData = reactive<any[]>([
     desc: 'input / textarea / select / checkbox / radio',
   },
   {
+    name: 'textfield',
+    desc: 'input / textarea / select',
+  },
+  {
+    name: 'selector',
+    desc: 'checkbox / radio',
+  },
+  {
     name: 'grid',
     desc: 'Grid / Pagination',
   },
