@@ -12,6 +12,16 @@ const icons = [
   { fileName: 'delete__circle--eae' },
   { fileName: 'caution__full--fe3' },
   { fileName: 'file__line--bbb' },
+  { fileName: 'file__docx' },
+  { fileName: 'file__etc' },
+  { fileName: 'file__hwp' },
+  { fileName: 'file__img' },
+  { fileName: 'file__pdf' },
+  { fileName: 'file__ppt' },
+  { fileName: 'file__pptx' },
+  { fileName: 'file__word' },
+  { fileName: 'file__xlsx' },
+  { fileName: 'file__zip' },
 ]
 </script>
 

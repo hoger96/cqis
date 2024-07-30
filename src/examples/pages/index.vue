@@ -22,12 +22,8 @@ const uiComponentData = reactive<any[]>([
     desc: 'Editor Example',
   },
   {
-    name: 'file',
-    desc: 'File',
-  },
-  {
     name: 'form',
-    desc: 'input / textarea / select / checkbox / radio',
+    desc: 'Form(row) / SearchForm / File',
   },
   {
     name: 'textfield',

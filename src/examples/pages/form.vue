@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import CustomInput from '../../components/CustomInput.vue'
-
-// select
-import type { IOptions } from '../types/select-box'
 import BasicSelectBox from '../../components/BasicSelectBox.vue'
+// select-box
+import type { IOptions } from '../types/select-box'
 import mockOptions from '../mock/options.js'
+// File
+import FileUpload from '../../components/FileUpload.vue'
 
 const { t } = useI18n()
 
@@ -14,13 +15,18 @@ const form = {
   radio: 'A',
 }
 
-// select
+// select-box
 const options = ref<IOptions[]>(mockOptions)
-
 const initData = ref(3)
 
+//SearchForm
 const handleSearch = () => { }
 const handleReset = () => { }
+
+//File
+const onFileChange = (file: File[]) => {
+  console.log('ee', file)
+}
 </script>
 
 <template>
@@ -41,7 +47,7 @@ const handleReset = () => { }
         <FormItem label="Required" required>
           <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
         </FormItem>
-        <FormItem label="Basic (radio)">
+        <FormItem label="Radio">
           <el-radio-group v-model="form.radio">
             <el-radio value="A">
               A
@@ -51,12 +57,13 @@ const handleReset = () => { }
             </el-radio>
           </el-radio-group>
         </FormItem>
-        <FormItem label="Basic (checkbox)">
+        <FormItem label="Checkbox">
           <el-checkbox-group v-model="form.checkbox1">
             <el-checkbox label="A" value="A" />
             <el-checkbox label="B" value="B" />
           </el-checkbox-group>
         </FormItem>
+        <FileUpload @file-change="onFileChange" />
         <FormItem label="&quot;use-group&quot;" use-group>
           <basic-select-box v-model="initData" :options="options" />
           <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
