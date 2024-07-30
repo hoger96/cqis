@@ -1,86 +1,87 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IDatasetData } from '../types/data-set.ts'
+import { ISearchParams, IDatasetVisualData } from '../types/data-visual.ts'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const { t } = useI18n()
 const deletedDataset = ref<string[]>([])
+const searchConditionOptions = [
+  {
+    value: 'datasetName',
+    label: '데이터셋 명'
+  },
+  {
+    value: 'type',
+    label: '타입'
+  },
+]
 const mockupList = ref([
   {
     index: 1,
     datasetId: 'dataset_1',
     datasetName: '데이터셋 상세정보1',
-    targetTableName: '고객 가입 정보',
-    targetPhysicalTableName: 'Y',
-    job: '2024-07-18',
-    period: '3시간'
+    job: '로그 데이터셋',
+    use: 'Y',
+    createDate: '2024-07-18',
+    lineageId: 'lineage_1'
   },
   {
     index: 2,
     datasetId: 'dataset_2',
     datasetName: '데이터셋 상세정보2',
-    targetTableName: '냉장고 매출 정보',
-    targetPhysicalTableName: 'Y',
-    job: '2024-07-18',
-    period: '3시간'
+    job: '로그 데이터셋',
+    use: 'Y',
+    createDate: '2024-07-18',
+    lineageId: 'lineage_2'
   },
   {
     index: 3,
     datasetId: 'dataset_3',
     datasetName: '데이터셋 상세정보3',
-    targetTableName: '고객 CS 정보',
-    targetPhysicalTableName: 'N',
-    job: '2024-07-18',
-    period: '3시간'
+    job: '통계 데이터셋',
+    use: 'Y',
+    createDate: '2024-07-18',
+    lineageId: 'lineage_3'
   },
   {
     index: 4,
     datasetId: 'dataset_4',
     datasetName: '데이터셋 상세정보4',
-    targetTableName: '에어컨 매출 정보',
-    targetPhysicalTableName: 'Y',
-    job: '2024-07-18',
-    period: '3시간'
+    job: '로그 데이터셋',
+    use: 'Y',
+    createDate: '2024-07-18',
+    lineageId: 'lineage_4'
   },
   {
     index: 5,
     datasetId: 'dataset_5',
     datasetName: '데이터셋 상세정보5',
-    targetTableName: '스탠바이미 매출 정보',
-    targetPhysicalTableName: 'Y',
-    job: '2024-07-18',
-    period: '3시간'
+    job: '로그 데이터셋',
+    use: 'Y',
+    createDate: '2024-07-18',
+    lineageId: 'lineage_5'
   }
 ])
 
 
 const searchParam = reactive<ISearchParams>({
-  datasetName: '',
-  tableName: '',
-  physicalTableName: '',
-  job: '',
-  columnName: '',
+  searchCondition: 'datasetName',
+  keyword: '',
   page: 1,
 })
 const searchedParam = reactive<ISearchParams>({
-  datasetName: '',
-  tableName: '',
-  physicalTableName: '',
-  job: '',
-  columnName: '',
+  searchCondition: '',
+  keyword: '',
   page: 1,
 })
 const totalCount = ref(0)
-const dataSetList = ref<IDataSetData[]>([])
+const dataSetList = ref<IDatasetVisualData[]>([])
 
 const getParams = (searchParam: ISearchParams) => {
   const params = {
-    datasetName: searchParam.datasetName,
-    tableName: searchParam.tableName,
-    physicalTableName: searchParam.physicalTableName,
-    job: searchParam.job,
-    columnName: searchParam.columnName,
+    searchCondition: searchParam.searchCondition,
+    keyword: searchParam.keyword,
     page: searchParam.page,
   }
   return params
@@ -94,14 +95,11 @@ const changePage = async (newPage: number) => {
 }
 
 const handleReset = () => {
-  searchParam.datasetName = ''
-  searchParam.tableName = ''
-  searchParam.physicalTableName = ''
-  searchParam.job = ''
-  searchParam.columnName = ''
+  searchParam.searchCondition = 'datasetName'
+  searchParam.keyword = ''
 }
 
-const getDataSetList = (params: ISearchParams) => {
+const getDatasetVisualList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
     // const res = await request({
@@ -118,15 +116,12 @@ const getDataSetList = (params: ISearchParams) => {
 }
 
 const handleSearch = () => {
-  searchedParam.datasetName = searchParam.datasetName
-  searchedParam.tableName = searchParam.tableName
-  searchedParam.physicalTableName = searchParam.physicalTableName
-  searchedParam.job = searchParam.job
-  searchedParam.columnName = searchParam.columnName
+  searchedParam.searchCondition = searchParam.searchCondition
+  searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
   params.page = 1
   searchParam.page = 1
-  getDataSetList(params)
+  getDatasetVisualList(params)
 }
 
 const handleDeleteDataset = () => {
@@ -150,11 +145,11 @@ const handleSelectionChange = (target: IDatasetData[]) => {
 }
 
 const handleCreateDataSet = () => {
-  router.push({ path: '/admin/pages/data-set/create' })
+  router.push({ path: '/admin/pages/data-visual/create' })
 }
 
 const handleDataSetDetail = (data) => {
-  router.push({ path: `/admin/pages/data-set/${data.datasetId}` })
+  router.push({ path: `/admin/pages/data-visual/${data.datasetId}` })
 }
 
 onMounted(() => {
@@ -165,27 +160,14 @@ onMounted(() => {
 <template>
   <div>
     <h2 class="title">
-      {{ t('data-set.title') }}
+      {{ t('data-visual.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
       <SearchItem :label="t('data-set.label.data-set')">
-        <CustomInput v-model="searchParam.datasetName" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
+        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
       </SearchItem>
-      <SearchItem :label="t('data-set.label.table')">
-        <CustomInput v-model="searchParam.tableName" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
-      </SearchItem>
-      <SearchItem :label="t('data-set.label.physical-table')">
-        <CustomInput v-model="searchParam.physicalTableName" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
-      </SearchItem>
-      <SearchItem :label="t('data-set.label.job')">
-        <CustomInput v-model="searchParam.job" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
-      </SearchItem>
-      <SearchItem :label="t('data-set.label.column')">
-        <CustomInput v-model="searchParam.column" :placeholder="t('common.search-bar.placeholder')"
+      <SearchItem :label="t('common.search-bar.keyword')">
+        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
@@ -196,7 +178,7 @@ onMounted(() => {
         </span>
         <div class="flex">
           <button type="button" class="btn__secondary--md" @click="handleDeleteDataset">
-            {{ t('common.button.delete') }}
+            {{ t('common.label.use-no') }}
           </button>
           <button type="button" class="btn__primary-line--md" @click="handleCreateDataSet">
             {{ t('common.button.create') }}
@@ -208,11 +190,16 @@ onMounted(() => {
         <el-table-column type="selection" width="55" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="datasetName" :label="t('data-set.label.data-set')" min-width="150" align="center" />
-        <el-table-column prop="targetTableName" :label="t('data-set.table.table')" min-width="150" align="center" />
-        <el-table-column prop="targetPhysicalTableName" :label="t('data-set.table.physical-table')" min-width="150"
-          align="center" />
-        <el-table-column prop="job" :label="t('data-set.label.job')" min-width="100" align="center" />
-        <el-table-column prop="period" :label="t('data-set.table.period')" min-width="150" align="center" />
+        <el-table-column prop="job" :label="t('data-visual.label.job')" min-width="150" align="center" />
+        <el-table-column prop="use" :label="t('common.search-bar.use')" min-width="150" align="center" />
+        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="100" align="center" />
+        <el-table-column prop="lineage" :label="t('data-visual.label.lineage')" min-width="150" align="center">
+          <template #default="scope">
+            <button class="btn__secondary--sm" @click="handleLineagePopup(scope.lineageId)">
+              리니지
+            </button>
+          </template>
+        </el-table-column>
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
