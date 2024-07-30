@@ -4,12 +4,15 @@ import { IAnnouncementCreate } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
+import LineagePopup from '../../components/LineagePopup.vue'
 
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
 const updateMode = ref(false)
 const datasetId = ref(route.params.id)
+const popupSignal = ref(false)
+const lineageId = ref('')
 
 const dataset = reactive({
   name: '',
@@ -44,6 +47,7 @@ const handleSetDataset = () => {
   dataset.description = data.description
   tableList.value = data.tableList
   dataset.use = data.use
+  lineageId.value = data.lineageId
 }
 
 const handleUpdateDataset = () => {
@@ -86,6 +90,14 @@ const handleUpdateMode = () => {
 
 const handleGoDatasetPage = () => {
   router.push({ path: '/admin/pages/data-visual' })
+}
+
+const handleLineagePopup = () => {
+  popupSignal.value = true
+}
+
+const handleCancel = () => {
+  popupSignal.value = false
 }
 
 onMounted(() => {
@@ -137,7 +149,7 @@ onMounted(() => {
       </form>
     </div>
     <div class="mgmt__btn">
-      <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleLineage">
+      <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleLineagePopup">
         {{ t('data-visual.label.lineage') }}
       </button>
       <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleGoDatasetPage">
@@ -153,6 +165,7 @@ onMounted(() => {
         {{ t('common.button.save') }}
       </button>
     </div>
+    <LineagePopup v-model:model-value="popupSignal" :lineage-id="lineageId" @cancel="handleCancel" />
   </div>
 </template>
 <style></style>

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import "@ollion/flow-core";
 import "@ollion/flow-lineage";
+import { html } from "lit";
+import { ref } from "vue";
 import { useRouter } from 'vue-router'
-import { MODAL_SIZE } from '~/types/modal.ts'
-import "@ollion/flow-lineage/dist/types/vue3";
+import { MODAL_SIZE } from '~/types/modal.ts';
 
 const { t } = useI18n()
 const props = defineProps<{
@@ -13,27 +14,49 @@ const props = defineProps<{
 const emits = defineEmits<{
   (e: 'update:modelValue', modelValue: boolean): void
   (e: 'cancel'): void
-  (e: 'confirm', value: { userInfo: IUserDetail }): void
 }>()
 
 const lineageId = ref('')
+const lineageForm = reactive({
+  name: '',
+  description: '',
+  children: []
+})
 const nodes = ref({
   rdj: {
     fData: {
       fullName: "Robert Downey Jr.",
       description: "Movies"
+    },
+    fClick: (event: any, node: any) => {
+      setLineageDetail(event, node)
+    }
+  },
+  nase: {
+    fData: {
+      fullName: "Na Seong eon.",
+      description: "name"
+    },
+    fClick: (event: any, node: any) => {
+      setLineageDetail(event, node)
     }
   },
   judge: {
     fData: {
       fullName: "The Judge",
       description: "Hank Palmer"
+    },
+    fClick: (event: any, node: any) => {
+      setLineageDetail(event, node)
     }
   },
   ironman: {
     fData: {
       fullName: "Iron Man",
       description: "Tony stark"
+    },
+    fClick: (event: any, node: any) => {
+      setLineageDetail(event, node)
     },
     fChildren: {
       irchild1: {
@@ -44,106 +67,74 @@ const nodes = ref({
       },
       irchild2: {
         fData: {
-          icon: "i-paragraph",
-          title: "Iron man 2"
+          icon: "Mavis",
+          title: "Mavis"
         }
       }
     },
     fHideChildren: false
   }
-})
+});
+
 const links = ref([
-  {
-    from: "rdj",
-    to: "judge"
-  },
-  {
-    from: "rdj",
-    to: "ironman"
-  }
-
-])
-
-const handleCancel = () => {
-  emits('cancel')
-}
-
-const getLineageDetail = () => {
-  try {
-    // const res = await request({
-    //   method: 'GET',
-    //   url: '/data-set/${lineageId.value}',
-    // })
-    const res = {
-    }
-  }
-  catch (error) {
-    console.error(error)
-  }
-}
+  { from: "judge", to: "rdj" },
+  { from: "ironman", to: "rdj" },
+  { from: "rdj", to: "nase" }
+]);
 
 const nodeTemplate = (node: LineageNodeElement) => {
-  return h('f-div', {
-    width: "100%",
-    state: "secondary",
-    height: "100%",
-    padding: "small",
-    align: "top-left",
-    variant: "curved",
-    gap: "small",
-  }, [
-    h('f-pictogram', {
-      variant: "circle",
-      source: node.fData.fullName,
-    }),
-    h('f-div', {
-      direction: "column"
-    }, [
-      h('f-text', {
-        size: "small",
-        ellipsis: true,
-      }, node.fData.fullName),
-      h('f-text', {
-        size: "x-small",
-        ellipsis: true,
-      }, node.fData.description)
-    ]),
-    node.childrenToggle
-  ]);
-}
+  return html`
+    <f-div
+      width="100%"
+      state="custom,#888888"
+      height="100%"
+      padding="small"
+      align="top-left"
+      variant="curved"
+      gap="small"
+    >
+      <f-pictogram variant="circle" source="${node.fData.fullName}"></f-pictogram>
+      <f-div direction="column">
+        <f-text size="small" ellipsis>${node.fData.fullName}</f-text>
+        <f-text size="x-small" ellipsis>${node.fData.description}</f-text>
+      </f-div>
+      ${node.childrenToggle}
+    </f-div>
+  `;
+};
 
 const childNodeTemplate = (node: LineageNodeElement) => {
-  return h('f-div', {
-    state: "secondary",
-    width: "100%",
-    height: "100%",
-    padding: "none medium",
-    align: "middle-left",
-    gap: "small",
-    border: "small solid default bottom"
-  }, [
-    h('f-icon', {
-      source: node.fData.icon,
-      size: "small"
-    }),
-    h('f-text', {
-      size: "small",
-      ellipsis: true,
-    }, node.fData.title)
-  ]);
+  return html`
+    <f-div
+      width="100%"
+      height="100%"
+      state="custom,#434470"
+      padding="none medium"
+      align="middle-left"
+      gap="small"
+      border="small solid default bottom"
+    >
+      <f-icon source="${node.fData.icon}" size="small"></f-icon>
+      <f-text size="small" ellipsis>${node.fData.title}</f-text>
+    </f-div>
+  `;
+};
+
+const resetForm = () => {
+  lineageForm.name = ''
+  lineageForm.description = ''
+  lineageForm.children = []
 }
 
-const setUserDetail = () => {
-  try {
-    // FIXME: api 연결
-    // const res = await request({
-    //   method: 'GET',
-    //   url: '/user/${props.userId}',
-    //   userInfo,
-    // })
-  }
-  catch (error) {
-    console.error(error)
+const setLineageDetail = (e, node) => {
+  resetForm()
+  lineageForm.name = node.fData.fullName
+  lineageForm.description = node.fData.description
+  if (node.fChildren) {
+    const childrenList = node.fChildren
+    const childrenKeys = Object.keys(node.fChildren)
+    for (let i = 0; i < childrenKeys.length; i++)
+      lineageForm.children.push(childrenList[childrenKeys[i]].fData.title)
   }
 }
 
@@ -156,6 +147,10 @@ const isShow = computed({
   }
 })
 
+const handleCancel = () => {
+  emits('cancel')
+}
+
 watchEffect(() => {
   lineageId.value = props.lineageId
   if (!lineageId.value) {
@@ -167,21 +162,34 @@ watchEffect(() => {
 </script>
 
 <template>
-  <common-modal v-model="isShow" :title="t('data-visual.label.lineage')" :size="MODAL_SIZE.XXXLARGE"
+  <common-modal v-model="isShow" :title="t('data-visual.label.lineage')" :size="MODAL_SIZE.XXLARGE"
     @cancel="handleCancel">
     <template #content>
-      <f-lineage direction="horizontal" :padding="28" :gap="100" :node-size.prop="{ width: 240, height: 500 }"
-        :children-node-size.prop="{ width: 240, height: 32 }" :max-childrens="8" :links.prop="links" :nodes.prop="nodes"
-        :node-template.prop="nodeTemplate" :children-node-template.prop="childNodeTemplate"></f-lineage>
+      <div class="flex">
+        <f-lineage direction="horizontal" :padding="28" :gap="100" :node-size.prop="{ width: 240, height: 60 }"
+          :children-node-size.prop="{ width: 240, height: 32 }" :max-childrens="8" :links.prop="links"
+          :nodes.prop="nodes" :node-template.prop="nodeTemplate" :children-node-template.prop="childNodeTemplate"
+          :background="{ color: 'white' }">
+        </f-lineage>
+        <form v-if="lineageForm.name" class="form ml-5">
+          <FormItem :label="t('data-visual.lineage.name')">
+            <CustomInput v-model="lineageForm.name" max-length="10" readonly />
+          </FormItem>
+          <FormItem :label="t('data-visual.lineage.description')">
+            <CustomInput v-model="lineageForm.description" max-length="10" readonly />
+          </FormItem>
+          <FormItem v-if="lineageForm.children.length > 0" :label="t('data-visual.lineage.column')">
+            <div v-for="(table, index) in lineageForm.children" :key="index" class="flex">
+              <CustomInput v-model="lineageForm.children[index]" max-length="10" readonly />
+            </div>
+          </FormItem>
+        </form>
+      </div>
     </template>
     <template #footer>
       <button type="button" class="btn__negative--md" @click="handleCancel">
         {{ t('common.button.cancel') }}
       </button>
-      <button type="button" class="btn__secondary--md" @click="handleUpdateUser">
-        {{ t('common.button.save') }}
-      </button>
     </template>
   </common-modal>
 </template>
-<style></style>
