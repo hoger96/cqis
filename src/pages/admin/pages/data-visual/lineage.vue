@@ -1,11 +1,26 @@
 <script setup lang="ts">
-import { LineageNodeElement, LineageLinkElement } from '@ollion/flow-lineage';
+import "@ollion/flow-core";
+import "@ollion/flow-lineage";
+import { html } from "lit";
+import { ref } from "vue";
+import { useRouter } from 'vue-router'
+import { MODAL_SIZE } from '~/types/modal.ts';
 
-const nodes = ref<Record<string, LineageNodeElement>>({
+// Define the nodes and links
+const nodes = ref({
   rdj: {
     fData: {
       fullName: "Robert Downey Jr.",
       description: "Movies"
+    },
+    fClick: (event: any, node: any) => {
+      console.log("Node Clicked", event, node);
+    }
+  },
+  nase: {
+    fData: {
+      fullName: "Na Seong eon.",
+      description: "name"
     }
   },
   judge: {
@@ -25,86 +40,59 @@ const nodes = ref<Record<string, LineageNodeElement>>({
           icon: "i-hashtag",
           title: "Iron man 1"
         }
-      },
-      irchild2: {
-        fData: {
-          icon: "i-paragraph",
-          title: "Iron man 2"
-        }
       }
     },
     fHideChildren: false
   }
-})
+});
 
-const links = ref<LineageLinkElement[]>([
-  {
-    from: "rdj",
-    to: "judge"
-  },
-  {
-    from: "rdj",
-    to: "ironman"
-  }
-
-])
+const links = ref([
+  { from: "judge", to: "rdj" },
+  { from: "ironman", to: "rdj" },
+  { from: "rdj", to: "nase" }
+]);
 
 const nodeTemplate = (node: LineageNodeElement) => {
-  return h('f-div', {
-    width: "100%",
-    state: "secondary",
-    height: "100%",
-    padding: "small",
-    align: "top-left",
-    variant: "curved",
-    gap: "small",
-  }, [
-    h('f-pictogram', {
-      variant: "circle",
-      source: node.fData.fullName,
-    }),
-    h('f-div', {
-      direction: "column"
-    }, [
-      h('f-text', {
-        size: "small",
-        ellipsis: true,
-      }, node.fData.fullName),
-      h('f-text', {
-        size: "x-small",
-        ellipsis: true,
-      }, node.fData.description)
-    ]),
-    node.childrenToggle
-  ]);
-}
+  return html`
+    <f-div
+      width="100%"
+      state="custom,#888888"
+      height="100%"
+      padding="small"
+      align="top-left"
+      variant="curved"
+      gap="small"
+    >
+      <f-pictogram variant="circle" source="${node.fData.fullName}"></f-pictogram>
+      <f-div direction="column">
+        <f-text size="small" ellipsis>${node.fData.fullName}</f-text>
+        <f-text size="x-small" ellipsis>${node.fData.description}</f-text>
+      </f-div>
+      ${node.childrenToggle}
+    </f-div>
+  `;
+};
 
 const childNodeTemplate = (node: LineageNodeElement) => {
-  return h('f-div', {
-    state: "secondary",
-    width: "100%",
-    height: "100%",
-    padding: "none medium",
-    align: "middle-left",
-    gap: "small",
-    border: "small solid default bottom"
-  }, [
-    h('f-icon', {
-      source: node.fData.icon,
-      size: "small"
-    }),
-    h('f-text', {
-      size: "small",
-      ellipsis: true,
-    }, node.fData.title)
-  ]);
-}
+  return html`
+    <f-div
+      width="100%"
+      height="100%"
+      padding="none medium"
+      align="middle-left"
+      gap="small"
+      border="small solid default bottom"
+    >
+      <f-icon source="${node.fData.icon}" size="small"></f-icon>
+      <f-text size="small" ellipsis>${node.fData.title}</f-text>
+    </f-div>
+  `;
+};
 </script>
 
 <template>
-  <!-- <f-lineage direction="horizontal" :padding="28" :gap="100" :node-size.prop="{ width: 240, height: 53 }"
+  <f-lineage direction="horizontal" :padding="28" :gap="100" :node-size.prop="{ width: 240, height: 500 }"
     :children-node-size.prop="{ width: 240, height: 32 }" :max-childrens="8" :links.prop="links" :nodes.prop="nodes"
     :node-template.prop="nodeTemplate" :children-node-template.prop="childNodeTemplate">
-  </f-lineage> -->
+  </f-lineage>
 </template>
-<style></style>

@@ -110,22 +110,20 @@ onMounted(() => {
           <CustomTextarea v-model="dataset.description" :placeholder="t('data-visual.placeholder.app-description')"
             :readonly="!updateMode" />
         </FormItem>
-        <div>
-          <FormItem :label="t('data-visual.label.table')" :required="updateMode">
-            <div v-for="(table, index) in tableList" :key="index" class="flex">
-              <CustomInput v-model="tableList[index]" :placeholder="t('data-visual.label.table')"
-                :readonly="!updateMode" />
-              <button v-if="index === 0 && updateMode" type="button" class="btn__secondary--sm"
-                @click="handleAddTable(index)">
-                {{ t('common.button.add') }}
-              </button>
-              <button v-if="tableList.length > 1 && updateMode" type="button" class="btn__secondary--sm"
-                @click="handleRemoveTable(index)">
-                {{ t('common.button.delete') }}
-              </button>
-            </div>
-          </FormItem>
-        </div>
+        <FormItem :label="t('data-visual.label.table')" :required="updateMode">
+          <div v-for="(table, index) in tableList" :key="index" class="flex">
+            <CustomInput v-model="tableList[index]" :placeholder="t('data-visual.label.table')"
+              :readonly="!updateMode" />
+            <button v-if="index === 0 && updateMode" type="button" class="btn__secondary--sm"
+              @click="handleAddTable(index)">
+              {{ t('common.button.add') }}
+            </button>
+            <button v-if="tableList.length > 1 && updateMode" type="button" class="btn__secondary--sm"
+              @click="handleRemoveTable(index)">
+              {{ t('common.button.delete') }}
+            </button>
+          </div>
+        </FormItem>
         <FormItem :label="t('common.search-bar.use')" :required="updateMode">
           <el-radio-group v-model="dataset.use" :disabled="!updateMode">
             <el-radio value="Y">
