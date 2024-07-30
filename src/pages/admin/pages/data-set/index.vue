@@ -2,9 +2,6 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ISearchParams, IDatasetData } from '../types/data-set.ts'
 import { useRouter } from 'vue-router'
-import { MODAL_SIZE } from '../../types/modal.ts'
-import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
-import UserPopup from '../components/UserPopup.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -166,57 +163,46 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="data-source">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('data-set.title') }}
-      </h2>
-    </div>
-    <form class="form__search">
-      <div class="form flex-1">
-        <label class="form__label">{{ t('data-set.label.data-set') }}</label>
+  <div>
+    <h2 class="title">
+      {{ t('data-set.title') }}
+    </h2>
+    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+      <SearchItem :label="t('data-set.label.data-set')">
         <CustomInput v-model="searchParam.datasetName" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('data-set.label.table') }}</label>
+      </SearchItem>
+      <SearchItem :label="t('data-set.label.table')">
         <CustomInput v-model="searchParam.tableName" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('data-set.label.physical-table') }}</label>
+      </SearchItem>
+      <SearchItem :label="t('data-set.label.physical-table')">
         <CustomInput v-model="searchParam.physicalTableName" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('data-set.label.job') }}</label>
+      </SearchItem>
+      <SearchItem :label="t('data-set.label.job')">
         <CustomInput v-model="searchParam.job" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
-      </div>
-      <div class="form flex-1">
-        <label class="form__label">{{ t('data-set.label.column') }}</label>
+      </SearchItem>
+      <SearchItem :label="t('data-set.label.column')">
         <CustomInput v-model="searchParam.column" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
+      </SearchItem>
+    </SearchForm>
+    <div class="content__box">
+      <div class="total__bar">
+        <span class="total">
+          {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
+        </span>
+        <div class="flex">
+          <button type="button" class="btn__secondary--md" @click="handleDeleteDataset">
+            {{ t('common.button.delete') }}
+          </button>
+          <button type="button" class="btn__primary-line--md" @click="handleCreateDataSet">
+            {{ t('common.button.create') }}
+          </button>
+        </div>
       </div>
-      <button type="button" class="ml-5 btn__secondary--md" @click="handleReset">
-        {{ t('common.button.reset') }}
-      </button>
-      <button type="button" class="ml-5 btn__primary-line--md" @click="handleSearch">
-        {{ t('common.button.search') }}
-      </button>
-    </form>
-    <div class="flex">
-      <span class="table__count">
-        {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
-      </span>
-      <button type="button" class="btn__secondary--md" @click="handleDeleteDataset">
-        {{ t('common.button.delete') }}
-      </button>
-      <button type="button" class="btn__primary-line--md" @click="handleCreateDataSet">
-        {{ t('common.button.create') }}
-      </button>
-    </div>
-    <div class="mgmt__box">
       <el-table :data="dataSetList" style="width: 100%" @row-dblclick="handleDataSetDetail"
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />

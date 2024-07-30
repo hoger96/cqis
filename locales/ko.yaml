@@ -74,7 +74,19 @@ data-set:
     physical-table: 타켓 물리 테이블명
     period: 주기
     source: Source
-  title: 데이터 셋
+  title: 데이터 셋 관리
+data-visual:
+  label:
+    app-description: 앱 설명
+    app-name: 앱 명
+    job: JOB
+    lineage: 리니지
+    table: 테이블
+  placeholder:
+    app-description: 앱 설명을 입력하세요.
+    app-name: 앱 명을 입력하세요.
+    table: 테이블을 입력하세요.
+  title: 데이터 시각화 관리
 faq:
   admin-title: FAQ 관리자
   title: FAQ

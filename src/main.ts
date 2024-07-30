@@ -7,6 +7,9 @@ import { routes } from 'vue-router/auto-routes'
 
 import { ViteSSG } from 'vite-ssg'
 import { setupLayouts } from 'virtual:generated-layouts'
+import "@ollion/flow-core";
+import "@ollion/flow-lineage";
+import "@ollion/flow-lineage/dist/types/vue3.ts";
 
 // createApp(App).use(router).use(ElementPlus).mount('#app')
 export const createApp = ViteSSG(
