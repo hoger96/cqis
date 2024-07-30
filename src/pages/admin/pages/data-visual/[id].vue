@@ -11,100 +11,29 @@ const { t } = useI18n()
 const updateMode = ref(false)
 const datasetId = ref(route.params.id)
 
-const batchTypeOptions = ref([
-  {
-    value: 'type1',
-    label: 'type1'
-  },
-  {
-    value: 'type2',
-    label: 'type2'
-  },
-])
-
 const dataset = reactive({
   name: '',
   description: '',
-  batchType: '',
-  batchPeriod: '',
-  job: '',
-  playTime: ''
+  use: 'Y'
 })
-
-const targetTableList = ref<[]>([
-  {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
-      }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: '',
-    }
-  }
-])
+const tableList = ref<[]>([''])
 
 const handleGetDataset = () => {
   try {
     // const res = await request({
     //   method: 'GET',
-    //   url: `/dataset/${datasetId.value}`
+    //   url: `/dataset-visual/${datasetId.value}`
     // })
     const res = {
       name: '데이터셋1',
       description: '데이터셋1 입니다.',
-      targetTableList: [
-        {
-          sourceList: [
-            {
-              tableName: '소스테이블1',
-              column: '소스컬럼1',
-              description: '소스설명1'
-            },
-            {
-              tableName: '소스테이블2',
-              column: '소스컬럼2',
-              description: '소스설명2'
-            }
-          ],
-          target: {
-            tableName: '타겟테이블1',
-            column: '타겟컬럼1',
-            description: '타겟설명1'
-          }
-        },
-        {
-          sourceList: [
-            {
-              tableName: '소스테이블1',
-              column: '소스컬럼1',
-              description: '소스설명1'
-            },
-            {
-              tableName: '소스테이블2',
-              column: '소스컬럼2',
-              description: '소스설명2'
-            }
-          ],
-          target: {
-            tableName: '타겟테이블1',
-            column: '타겟컬럼1',
-            description: '타겟설명1'
-          }
-        }
-      ],
-      batchType: 'type1',
-      batchPeriod: '주 3회',
-      job: '선행 job',
-      playTime: '2시간'
+      tableList: ['테이블1', '테이블2'],
+      use: 'N'
     }
+
     return res
   }
-  catch (error: Error) {
+  catch (error) {
     console.error(error)
   }
 }
@@ -113,60 +42,38 @@ const handleSetDataset = () => {
   const data = handleGetDataset()
   dataset.name = data.name
   dataset.description = data.description
-  targetTableList.value = data.targetTableList
-  dataset.batchType = data.batchType
-  dataset.batchPeriod = data.batchPeriod
-  dataset.job = data.job
-  dataset.playTime = data.playTime
+  tableList.value = data.tableList
+  dataset.use = data.use
 }
 
 const handleUpdateDataset = () => {
   try {
     const data = {
-      title: dataset.name,
+      name: dataset.name,
       description: dataset.description,
-      targetTableList: targetTableList.value,
-      batchType: dataset.batchType,
-      batchPeriod: dataset.batchPeriod,
-      job: dataset.job,
-      playTime: dataset.playTime
+      tableList: tableList.value,
+      use: dataset.use,
     }
+    // const res = await request({
+    //   method: 'POST',
+    //   url: `/dataset-visual/${datasetId.value}`,
+    //   data
+    // })
     console.log('수정: ', data)
-    router.push({ path: '/admin/pages/data-set' })
+    router.push({ path: '/admin/pages/data-visual' })
   } catch (error) {
     console.error(error)
   }
 }
 
-const handleAddTargetTable = () => {
-  const newData = {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
-      }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: ''
-    }
-  }
-  targetTableList.value.push(newData)
+const handleAddTable = (index: number) => {
+  tableList.value.push('')
 }
 
-const handleAddSource = (index: number) => {
-  const newData = {
-    tableName: '',
-    column: '',
-    description: '',
+const handleRemoveTable = (index: number) => {
+  if (tableList.value.length > 1) {
+    tableList.value.splice(index, 1)
   }
-  targetTableList.value[index].sourceList.push(newData)
-}
-
-const handleRemoveSource = (tableIndex: number, sourceIndex: number) => {
-  targetTableList.value[tableIndex].sourceList.splice(sourceIndex, 1)
 }
 
 const handleChangeMode = () => {
@@ -178,7 +85,7 @@ const handleUpdateMode = () => {
 }
 
 const handleGoDatasetPage = () => {
-  router.push({ path: '/admin/pages/data-set' })
+  router.push({ path: '/admin/pages/data-visual' })
 }
 
 onMounted(() => {
@@ -189,82 +96,52 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('data-set.title') }} {{ t('common.label.detail') }}
-      </h2>
-    </div>
-    <div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.data-set') }}</label>
-        <CustomInput v-model="dataset.name" :placeholder="t('data-set.placeholder.name')" :readonly="!updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.description') }}</label>
-        <CustomTextarea v-model="dataset.description" :placeholder="t('data-set.placeholder.description')"
-          :readonly="!updateMode" />
-      </div>
-      <div>
-        <label class="form__label--required">{{ t('data-set.label.target-table') }}</label>
-        <button v-if="updateMode" type="button" class="btn__secondary--sm" @click="handleAddTargetTable">
-          {{ t('common.button.add') }}
-        </button>
-        <div v-for="(targetTable, index) in targetTableList" :key="index" class="p-3 m-5">
-          <div class="flex">
-            <div class="form">
-              <label class="form__label--required">{{ t('data-set.table.source') }}</label>
-              <div>
-                <div>
-                  <div v-for="(source, sourceIndex) in targetTable.sourceList" :key="sourceIndex" class="flex">
-                    <CustomInput v-model="source.tableName" :placeholder="t('data-set.label.table')"
-                      :readonly="!updateMode" />
-                    <CustomInput v-model="source.column" :placeholder="t('data-set.label.column')"
-                      :readonly="!updateMode" />
-                    <CustomInput v-model="source.description" :placeholder="t('data-set.label.dd')"
-                      :readonly="!updateMode" />
-                    <button v-if="sourceIndex === 0 && updateMode" type="button" class="btn__secondary--sm"
-                      @click="handleAddSource(index)">
-                      {{ t('common.button.add') }}
-                    </button>
-                    <button v-if="targetTable.sourceList.length > 1 && updateMode" type="button"
-                      class="btn__secondary--sm" @click="handleRemoveSource(index, sourceIndex)">
-                      {{ t('common.button.delete') }}
-                    </button>
-                  </div>
-                </div>
-              </div>
+  <div class="p-20">
+    <h2 class="text-3xl font-semibold">
+      {{ t('data-set.title') }} {{ t('common.label.detail') }}
+    </h2>
+    <div class="my-10">
+      <form class="form">
+        <FormItem :label="t('data-visual.label.app-name')" :required="updateMode">
+          <CustomInput v-model="dataset.name" :placeholder="t('data-visual.placeholder.app-name')"
+            :readonly="!updateMode" />
+        </FormItem>
+        <FormItem :label="t('data-visual.label.app-description')" :required="updateMode">
+          <CustomTextarea v-model="dataset.description" :placeholder="t('data-visual.placeholder.app-description')"
+            :readonly="!updateMode" />
+        </FormItem>
+        <div>
+          <FormItem :label="t('data-visual.label.table')" :required="updateMode">
+            <div v-for="(table, index) in tableList" :key="index" class="flex">
+              <CustomInput v-model="tableList[index]" :placeholder="t('data-visual.label.table')"
+                :readonly="!updateMode" />
+              <button v-if="index === 0 && updateMode" type="button" class="btn__secondary--sm"
+                @click="handleAddTable(index)">
+                {{ t('common.button.add') }}
+              </button>
+              <button v-if="tableList.length > 1 && updateMode" type="button" class="btn__secondary--sm"
+                @click="handleRemoveTable(index)">
+                {{ t('common.button.delete') }}
+              </button>
             </div>
-          </div>
-          <div class="form">
-            <label class="form__label--required">{{ t('data-set.table.target') }}</label>
-            <CustomInput v-model="targetTable.target.tableName" :placeholder="t('data-set.label.table')"
-              :readonly="!updateMode" />
-            <CustomInput v-model="targetTable.target.column" :placeholder="t('data-set.label.column')"
-              :readonly="!updateMode" />
-            <CustomInput v-model="targetTable.target.description" :placeholder="t('data-set.label.dd')"
-              :readonly="!updateMode" />
-          </div>
+          </FormItem>
         </div>
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.batch') }}</label>
-        <basic-select-box v-model="dataset.batchType" :options="batchTypeOptions"
-          :placeholder="t('data-set.placeholder.batch-type')" :readonly="!updateMode" />
-        <CustomInput v-model="dataset.batchPeriod" :placeholder="t('data-set.placeholder.name')"
-          :readonly="!updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.first-job') }}</label>
-        <CustomInput v-model="dataset.job" :placeholder="t('data-set.placeholder.first-job')" :readonly="!updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.batch-time') }}</label>
-        <CustomInput v-model="dataset.playTime" :placeholder="t('data-set.placeholder.batch-time')"
-          :readonly="!updateMode" />
-      </div>
+        <FormItem :label="t('common.search-bar.use')" :required="updateMode">
+          <el-radio-group v-model="dataset.use" :disabled="!updateMode">
+            <el-radio value="Y">
+              {{ t('common.label.use-yes') }}
+            </el-radio>
+            <el-radio value="N">
+              {{ t('common.label.use-no') }}
+            </el-radio>
+          </el-radio-group>
+        </FormItem>
+      </form>
     </div>
     <div class="mgmt__btn">
+      <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleLineage">
+        {{ t('data-visual.label.lineage') }}
+      </button>
       <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleGoDatasetPage">
         {{ t('common.button.cancel') }}
       </button>

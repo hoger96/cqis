@@ -2,10 +2,13 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ISearchParams, IDatasetVisualData } from '../types/data-visual.ts'
 import { useRouter } from 'vue-router'
+import LineagePopup from '../../components/LineagePopup.vue'
 
 const router = useRouter()
 const { t } = useI18n()
-const deletedDataset = ref<string[]>([])
+const changeUseDataset = ref<string[]>([])
+const popupSignal = ref(false)
+const lineageId = ref('')
 const searchConditionOptions = [
   {
     value: 'datasetName',
@@ -124,15 +127,15 @@ const handleSearch = () => {
   getDatasetVisualList(params)
 }
 
-const handleDeleteDataset = () => {
+const handleChangeUseDataset = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'DELETE',
-    //   url: '/dataset',
-    //   deletedDataset.value,
+    //   method: 'POST',
+    //   url: '/dataset-visual-use',
+    //   changeUseDataset.value,
     // })
-    console.log(deletedDataset.value)
+    console.log(changeUseDataset.value)
     handleSearch()
   }
   catch (error) {
@@ -140,16 +143,25 @@ const handleDeleteDataset = () => {
   }
 }
 
-const handleSelectionChange = (target: IDatasetData[]) => {
-  deletedDataset.value = target.map(i => i.datasetId)
+const handleSelectionChange = (target: IDatasetVisualData[]) => {
+  changeUseDataset.value = target.map(i => i.datasetId)
 }
 
 const handleCreateDataSet = () => {
   router.push({ path: '/admin/pages/data-visual/create' })
 }
 
-const handleDataSetDetail = (data) => {
+const handleDataSetDetail = (data: IDatasetVisualData) => {
   router.push({ path: `/admin/pages/data-visual/${data.datasetId}` })
+}
+
+const handleLineagePopup = (data: IDatasetVisualData) => {
+  lineageId.value = data.lineageId
+  popupSignal.value = true
+}
+
+const handleCancel = () => {
+  popupSignal.value = false
 }
 
 onMounted(() => {
@@ -177,7 +189,7 @@ onMounted(() => {
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
         <div class="flex">
-          <button type="button" class="btn__secondary--md" @click="handleDeleteDataset">
+          <button type="button" class="btn__secondary--md" @click="handleChangeUseDataset">
             {{ t('common.label.use-no') }}
           </button>
           <button type="button" class="btn__primary-line--md" @click="handleCreateDataSet">
@@ -195,7 +207,7 @@ onMounted(() => {
         <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="100" align="center" />
         <el-table-column prop="lineage" :label="t('data-visual.label.lineage')" min-width="150" align="center">
           <template #default="scope">
-            <button class="btn__secondary--sm" @click="handleLineagePopup(scope.lineageId)">
+            <button class="btn__secondary--sm" @click="handleLineagePopup(scope.row)">
               리니지
             </button>
           </template>
@@ -204,6 +216,7 @@ onMounted(() => {
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
+    <LineagePopup v-model:model-value="popupSignal" :lineage-id="lineageId" @cancel="handleCancel" />
   </div>
 </template>
 <style></style>

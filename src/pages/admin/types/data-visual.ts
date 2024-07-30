@@ -10,5 +10,5 @@ export interface IDatasetVisualData{
   job: string
   use: string
   createDate: string
-  lineage: string
+  lineageId: string
 }

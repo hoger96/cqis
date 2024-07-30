@@ -5,6 +5,7 @@ const dropZoneRef = ref<HTMLDivElement>()
 const attachedFile = ref<File>([])
 const fileRef = ref<HTMLInputElement | null>(null)
 const fileName = ref('')
+const fileExtension = ref('')
 const fileUrl = ref('')
 
 const props = withDefaults(defineProps<IUploadProps>(), {
@@ -33,8 +34,12 @@ const openFileUpload = (e: Event) => {
 }
 
 const setFileName = () => {
-  if (attachedFile.value.length > 0)
-    fileName.value = attachedFile.value[0].name
+  if (attachedFile.value.length > 0) {
+    const fullName = attachedFile.value[0].name
+    const lastDotIndex = fullName.lastIndexOf('.')
+    fileName.value = fullName.slice(0, lastDotIndex)
+    fileExtension.value = fullName.slice(lastDotIndex + 1)
+  }
 }
 
 const createDownloadLink = (file: File) => {
@@ -80,7 +85,9 @@ onMounted(() => {
       </div>
       <div v-if="fileName.length > 0" class="form__upload--file">
         <!-- FIXME 개발자 :: 확장자에 따른 name 변경 요청드립니다. :name="file__${fileExtension}"
-            확장자 종류 참고(docx,etc,hwp,img,pdf,pptx,xlsx,zip)-->
+            확장자 종류 참고(docx,etc,hwp,img,pdf,pptx,xlsx,zip)
+            fileExtension.value에 저장해놨습니다!
+            -->
         <Icon class="mr-1" name="file__img" width="16" height="16" alt="" area-hidden="true" />
         <a :href="fileUrl" :download="fileName">{{ fileName }}</a>
         <button type="button" class="ml-2.5">
