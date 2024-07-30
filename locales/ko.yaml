@@ -82,6 +82,10 @@ data-visual:
     job: JOB
     lineage: 리니지
     table: 테이블
+  lineage:
+    column: 컬럼 명
+    description: 테이블 설명
+    name: 테이블 명
   placeholder:
     app-description: 앱 설명을 입력하세요.
     app-name: 앱 명을 입력하세요.
@@ -91,7 +95,18 @@ faq:
   admin-title: FAQ 관리자
   title: FAQ
 user:
+  label:
+    active: 활성화
+    admin: 관리자
+    admin-state: 관리자 여부
+    analyst: Analyst
+    lock: 잠김
+    professional: professional
+    state: 상태
+    user: 일반
+    qlik: QLIK 권한타입
   popup:
+    reason-placeholder: 사유를 입력하세요.
     title: 사용자 설정
   title: 사용자 관리
 user-auth:

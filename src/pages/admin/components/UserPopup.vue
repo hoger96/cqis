@@ -17,9 +17,21 @@ const emits = defineEmits<{
   (e: 'confirm', value: { userInfo: IUserDetail }): void
 }>()
 
+const mockupData = {
+  name: '홍길동',
+  adminState: 'admin',
+  qlik: 'professional',
+  state: 'lock',
+  use: 'Y',
+  reason: ''
+}
+
 const userId = ref('')
 const userInfo = reactive<IUserDetail>({
   name: '',
+  adminState: '',
+  qlik: '',
+  state: '',
   use: '',
   reason: ''
 })
@@ -28,7 +40,7 @@ const handleCancel = () => {
   emits('cancel')
 }
 
-const setUserDetail = () => {
+const getUserDetail = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
@@ -36,13 +48,21 @@ const setUserDetail = () => {
     //   url: '/user/${props.userId}',
     //   userInfo,
     // })
-    userInfo.name = '홍길동'
-    userInfo.use = 'Y'
-    userInfo.reason = '그냥'
+    return mockupData
   }
   catch (error) {
     console.error(error)
   }
+}
+
+const setUserDetail = () => {
+  const data = getUserDetail()
+  userInfo.name = data.name
+  userInfo.adminState = data.adminState
+  userInfo.qlik = data.qlik
+  userInfo.state = data.state
+  userInfo.use = data.use
+  userInfo.reason = data.reason
 }
 
 const handleUpdateUser = () => {
@@ -92,6 +112,42 @@ watchEffect(() => {
         <FormItem :label="t('common.label.name')">
           <CustomInput v-model="userInfo.name" max-length="10" readonly />
         </FormItem>
+        <FormItem :label="t('user.label.admin-state')">
+          <div class="form">
+            <el-radio-group v-model="userInfo.adminState">
+              <el-radio value="user">
+                {{ t('user.label.user') }}
+              </el-radio>
+              <el-radio value="admin">
+                {{ t('user.label.admin') }}
+              </el-radio>
+            </el-radio-group>
+          </div>
+        </FormItem>
+        <FormItem :label="t('user.label.qlik')">
+          <div class="form">
+            <el-radio-group v-model="userInfo.qlik">
+              <el-radio value="analyst">
+                {{ t('user.label.analyst') }}
+              </el-radio>
+              <el-radio value="professional">
+                {{ t('user.label.professional') }}
+              </el-radio>
+            </el-radio-group>
+          </div>
+        </FormItem>
+        <FormItem :label="t('user.label.state')">
+          <div class="form">
+            <el-radio-group v-model="userInfo.state">
+              <el-radio value="lock">
+                {{ t('user.label.lock') }}
+              </el-radio>
+              <el-radio value="active">
+                {{ t('user.label.active') }}
+              </el-radio>
+            </el-radio-group>
+          </div>
+        </FormItem>
         <FormItem :label="t('common.search-bar.use')">
           <div class="form">
             <el-radio-group v-model="userInfo.use">
@@ -105,7 +161,7 @@ watchEffect(() => {
           </div>
         </FormItem>
         <FormItem :label="t('common.label.reason')">
-          <CustomTextarea v-model="userInfo.reason" max-length="20" />
+          <CustomTextarea v-model="userInfo.reason" max-length="20" :placeholder="t('user.popup.reason-placeholder')" />
         </FormItem>
       </form>
     </template>
