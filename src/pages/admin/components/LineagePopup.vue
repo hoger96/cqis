@@ -162,7 +162,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <common-modal v-model="isShow" :title="t('data-visual.label.lineage')" :size="MODAL_SIZE.XXLARGE"
+  <common-modal v-model="isShow" :title="t('data-visual.label.lineage')" :size="MODAL_SIZE.XXXLARGE"
     @cancel="handleCancel">
     <template #content>
       <div class="flex">
@@ -171,7 +171,7 @@ watchEffect(() => {
           :nodes.prop="nodes" :node-template.prop="nodeTemplate" :children-node-template.prop="childNodeTemplate"
           :background="{ color: 'white' }">
         </f-lineage>
-        <form v-if="lineageForm.name" class="form ml-5">
+        <form v-if="lineageForm.name" class="form ml-5 p-5 border-2">
           <FormItem :label="t('data-visual.lineage.name')">
             <CustomInput v-model="lineageForm.name" max-length="10" readonly />
           </FormItem>

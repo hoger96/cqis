@@ -8,9 +8,6 @@ import UserPopup from '../components/UserPopup.vue'
 
 const router = useRouter()
 const { t } = useI18n()
-const searchCondition = ref('id')
-const useState = ref('Y')
-const keyword = ref('')
 const userPopupSignal = ref(false)
 const userId = ref('')
 
@@ -22,6 +19,16 @@ const searchConditionOptions = [
   {
     value: 'name',
     label: '이름'
+  },
+]
+const userStateOptions = [
+  {
+    value: 'user',
+    label: '일반'
+  },
+  {
+    value: 'admin',
+    label: '관리자'
   },
 ]
 const useStateOptions = [
@@ -39,7 +46,8 @@ const mockupList = ref([
     index: 1,
     userId: 'id_1',
     name: '홍길동',
-    team: '마케팅전략담당',
+    adminState: 'user',
+    qlik: 'professional',
     use: 'Y',
     loginDate: '2024-05-29 10:12:31'
   },
@@ -47,7 +55,8 @@ const mockupList = ref([
     index: 2,
     userId: 'id_2',
     name: '김길동',
-    team: '고객유지담당',
+    adminState: 'user',
+    qlik: 'Analyst',
     use: 'Y',
     loginDate: '2024-05-29 10:12:31'
   },
@@ -55,7 +64,8 @@ const mockupList = ref([
     index: 3,
     userId: 'id_3',
     name: '남길동',
-    team: '영업정책담당',
+    adminState: 'admin',
+    qlik: 'professional',
     use: 'N',
     loginDate: '2024-05-29 10:12:31'
   },
@@ -63,7 +73,8 @@ const mockupList = ref([
     index: 4,
     userId: 'id_4',
     name: '강길동',
-    team: '채널혁신담당',
+    adminState: 'user',
+    qlik: 'professional',
     use: 'N',
     loginDate: '2024-05-29 10:12:31'
   },
@@ -71,7 +82,8 @@ const mockupList = ref([
     index: 5,
     userId: 'id_5',
     name: '마길동',
-    team: '마케팅전략담당',
+    adminState: 'admin',
+    qlik: 'Analyst',
     use: 'Y',
     loginDate: '2024-05-29 10:12:31'
   }
@@ -80,12 +92,14 @@ const mockupList = ref([
 
 const searchParam = reactive<ISearchParams>({
   searchCondition: 'id',
+  adminState: 'user',
   use: 'Y',
   keyword: '',
   page: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
+  adminState: '',
   use: '',
   keyword: '',
   page: 1,
@@ -96,6 +110,7 @@ const userList = ref<IUserData[]>([])
 const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
+    adminState: searchParam.adminState,
     use: searchParam.use,
     keyword: searchParam.keyword,
     page: searchParam.page,
@@ -111,8 +126,9 @@ const changePage = async (newPage: number) => {
 }
 
 const handleReset = () => {
-  searchParam.searchCondition = 'id'
-  searchParam.use = 'Y'
+  searchParam.searchCondition = 'id',
+    searchParam.adminState = 'user',
+    searchParam.use = 'Y'
   searchParam.keyword = ''
 }
 
@@ -134,6 +150,7 @@ const getUserList = (params: ISearchParams) => {
 
 const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
+  searchedParam.adminState = searchParam.adminState
   searchedParam.use = searchParam.use
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
@@ -185,6 +202,9 @@ onMounted(() => {
       <SearchItem :label="t('common.search-bar.condition')">
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
       </SearchItem>
+      <SearchItem :label="t('user.label.admin-state')">
+        <basic-select-box v-model="searchParam.adminState" :options="userStateOptions" />
+      </SearchItem>
       <SearchItem :label="t('common.search-bar.use')">
         <basic-select-box v-model="searchParam.use" :options="useStateOptions" />
       </SearchItem>
@@ -201,7 +221,8 @@ onMounted(() => {
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />
         <el-table-column prop="name" :label="t('common.label.name')" min-width="150" align="center" />
-        <el-table-column prop="team" :label="t('common.label.team')" min-width="150" align="center" />
+        <el-table-column prop="adminState" :label="t('user.label.admin')" min-width="150" align="center" />
+        <el-table-column prop="qlik" :label="t('user.label.qlik')" min-width="150" align="center" />
         <el-table-column prop="use" :label="t('common.search-bar.use')" min-width="100" align="center">
           <template v-slot="scope">
             <p>
