@@ -1,5 +1,6 @@
 export interface ISearchParams {
   searchCondition: string
+  adminState: string
   use: string
   keyword: string
   page?: number
@@ -9,7 +10,8 @@ export interface IUserData{
   index: number
   userId: string
   name: string
-  team: string
+  adminState: string
+  qlik: string
   use: string
   loginDate: string
 }
