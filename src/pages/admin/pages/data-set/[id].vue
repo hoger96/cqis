@@ -131,6 +131,11 @@ const handleUpdateDataset = () => {
       job: dataset.job,
       playTime: dataset.playTime
     }
+    // const res = await request({
+    //   method: 'POST',
+    //   url: `/dataset/${datasetId.value}`,
+    //   data
+    // })
     console.log('수정: ', data)
     router.push({ path: '/admin/pages/data-set' })
   } catch (error) {
@@ -189,80 +194,67 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="document">
-    <div class="mb-4">
-      <h2 class="mgmt__title">
-        {{ t('data-set.title') }} {{ t('common.label.detail') }}
-      </h2>
-    </div>
-    <div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.data-set') }}</label>
-        <CustomInput v-model="dataset.name" :placeholder="t('data-set.placeholder.name')" :readonly="!updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.description') }}</label>
-        <CustomTextarea v-model="dataset.description" :placeholder="t('data-set.placeholder.description')"
-          :readonly="!updateMode" />
-      </div>
-      <div>
-        <label class="form__label--required">{{ t('data-set.label.target-table') }}</label>
-        <button v-if="updateMode" type="button" class="btn__secondary--sm" @click="handleAddTargetTable">
-          {{ t('common.button.add') }}
-        </button>
-        <div v-for="(targetTable, index) in targetTableList" :key="index" class="p-3 m-5">
-          <div class="flex">
-            <div class="form">
-              <label class="form__label--required">{{ t('data-set.table.source') }}</label>
-              <div>
-                <div>
-                  <div v-for="(source, sourceIndex) in targetTable.sourceList" :key="sourceIndex" class="flex">
-                    <CustomInput v-model="source.tableName" :placeholder="t('data-set.label.table')"
-                      :readonly="!updateMode" />
-                    <CustomInput v-model="source.column" :placeholder="t('data-set.label.column')"
-                      :readonly="!updateMode" />
-                    <CustomInput v-model="source.description" :placeholder="t('data-set.label.dd')"
-                      :readonly="!updateMode" />
-                    <button v-if="sourceIndex === 0 && updateMode" type="button" class="btn__secondary--sm"
-                      @click="handleAddSource(index)">
-                      {{ t('common.button.add') }}
-                    </button>
-                    <button v-if="targetTable.sourceList.length > 1 && updateMode" type="button"
-                      class="btn__secondary--sm" @click="handleRemoveSource(index, sourceIndex)">
-                      {{ t('common.button.delete') }}
-                    </button>
-                  </div>
-                </div>
+  <div class="p-20">
+    <h2 class="text-3xl font-semibold">
+      {{ t('data-set.title') }} {{ t('common.label.detail') }}
+    </h2>
+    <div class="my-10">
+      <form class="form">
+        <FormItem :label="t('data-set.label.data-set')" :required="updateMode">
+          <CustomInput v-model="dataset.name" :placeholder="t('data-set.placeholder.name')" :readonly="!updateMode" />
+        </FormItem>
+        <FormItem :label="t('data-set.label.description')" :required="updateMode">
+          <CustomTextarea v-model="dataset.description" :placeholder="t('data-set.placeholder.description')"
+            :readonly="!updateMode" />
+        </FormItem>
+        <FormItem :label="t('data-set.label.target-table')" :required="updateMode">
+          <button v-if="updateMode" type="button" class="btn__secondary--sm" @click="handleAddTargetTable">
+            {{ t('common.button.add') }}
+          </button>
+          <div v-for="(targetTable, index) in targetTableList" :key="index" class="p-3 m-5">
+            <FormItem :label="t('data-set.table.source')" :required="updateMode">
+              <div v-for="(source, sourceIndex) in targetTable.sourceList" :key="sourceIndex" class="flex">
+                <CustomInput v-model="source.tableName" :placeholder="t('data-set.label.table')"
+                  :readonly="!updateMode" />
+                <CustomInput v-model="source.column" :placeholder="t('data-set.label.column')"
+                  :readonly="!updateMode" />
+                <CustomInput v-model="source.description" :placeholder="t('data-set.label.dd')"
+                  :readonly="!updateMode" />
+                <button v-if="sourceIndex === 0 && updateMode" type="button" class="btn__secondary--sm"
+                  @click="handleAddSource(index)">
+                  {{ t('common.button.add') }}
+                </button>
+                <button v-if="targetTable.sourceList.length > 1 && updateMode" type="button" class="btn__secondary--sm"
+                  @click="handleRemoveSource(index, sourceIndex)">
+                  {{ t('common.button.delete') }}
+                </button>
               </div>
-            </div>
+            </FormItem>
+            <FormItem :label="t('data-set.table.target')" :required="updateMode">
+              <CustomInput v-model="targetTable.target.tableName" :placeholder="t('data-set.label.table')"
+                :readonly="!updateMode" />
+              <CustomInput v-model="targetTable.target.column" :placeholder="t('data-set.label.column')"
+                :readonly="!updateMode" />
+              <CustomInput v-model="targetTable.target.description" :placeholder="t('data-set.label.dd')"
+                :readonly="!updateMode" />
+            </FormItem>
           </div>
-          <div class="form">
-            <label class="form__label--required">{{ t('data-set.table.target') }}</label>
-            <CustomInput v-model="targetTable.target.tableName" :placeholder="t('data-set.label.table')"
-              :readonly="!updateMode" />
-            <CustomInput v-model="targetTable.target.column" :placeholder="t('data-set.label.column')"
-              :readonly="!updateMode" />
-            <CustomInput v-model="targetTable.target.description" :placeholder="t('data-set.label.dd')"
-              :readonly="!updateMode" />
-          </div>
-        </div>
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.batch') }}</label>
-        <basic-select-box v-model="dataset.batchType" :options="batchTypeOptions"
-          :placeholder="t('data-set.placeholder.batch-type')" :readonly="!updateMode" />
-        <CustomInput v-model="dataset.batchPeriod" :placeholder="t('data-set.placeholder.name')"
-          :readonly="!updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.first-job') }}</label>
-        <CustomInput v-model="dataset.job" :placeholder="t('data-set.placeholder.first-job')" :readonly="!updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('data-set.label.batch-time') }}</label>
-        <CustomInput v-model="dataset.playTime" :placeholder="t('data-set.placeholder.batch-time')"
-          :readonly="!updateMode" />
-      </div>
+        </FormItem>
+        <FormItem :label="t('data-set.label.batch')" use-group :required="updateMode">
+          <basic-select-box v-model="dataset.batchType" :options="batchTypeOptions"
+            :placeholder="t('data-set.placeholder.batch-type')" :readonly="!updateMode" />
+          <CustomInput v-model="dataset.batchPeriod" :placeholder="t('data-set.placeholder.name')"
+            :readonly="!updateMode" />
+        </FormItem>
+        <FormItem :label="t('data-set.label.first-job')" :required="updateMode">
+          <CustomInput v-model="dataset.job" :placeholder="t('data-set.placeholder.first-job')"
+            :readonly="!updateMode" />
+        </FormItem>
+        <FormItem :label="t('data-set.label.batch-time')" :required="updateMode">
+          <CustomInput v-model="dataset.playTime" :placeholder="t('data-set.placeholder.batch-time')"
+            :readonly="!updateMode" />
+        </FormItem>
+      </form>
     </div>
     <div class="mgmt__btn">
       <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleGoDatasetPage">

@@ -65,6 +65,12 @@ const menuList = reactive([
     menuIndex: '9',
     menuUrl: '/admin/pages/data-set',
   },
+  {
+    menuId: '데이터 시각화 관리',
+    menuName: '데이터 시각화 관리',
+    menuIndex: '10',
+    menuUrl: '/admin/pages/data-visual',
+  },
 ])
 
 const router = useRouter()
