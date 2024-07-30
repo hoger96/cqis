@@ -61,28 +61,23 @@ onMounted(() => {
     <h2 class="title">
       {{ t('faq.title') }}
     </h2>
-    <div class="content__box">
-      <div class="form">
-        <label class="form__label">{{ t('common.label.title') }}</label>
+    <form class="form content__box">
+      <FormItem :label="t('common.label.title')">
         <CustomInput v-model="faqForm.title" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-user') }}</label>
+      </FormItem>
+      <FormItem :label="t('common.label.create-user')">
         <CustomInput v-model="faqForm.createUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-date') }}</label>
+      </FormItem>
+      <FormItem :label="t('common.label.create-date')">
         <CustomInput v-model="faqForm.createDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.file') }}</label>
+      </FormItem>
+      <FormItem :label="t('common.label.file')">
         <CustomInput v-model="faqForm.file" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.content') }}</label>
+      </FormItem>
+      <FormItem :label="t('common.label.content')">
         <CustomTextarea v-model="faqForm.detail" readonly />
-      </div>
-    </div>
+      </FormItem>
+    </form>
     <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoFaqPage">
         {{ t('common.button.confirm') }}

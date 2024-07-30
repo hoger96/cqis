@@ -14,7 +14,7 @@ $prefix-list: webkit, moz, ms, o;
 }
 
 /* ========================== 가상선택자 ========================== */
-@mixin before($w, $h) {
+@mixin before($w: null, $h: null) {
   position: relative;
 
   &::before {
@@ -26,7 +26,7 @@ $prefix-list: webkit, moz, ms, o;
     @content;
   }
 }
-@mixin after($w, $h) {
+@mixin after($w: null, $h: null) {
   position: relative;
 
   &::after {
