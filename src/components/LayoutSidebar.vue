@@ -59,6 +59,12 @@ const menuList = reactive([
     menuIndex: '8',
     menuUrl: '/admin/pages/user-auth',
   },
+  {
+    menuId: '데이터 셋 관리',
+    menuName: '데이터 셋 관리',
+    menuIndex: '9',
+    menuUrl: '/admin/pages/data-set',
+  },
 ])
 
 const router = useRouter()

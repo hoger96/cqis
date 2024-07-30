@@ -174,7 +174,7 @@ onMounted(() => {
           {{ t('common.button.create') }}
         </button>
       </div>
-      <el-table :data="qnaList" style="width: 100%" @row-click="handleQnaDetail">
+      <el-table :data="qnaList" style="width: 100%" @row-dblclick="handleQnaDetail">
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="title" :label="t('common.label.title')" min-width="400" align="center" />
         <el-table-column prop="createUser" :label="t('common.label.create-user')" min-width="150" align="center" />
