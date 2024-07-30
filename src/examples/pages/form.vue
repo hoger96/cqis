@@ -63,7 +63,9 @@ const onFileChange = (file: File[]) => {
             <el-checkbox label="B" value="B" />
           </el-checkbox-group>
         </FormItem>
-        <FileUpload @file-change="onFileChange" />
+        <FormItem :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" />
+        </FormItem>
         <FormItem label="&quot;use-group&quot;" use-group>
           <basic-select-box v-model="initData" :options="options" />
           <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />

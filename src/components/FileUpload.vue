@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { IUploadProps } from '../examples/types/upload.ts'
 
+const { t } = useI18n()
+
 const dropZoneRef = ref<HTMLDivElement>()
 const attachedFile = ref<File>([])
 const fileRef = ref<HTMLInputElement | null>(null)
@@ -74,26 +76,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <FormItem label="첨부파일">
-    <div ref="dropZoneRef" class="form__upload">
-      <div class="form__upload-area">
-        <button v-if="props.show" type="button" @click="openFileUpload">
-          <icon name="file__line--bbb" width="32" height="32" alt="파일첨부" />
-        </button>
-        <p v-if="props.show" class="mt-2">파일을 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
-        <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
-      </div>
-      <div v-if="fileName.length > 0" class="form__upload--file">
-        <!-- FIXME 개발자 :: 확장자에 따른 name 변경 요청드립니다. :name="file__${fileExtension}"
-            확장자 종류 참고(docx,etc,hwp,img,pdf,pptx,xlsx,zip)
-            fileExtension.value에 저장해놨습니다!
-            -->
-        <Icon class="mr-1" name="file__img" width="16" height="16" alt="" area-hidden="true" />
-        <a :href="fileUrl" :download="fileName">{{ fileName }}</a>
-        <button type="button" class="ml-2.5">
-          <Icon name="delete__rect--fff" width="16" height="16" alt="첨부파일 삭제" />
-        </button>
-      </div>
+  <div ref="dropZoneRef" class="form__upload">
+    <div class="form__upload-area">
+      <button v-if="props.show" type="button" @click="openFileUpload">
+        <icon name="file__line--bbb" width="32" height="32" :alt="t('common.button.file')" />
+      </button>
+      <p v-if="props.show" class="mt-2">{{ t('common.label.file-placeholder') }}</p>
+      <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
     </div>
-  </FormItem>
+    <div v-if="fileName.length > 0" class="form__upload--file">
+      <Icon class="mr-1" :name="`file__${fileExtension}`" width="16" height="16" alt="" area-hidden="true" />
+      <a :href="fileUrl" :download="fileName">{{ fileName }}.{{ fileExtension }}</a>
+    </div>
+  </div>
 </template>

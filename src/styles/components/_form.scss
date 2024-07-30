@@ -63,6 +63,14 @@
     &--file {
       @include flex-box(flex);
       margin-top: 15px;
+      a {
+        @include truncate;
+        max-width: 100px;
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+      }
     }
   }
 
