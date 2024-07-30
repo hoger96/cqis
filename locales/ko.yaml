@@ -82,6 +82,10 @@ data-visual:
     job: JOB
     lineage: 리니지
     table: 테이블
+  lineage:
+    column: 컬럼 명
+    description: 테이블 설명
+    name: 테이블 명
   placeholder:
     app-description: 앱 설명을 입력하세요.
     app-name: 앱 명을 입력하세요.
