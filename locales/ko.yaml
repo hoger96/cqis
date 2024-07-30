@@ -1,9 +1,9 @@
 annc:
   admin-title: 공지사항 관리자
   title: 공지사항
-
 common:
   button:
+    add: 추가
     cancel: 취소
     close: 닫기
     confirm: 확인
@@ -21,6 +21,7 @@ common:
     count: 건
     create-date: 등록일자
     create-user: 등록자
+    detail: 상세
     end-date: 종료일
     file: 첨부파일
     file-placeholder: 파일을 드래그 앤 드롭 하거나 클릭하여 업로드하세요.
@@ -47,6 +48,33 @@ common:
     placeholder: 검색어를 입력하세요.
     state: 답변 상태
     use: 사용 여부
+data-set:
+  label:
+    batch: 배치 주기
+    batch-time: 배치 실행 시간
+    data-set: 데이터 셋 명
+    dd: 설명
+    description: 데이터 셋 설명
+    first-job: 선행 배치 JOB
+    table: 테이블 명
+    target-table: 타겟 테이블
+    physical-table: 물리 테이블명
+    job: 선행 Job명
+    column: 컬럼명
+  placeholder:
+    batch: 배치 횟수를 입력하세요.
+    batch-time: 선행 배치가 없을 경우 입력하세요.
+    batch-type: 배치 주기 타입
+    description: 데이터 셋 설명을 입력하세요.
+    first-job: 선행 배치가 존재 할 경우 입력하세요.
+    name: 데이터 셋 명을 입력하세요.
+  table:
+    table: 타겟 테이블명
+    target: Target
+    physical-table: 타켓 물리 테이블명
+    period: 주기
+    source: Source
+  title: 데이터 셋
 faq:
   admin-title: FAQ 관리자
   title: FAQ
@@ -58,8 +86,8 @@ user-auth:
   label:
     auth-date: 최종 권한 부여 일시
   popup:
-    title: 사용자 권한 설정
     auth: 권한 그룹 설정
+    title: 사용자 권한 설정
   title: 사용자 권한 관리
 qna:
   admin-title: Q&A 관리자

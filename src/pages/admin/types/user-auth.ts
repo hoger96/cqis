@@ -13,12 +13,12 @@ export interface IUserAuthData{
   authDate: string
 }
 
-export interface IUserPopup{
+export interface IUserAuthPopup{
   modelValue: boolean
   userId?: string
 }
 
-export interface IUserDetail{
+export interface IUserAuthDetail{
   name: string
   auth: []
   reason: string

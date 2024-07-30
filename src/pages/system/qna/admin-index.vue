@@ -191,7 +191,7 @@ onMounted(() => {
           {{ t('common.button.delete') }}
         </button>
       </div>
-      <el-table :data="qnaList" style="width: 100%" @row-click="handleQnaDetail"
+      <el-table :data="qnaList" style="width: 100%" @row-dblclick="handleQnaDetail"
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />

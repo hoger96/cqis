@@ -139,7 +139,7 @@ onMounted(() => {
       </SearchItem>
     </SearchForm>
     <div class="content__box">
-      <el-table :data="announcementList" style="width: 100%" @row-click="handleAnncDetail">
+      <el-table :data="announcementList" style="width: 100%" @row-dblclick="handleAnncDetail">
         <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
         <el-table-column prop="title" :label="t('common.label.title')" min-width="70" align="center" />
         <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="20" align="center" />
