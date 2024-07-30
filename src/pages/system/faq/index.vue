@@ -144,7 +144,7 @@ onMounted(() => {
       </SearchItem>
     </SearchForm>
     <div class="content__box">
-      <el-table :data="faqList" style="width: 100%" @row-click="handleFaqDetail">
+      <el-table :data="faqList" style="width: 100%" @row-dblclick="handleFaqDetail">
         <el-table-column prop="index" :label="t('common.label.index')" min-width="100" align="center" />
         <el-table-column prop="title" :label="t('common.label.title')" min-width="500" align="center" />
         <el-table-column prop="createUser" :label="t('common.label.create-user')" min-width="200" align="center" />

@@ -182,7 +182,7 @@ onMounted(() => {
           </button>
         </div>
       </div>
-      <el-table :data="faqList" style="width: 100%" @row-click="handleFaqDetail"
+      <el-table :data="faqList" style="width: 100%" @row-dblclick="handleFaqDetail"
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" min-width="5" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
