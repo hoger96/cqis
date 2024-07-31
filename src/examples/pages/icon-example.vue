@@ -19,12 +19,12 @@ const icons = [
   { fileName: 'file__hwp' },
   { fileName: 'file__img' },
   { fileName: 'file__pdf' },
-  { fileName: 'file__ppt' },
   { fileName: 'file__pptx' },
-  { fileName: 'file__word' },
   { fileName: 'file__xlsx' },
   { fileName: 'file__zip' },
   { fileName: 'calendar__line--b3b' },
+  { fileName: 'plus-round__full' },
+  { fileName: 'minus-round__full' },
 ]
 </script>
 

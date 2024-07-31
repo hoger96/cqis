@@ -5,3 +5,14 @@
   border-radius: $radius;
   box-sizing: border-box;
 }
+.box {
+  &--f7f {
+    @include box(30px, $bg-color: $gray-30);
+    .el-table {
+      th,
+      tr {
+        background-color: $gray-30 !important;
+      }
+    }
+  }
+}
