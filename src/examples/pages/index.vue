@@ -9,13 +9,10 @@ const uiComponentData = reactive<any[]>([
     name: 'button',
     desc: 'button',
   },
-  {
-    name: 'chart',
-    desc: ' line  / bar  / pie  / tree',
-  },
+
   {
     name: 'datepicker',
-    desc: 'vue-date-picker example',
+    desc: 'Range Datepicker',
   },
   {
     name: 'editor-example',
@@ -23,7 +20,7 @@ const uiComponentData = reactive<any[]>([
   },
   {
     name: 'form',
-    desc: 'Form(row) / SearchForm / File',
+    desc: 'Form / SearchForm / File',
   },
   {
     name: 'textfield',
@@ -34,8 +31,8 @@ const uiComponentData = reactive<any[]>([
     desc: 'checkbox / radio',
   },
   {
-    name: 'grid',
-    desc: 'Grid / Pagination',
+    name: 'table',
+    desc: 'table / Pagination',
   },
   {
     name: 'popup',
@@ -45,10 +42,14 @@ const uiComponentData = reactive<any[]>([
     name: 'tree',
     desc: 'Tree',
   },
-  {
-    name: 'chart-js',
-    desc: 'chartjs example',
-  },
+  // {
+  //   name: 'chart',
+  //   desc: ' line  / bar  / pie  / tree',
+  // },
+  // {
+  //   name: 'chart-js',
+  //   desc: 'chartjs example',
+  // },
   {
     name: 'icon-example',
     desc: 'Icon Image Example',
@@ -65,12 +66,13 @@ const movePage = (target: any) => {
     <h1 class="mb-10 text-3xl font-semibold">
       UI Examples
     </h1>
-
-    <el-table :data="uiComponentData" row-class-name="cursor-pointer" @row-click="movePage">
-      <el-table-column type="index" width="'5%'" />
-      <el-table-column property="name" label="Name" width="'20%'" />
-      <el-table-column property="desc" label="Description" width="'75%'" />
-    </el-table>
+    <div class="content__box">
+      <el-table :data="uiComponentData" row-class-name="cursor-pointer" @row-click="movePage">
+        <el-table-column type="index" width="'5%'" />
+        <el-table-column property="name" label="Name" width="'20%'" />
+        <el-table-column property="desc" label="Description" width="'75%'" />
+      </el-table>
+    </div>
   </div>
 </template>
 
