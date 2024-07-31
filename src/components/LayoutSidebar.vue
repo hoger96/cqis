@@ -71,6 +71,12 @@ const menuList = reactive([
     menuIndex: '10',
     menuUrl: '/admin/pages/data-visual',
   },
+  {
+    menuId: '배치 관리',
+    menuName: '배치 관리',
+    menuIndex: '11',
+    menuUrl: '/admin/pages/batch-mgmt',
+  },
 ])
 
 const router = useRouter()
