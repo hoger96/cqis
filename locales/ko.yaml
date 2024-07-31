@@ -1,6 +1,19 @@
 annc:
   admin-title: 공지사항 관리자
   title: 공지사항
+batch:
+  label:
+    code: 배치 코드
+    description: 배치 설명
+    kind: 배치 종류
+    name: 배치 이름
+    time: 배치 시간
+  placeholder:
+    code: 배치 코드를 입력하세요.
+    description: 배치 설명을 입력하세요.
+    name: 배치 이름을 입력하세요.
+    time: 배치 시간을 선택하세요.
+  title: 배치 관리
 common:
   button:
     add: 추가
