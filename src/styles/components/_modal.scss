@@ -1,5 +1,4 @@
 /* ========================== Variables ========================== */
-
 /* ========================== Mixins ========================== */
 
 /* ========================== Styles ========================== */
@@ -152,6 +151,30 @@
       @apply flex items-center justify-center;
       padding: 20px 30px 30px;
       text-align: center;
+    }
+  }
+}
+
+// 리니지 팝업
+.lineage-p {
+  .el-dialog {
+    &__body {
+      height: 800px;
+    }
+  }
+  &__content {
+    @include flex-box(flex);
+    height: 100%;
+
+    f-lineage {
+      @include flex-box(items-start);
+      overflow: hidden;
+      flex: 1 1 0%;
+    }
+    .form {
+      width: 40%;
+      padding-left: 30px;
+      border-left: 1px solid $gray-47;
     }
   }
 }
