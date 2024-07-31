@@ -23,6 +23,8 @@ const icons = [
   { fileName: 'file__xlsx' },
   { fileName: 'file__zip' },
   { fileName: 'calendar__line--b3b' },
+  { fileName: 'plus-round__full' },
+  { fileName: 'minus-round__full' },
 ]
 </script>
 

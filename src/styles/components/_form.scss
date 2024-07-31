@@ -4,6 +4,13 @@
 
 /* ========================== Styles ========================== */
 .form {
+  &--col {
+    @include flex-box(column);
+
+    .form__label-wrap {
+      margin-bottom: 5px;
+    }
+  }
   &__item {
     @include flex-box(flex);
     width: 100%;
@@ -34,11 +41,12 @@
       @include after {
         @include typo(15px, 500, $error, $input-size);
         content: '*';
-        top: 50%;
-        transform: translateY(-50%);
         padding-left: 2px;
         padding-right: 2px;
       }
+    }
+    &-wrap {
+      @include flex-box(items-center justify-between);
     }
   }
 
@@ -112,20 +120,16 @@
 
   &__item {
     @include flex-box(items-center);
+    @include space-x(10px);
     &:has(.custom-input) {
       flex: 1 1 0%;
-    }
-    > div {
-      & + div {
-        margin-left: 10px;
-      }
     }
   }
 
   &__label {
     @include typo($font-weight: 500, $line-height: $input-size);
     min-width: fit-content;
-    margin-right: 19px;
+    margin-right: 10px;
     white-space: nowrap;
   }
 

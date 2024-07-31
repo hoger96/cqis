@@ -8,7 +8,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  useBtn: {
+    type: Boolean,
+    required: false,
+  },
   useGroup: {
+    type: Boolean,
+    required: false,
+  },
+  formCol: {
     type: Boolean,
     required: false,
   },
@@ -16,8 +24,11 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="form__item">
-    <label class="form__label" :class="{ 'is-required': required }">{{ props.label }}</label>
+  <div class="form__item" :class="{ 'form--col': formCol }">
+    <div class="form__label-wrap">
+      <label v-if="label" class="form__label" :class="{ 'is-required': required }">{{ label }}</label>
+      <slot v-if="useBtn" name="label-btn" />
+    </div>
     <div v-if="useGroup" class="form__group">
       <slot />
     </div>

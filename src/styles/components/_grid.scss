@@ -60,6 +60,17 @@
       }
     }
   }
+  &.no-hover {
+    .el-table__body {
+      .el-table__row {
+        &:hover {
+          td.el-table__cell {
+            background: none;
+          }
+        }
+      }
+    }
+  }
   &--small {
     .el-table__body {
       .el-table__cell {
