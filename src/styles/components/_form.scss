@@ -63,6 +63,14 @@
     &--file {
       @include flex-box(flex);
       margin-top: 15px;
+      a {
+        @include truncate;
+        max-width: 100px;
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+      }
     }
   }
 
@@ -131,23 +139,3 @@
     margin-top: 30px;
   }
 }
-
-// .popup-form {
-//   @apply flex;
-
-//   .form__label {
-//     @include typo($font-weight: 500);
-//     width: 100px;
-//     min-width: 100px;
-//     margin-right: 10px;
-//     color: $gray-400;
-
-//     & + div {
-//       @include typo($line-height: 36px);
-//     }
-//   }
-
-//   & + & {
-//     margin-top: 10px;
-//   }
-// }

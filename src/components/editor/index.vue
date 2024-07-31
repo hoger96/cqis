@@ -88,10 +88,12 @@ watchEffect(() => {
 </script>
 
 <template>
-  <QuillEditor v-if="editorConfig.show" ref="quiEditorRef" v-model:content="editorConfig.content"
-    :theme="editorConfig.theme" :toolbar="editorConfig.toolbar" :read-only="editorConfig.readOnly"
-    :placeholder="editorConfig.placeholder" :content-type="editorConfig.contentType" @blue="onEditorBlur"
-    @focus="onEditorFocus" @ready="onEditorReady" @text-change="onEditorChange" @update:content="onUpdateContent" />
+  <div class="editor">
+    <QuillEditor v-if="editorConfig.show" ref="quiEditorRef" v-model:content="editorConfig.content"
+      :theme="editorConfig.theme" :toolbar="editorConfig.toolbar" :read-only="editorConfig.readOnly"
+      :placeholder="editorConfig.placeholder" :content-type="editorConfig.contentType" @blue="onEditorBlur"
+      @focus="onEditorFocus" @ready="onEditorReady" @text-change="onEditorChange" @update:content="onUpdateContent" />
+  </div>
 </template>
 
 <style scoped></style>
