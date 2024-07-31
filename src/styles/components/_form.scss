@@ -94,7 +94,7 @@
 }
 
 .search-form {
-  @include flex-box(justify-between items-center);
+  @include flex-box(justify-between items-start);
   @include box(20px 40px);
   width: 100%;
 
@@ -115,6 +115,11 @@
     &:has(.custom-input) {
       flex: 1 1 0%;
     }
+    > div {
+      & + div {
+        margin-left: 10px;
+      }
+    }
   }
 
   &__label {
@@ -132,7 +137,10 @@
     }
   }
   .el-select {
-    min-width: 167px;
+    width: 167px;
+  }
+  .custom-input {
+    min-width: 300px;
   }
 
   & + .table {

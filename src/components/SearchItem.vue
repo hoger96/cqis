@@ -2,14 +2,14 @@
 const props = defineProps({
   label: {
     type: String,
-    required: true,
+    required: false,
   },
 })
 </script>
 
 <template>
   <div class="search-form__item">
-    <label class="search-form__label">{{ props.label }}</label>
+    <label v-if="label" class="search-form__label">{{ props.label }}</label>
     <slot />
   </div>
 </template>

@@ -89,6 +89,20 @@ const onFileChange = (file: File[]) => {
             @keyup.enter="handleSearch" />
         </SearchItem>
       </SearchForm>
+      <div class="my-10" />
+      <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+        <SearchItem>
+          <basic-select-box v-model="initData" :options="options" />
+          <CustomInput v-model="form.input" :placeholder="t('common.search-bar.placeholder')"
+            @keyup.enter="handleSearch" />
+        </SearchItem>
+        <SearchItem label="관리자 여부">
+          <basic-select-box v-model="initData" :options="options" />
+        </SearchItem>
+        <SearchItem label="사용 여부">
+          <basic-select-box v-model="initData" :options="options" />
+        </SearchItem>
+      </SearchForm>
     </div>
   </div>
 </template>
