@@ -57,6 +57,10 @@
     .el-select {
       max-width: 167px;
     }
+    &--col {
+      @include space-y(10px);
+      flex: 1 1 0%;
+    }
   }
 
   &__upload {
