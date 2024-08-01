@@ -14,6 +14,19 @@ batch:
     name: 배치 이름을 입력하세요.
     time: 배치 시간을 선택하세요.
   title: 배치 관리
+batch-history:
+  label:
+    complete: 완료
+    count: 작업 건수
+    date-range: 배치 작업 시작 일
+    end-date: 작업 종료 일시
+    fail: 실패
+    processing: 진행중
+    restart: 재실행
+    start-date: 작업 시작 일시
+    state: 배치 상태
+    wait: 대기
+  title: 배치 이력 관리
 common:
   button:
     add: 추가

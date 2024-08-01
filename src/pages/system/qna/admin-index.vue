@@ -171,15 +171,13 @@ onMounted(() => {
       {{ t('qna.admin-title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem :label="t('common.search-bar.condition')">
+      <SearchItem>
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
+          @keyup.enter="handleSearch" />
       </SearchItem>
       <SearchItem :label="t('common.search-bar.state')">
         <basic-select-box v-model="searchParam.state" :options="searchStateOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.keyword')">
-        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
     <div class="content__box">
