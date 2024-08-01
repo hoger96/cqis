@@ -8,6 +8,10 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const anncId = ref(route.params.id)
+const contents = ref<string | Delta>()
+const attachedFile = ref<File[]>([])
+const dataLoaded = ref(false)
+const questionUpload = ref(false)
 
 const anncForm = reactive<IAnnouncementDetail>({
   title: '',
@@ -15,25 +19,34 @@ const anncForm = reactive<IAnnouncementDetail>({
   createDate: '',
   updateUser: '',
   updateDate: '',
-  detail: '',
-  file: '',
   postingPeriod: '',
 })
 
-const getAnncDetail = () => {
+const fileData = {
+  lastModified: 1721021632831,
+  lastModifiedDate: 'Mon Jul 15 2024 14: 33: 52 GMT +0900(한국 표준시)',
+  name: '호걸가계부.xlsx',
+  size: 14083,
+  type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  webkitRelativePath: ''
+};
+const getAnncDetail = async () => {
   try {
     // const res = await request({
     //   method: 'GET',
     //   url: `/annc/${anncId.value}`
     // })
-    const res = {
+    const res = await {
       title: '[전사공지] 안전관리',
       createUser: '김영현',
       createDate: '2024-07-18',
       detail: '안전관리에 대하여 알려드리겠습니다.',
-      file: '안전관리.pdf',
       startDate: '2024-07-18',
-      endDate: '2024-07-24'
+      endDate: '2024-07-24',
+      file: new File([""], fileData.name, {
+        type: fileData.type,
+        lastModified: fileData.lastModified
+      })
     }
     return res
   }
@@ -42,25 +55,32 @@ const getAnncDetail = () => {
   }
 }
 
-const setAnncDetail = () => {
-  const data = getAnncDetail()
+const setAnncDetail = async () => {
+  const data = await getAnncDetail()
   const period = [data.startDate, data.endDate]
   anncForm.title = data.title
   anncForm.createUser = data.createUser
   anncForm.createDate = data.createDate
   anncForm.updateUser = data.updateUser ? data.updateUser : '-'
   anncForm.updateDate = data.updateDate ? data.updateDate : '-'
-  anncForm.detail = data.detail
-  anncForm.file = data.file
+  contents.value = data.detail
   anncForm.postingPeriod = period
+  if (data.file) {
+    attachedFile.value = [data.file]
+  }
+  dataLoaded.value = true
 }
 
 const handleGoAnncPage = () => {
   router.push({ path: '/system/announcement' })
 }
 
-onMounted(() => {
-  setAnncDetail()
+const onFileChange = (file: File[]) => {
+  attachedFile.value = file
+}
+
+onMounted(async () => {
+  await setAnncDetail()
 })
 </script>
 
@@ -70,41 +90,34 @@ onMounted(() => {
       {{ t('annc.title') }}
     </h2>
     <div class="content__box">
-      <div class="form">
-        <label class="form__label">{{ t('common.label.title') }}</label>
-        <CustomInput v-model="anncForm.title" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.period') }}</label>
-        <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
-          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-user') }}</label>
-        <CustomInput v-model="anncForm.createUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-date') }}</label>
-        <CustomInput v-model="anncForm.createDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.update-user') }}</label>
-        <CustomInput v-model="anncForm.updateUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.update-date') }}</label>
-        <CustomInput v-model="anncForm.updateDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.file') }}</label>
-        <CustomInput v-model="anncForm.file" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.content') }}</label>
-        <Editor v-model:content="anncForm.detail" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
-          :read-only="true" />
-      </div>
+      <form class="form">
+        <FormItem :label="t('common.label.title')">
+          <CustomInput v-model="anncForm.title" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.period')">
+          <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~"
+            value-format="YYYY-MM-DD" :start-placeholder="t('common.label.start-date')"
+            :end-placeholder="t('common.label.end-date')" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-user')">
+          <CustomInput v-model="anncForm.createUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-date')">
+          <CustomInput v-model="anncForm.createDate" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-user')">
+          <CustomInput v-model="anncForm.updateUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-date')">
+          <CustomInput v-model="anncForm.updateDate" readonly />
+        </FormItem>
+        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" :show="questionUpload" :file="attachedFile" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')">
+          <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
+        </FormItem>
+      </form>
     </div>
     <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoAnncPage">

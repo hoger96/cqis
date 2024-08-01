@@ -7,9 +7,13 @@ import Editor from '~/components/Editor.vue'
 
 const router = useRouter()
 const { t } = useI18n()
-const title = ref('')
-const postingPeriod = ref('')
 const contents = ref<string | Delta>()
+const attachedFile = ref<File[]>([])
+
+const anncForm = reactive<IAnnouncementDetail>({
+  title: '',
+  postingPeriod: '',
+})
 
 const onEditorChange = (value: string) => {
   contents.value = value
@@ -27,18 +31,18 @@ const handleCreateAnnc = () => {
       const formData = new FormData()
       formData.append('file', attachedFile.value[0])
       data.value = {
-        title: title.value,
-        startDate: postingPeriod.value[0],
-        endDate: postingPeriod.value[1],
+        title: anncForm.title,
+        startDate: anncForm.postingPeriod[0],
+        endDate: anncForm.postingPeriod[1],
         detail: contents,
         file: formData
       }
     }
     else {
       data.value = {
-        title: title.value,
-        startDate: postingPeriod.value[0],
-        endDate: postingPeriod.value[1],
+        title: anncForm.title,
+        startDate: anncForm.postingPeriod[0],
+        endDate: anncForm.postingPeriod[1],
         detail: contents,
       }
     }
@@ -60,22 +64,24 @@ const onFileChange = (file: File[]) => {
     <h2 class="title">
       {{ t('annc.title') }} {{ t('common.button.create') }}
     </h2>
-    <div>
-      <div class="form">
-        <label class="form__label--required">{{ t('common.label.title') }}</label>
-        <CustomInput v-model="title" />
-      </div>
-      <div class="form">
-        <label class="form__label--required">{{ t('common.label.period') }}</label>
-        <el-date-picker v-model="postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
-          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" />
-      </div>
-      <div>
-        <label class="form__label--required">{{ t('common.label.content') }}</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
-      </div>
-      <FileUpload @file-change="onFileChange" />
+    <div class="content__box">
+      <form class="form">
+        <FormItem :label="t('common.label.title')" required>
+          <CustomInput v-model="anncForm.title" />
+        </FormItem>
+        <FormItem :label="t('common.label.period')" required>
+          <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~"
+            value-format="YYYY-MM-DD" :start-placeholder="t('common.label.start-date')"
+            :end-placeholder="t('common.label.end-date')" />
+        </FormItem>
+        <FormItem :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')" required>
+          <Editor v-model:content="contents" toolbar="full" theme="snow"
+            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
+        </FormItem>
+      </form>
     </div>
     <div class="content__btns">
       <button type="button" class="btn__secondary--lg" @click="handleGoAnncPage">
