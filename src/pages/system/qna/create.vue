@@ -10,7 +10,7 @@ const router = useRouter()
 const { t } = useI18n()
 const title = ref('')
 const contents = ref<string | Delta>()
-const attachedFile = ref<File>([])
+const attachedFile = ref<File[]>([])
 
 const onEditorChange = (value: string) => {
   contents.value = value
@@ -32,9 +32,6 @@ const handleCreateQna = () => {
         detail: contents,
         file: formData
       }
-      for (const x of formData) {
-        console.log(x);
-      };
     }
     else {
       data.value = {
@@ -43,7 +40,7 @@ const handleCreateQna = () => {
       }
     }
     console.log('등록: ', data.value)
-    // router.push({ path: '/system/qna' })
+    router.push({ path: '/system/qna' })
   }
   catch (error) {
     console.error(error)
@@ -60,17 +57,19 @@ const onFileChange = (file: File[]) => {
     <h2 class="title">
       {{ t('qna.title') }} {{ t('common.button.create') }}
     </h2>
-    <div>
-      <div class="form">
-        <label class="form__label--required">{{ t('common.label.title') }}</label>
-        <CustomInput v-model="title" />
-      </div>
-      <div>
-        <label class="form__label--required">{{ t('common.label.content') }}</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
-      </div>
-      <FileUpload @file-change="onFileChange" />
+    <div class="content__box">
+      <form class="form">
+        <FormItem :label="t('common.label.title')" required>
+          <CustomInput v-model="title" />
+        </FormItem>
+        <FormItem :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')" required>
+          <Editor v-model:content="contents" toolbar="full" theme="snow"
+            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
+        </FormItem>
+      </form>
     </div>
     <div class="content__btns">
       <button type="button" class="btn__secondary--lg" @click="handleGoQnaPage">

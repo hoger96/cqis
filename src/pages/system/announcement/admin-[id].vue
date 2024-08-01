@@ -10,10 +10,8 @@ const router = useRouter()
 const anncId = ref(route.params.id)
 const updateMode = ref(true)
 const contents = ref<string | Delta>()
-const dropZoneRef = ref<HTMLDivElement>()
-const attachedFile = ref<File>([])
-const fileRef = ref<HTMLInputElement | null>(null)
-const fileName = ref('')
+const attachedFile = ref<File[]>([])
+const dataLoaded = ref(false)
 
 const anncForm = reactive<IAnnouncementDetail>({
   title: '',
@@ -21,24 +19,35 @@ const anncForm = reactive<IAnnouncementDetail>({
   createDate: '',
   updateUser: '',
   updateDate: '',
-  file: '',
   postingPeriod: '',
 })
 
-const getAnncDetail = () => {
+const fileData = {
+  lastModified: 1721021632831,
+  lastModifiedDate: 'Mon Jul 15 2024 14: 33: 52 GMT +0900(한국 표준시)',
+  name: '호걸가계부.xlsx',
+  size: 14083,
+  type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  webkitRelativePath: ''
+};
+
+const getAnncDetail = async () => {
   try {
     // const res = await request({
     //   method: 'GET',
     //   url: `/annc/${anncId.value}`
     // })
-    const res = {
+    const res = await {
       title: '[전사공지] 안전관리',
       createUser: '김영현',
       createDate: '2024-07-18',
       detail: '안전관리에 대하여 알려드리겠습니다.',
-      file: '안전관리.pdf',
       startDate: '2024-07-18',
-      endDate: '2024-07-24'
+      endDate: '2024-07-24',
+      file: new File([""], fileData.name, {
+        type: fileData.type,
+        lastModified: fileData.lastModified
+      })
     }
     return res
   }
@@ -47,8 +56,8 @@ const getAnncDetail = () => {
   }
 }
 
-const setAnncDetail = () => {
-  const data = getAnncDetail()
+const setAnncDetail = async () => {
+  const data = await getAnncDetail()
   const period = [data.startDate, data.endDate]
   anncForm.title = data.title
   anncForm.createUser = data.createUser
@@ -56,46 +65,19 @@ const setAnncDetail = () => {
   anncForm.updateUser = data.updateUser ? data.updateUser : '-'
   anncForm.updateDate = data.updateDate ? data.updateDate : '-'
   contents.value = data.detail
-  fileName.value = data.file
   anncForm.postingPeriod = period
+  if (data.file) {
+    attachedFile.value = [data.file]
+  }
+  dataLoaded.value = true
 }
 
 const onEditorChange = (value: string) => {
   contents.value = value
 }
 
-const onDrop = (files: File[] | null, event: DragEvent) => {
-  if (files) {
-    uploadFile(event, files)
-  }
-}
-useDropZone(dropZoneRef, {
-  onDrop,
-  // dataTypes: ['application/pdf', 'application/vnd.hancom.hwp', 'application/haansofthwp', 'application/x-hwp', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
-})
-
-const uploadFile = (e: Event | DragEvent, dropFile?: File) => {
-  const target = e.target as HTMLInputElement
-  const files = dropFile || target.files
-
-  if (!files)
-    return
-
-  attachedFile.value = files as any
-  setFileName()
-}
-
-
-const openFileUpload = (e: Event) => {
-  if (fileRef.value !== null)
-    fileRef.value.value = ''
-  if (!fileRef.value)
-    return e.preventDefault()
-  fileRef.value.click()
-}
-
-const setFileName = () => {
-  fileName.value = attachedFile.value[0].name
+const onFileChange = (file: File[]) => {
+  attachedFile.value = file
 }
 
 const handleUpdateAnnc = () => {
@@ -142,8 +124,8 @@ const handleCancel = () => {
   updateMode.value = true
 }
 
-onMounted(() => {
-  setAnncDetail()
+onMounted(async () => {
+  await setAnncDetail()
 })
 </script>
 
@@ -153,49 +135,36 @@ onMounted(() => {
       {{ t('annc.admin-title') }}
     </h2>
     <div class="content__box">
-      <div class="form">
-        <label :class="updateMode ? 'form__label' : 'form__label--required'"> {{ t('common.label.title') }}</label>
-        <CustomInput v-model="anncForm.title" :readonly="updateMode" />
-      </div>
-      <div class="form">
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">{{ t('common.label.period') }}</label>
-        <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
-          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')"
-          :readonly="updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-user') }}</label>
-        <CustomInput v-model="anncForm.createUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-date') }}</label>
-        <CustomInput v-model="anncForm.createDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.update-user') }}</label>
-        <CustomInput v-model="anncForm.updateUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.update-date') }}</label>
-        <CustomInput v-model="anncForm.updateDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.file') }}</label>
-        <div ref="dropZoneRef" class="form__upload">
-          <button v-if="!updateMode" class="btn__secondary-line--md" @click="openFileUpload">
-            {{ t('common.button.file') }}
-          </button>
-          <p v-if="!updateMode">{{ t('common.label.file-placeholder') }}</p>
-          <p>{{ fileName }}</p>
-          <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
-        </div>
-      </div>
-      <div>
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">{{ t('common.label.content') }}</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
-          :read-only="updateMode" />
-      </div>
+      <form class="form">
+        <FormItem :label="t('common.label.title')" :required="!updateMode">
+          <CustomInput v-model="anncForm.title" :readonly="updateMode" />
+        </FormItem>
+        <FormItem :label="t('common.label.period')" :required="!updateMode">
+          <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~"
+            value-format="YYYY-MM-DD" :start-placeholder="t('common.label.start-date')"
+            :end-placeholder="t('common.label.end-date')" :readonly="updateMode" />
+        </FormItem>
+        <FormItem :label="t('common.label.create-user')" :required="!updateMode">
+          <CustomInput v-model="anncForm.createUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-date')" :required="!updateMode">
+          <CustomInput v-model="anncForm.createDate" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-user')" :required="!updateMode">
+          <CustomInput v-model="anncForm.updateUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-date')" :required="!updateMode">
+          <CustomInput v-model="anncForm.updateDate" readonly />
+        </FormItem>
+        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')" :required="!updateMode">
+          <Editor v-model:content="contents" toolbar="full" theme="snow"
+            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+            :read-only="updateMode" />
+        </FormItem>
+      </form>
     </div>
     <div class="content__btns">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoAnncPage">

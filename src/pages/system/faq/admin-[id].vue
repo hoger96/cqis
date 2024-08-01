@@ -4,6 +4,8 @@ import { useRouter, useRoute } from 'vue-router'
 import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 import { IFaqDetail } from '../types/faq.ts'
+import FileUpload from '~/components/FileUpload.vue'
+import Editor from '~/components/Editor.vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -11,10 +13,8 @@ const router = useRouter()
 const faqId = ref(route.params.id)
 const updateMode = ref(true)
 const contents = ref<string | Delta>()
-const dropZoneRef = ref<HTMLDivElement>()
-const attachedFile = ref<File>([])
-const fileRef = ref<HTMLInputElement | null>(null)
-const fileName = ref('')
+const attachedFile = ref<File[]>([])
+const dataLoaded = ref(false)
 
 const faqForm = reactive<IFaqDetail>({
   title: '',
@@ -22,21 +22,32 @@ const faqForm = reactive<IFaqDetail>({
   createDate: '',
   updateUser: '',
   updateDate: '',
-  file: '',
 })
 
-const getFaqDetail = () => {
+const fileData = {
+  lastModified: 1721021632831,
+  lastModifiedDate: 'Mon Jul 15 2024 14: 33: 52 GMT +0900(한국 표준시)',
+  name: '호걸가계부.xlsx',
+  size: 14083,
+  type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  webkitRelativePath: ''
+};
+
+const getFaqDetail = async () => {
   try {
     // const res = await request({
     //   method: 'GET',
     //   url: `/faq/${faqId.value}`
     // })
-    const res = {
+    const res = await {
       title: '[전사공지] 안전관리',
       createUser: '김영현',
       createDate: '2024-07-18',
       detail: '안전관리에 대하여 알려드리겠습니다.',
-      file: '안전관리.pdf',
+      file: new File([""], fileData.name, {
+        type: fileData.type,
+        lastModified: fileData.lastModified
+      })
     }
     return res
   }
@@ -45,53 +56,22 @@ const getFaqDetail = () => {
   }
 }
 
-const setFaqDetail = () => {
-  const data = getFaqDetail()
+const setFaqDetail = async () => {
+  const data = await getFaqDetail()
   faqForm.title = data.title
   faqForm.createUser = data.createUser
   faqForm.createDate = data.createDate
   faqForm.updateUser = data.updateUser ? data.updateUser : '-'
   faqForm.updateDate = data.updateDate ? data.updateDate : '-'
   contents.value = data.detail
-  fileName.value = data.file
+  if (data.file) {
+    attachedFile.value = [data.file]
+  }
+  dataLoaded.value = true
 }
 
 const onEditorChange = (value: string) => {
   contents.value = value
-}
-
-const onDrop = (files: File[] | null, event: DragEvent) => {
-  if (files) {
-    uploadFile(event, files)
-  }
-}
-useDropZone(dropZoneRef, {
-  onDrop,
-  // dataTypes: ['application/pdf', 'application/vnd.hancom.hwp', 'application/haansofthwp', 'application/x-hwp', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
-})
-
-const uploadFile = (e: Event | DragEvent, dropFile?: File) => {
-  const target = e.target as HTMLInputElement
-  const files = dropFile || target.files
-
-  if (!files)
-    return
-
-  attachedFile.value = files as any
-  setFileName()
-}
-
-
-const openFileUpload = (e: Event) => {
-  if (fileRef.value !== null)
-    fileRef.value.value = ''
-  if (!fileRef.value)
-    return e.preventDefault()
-  fileRef.value.click()
-}
-
-const setFileName = () => {
-  fileName.value = attachedFile.value[0].name
 }
 
 const handleUpdateFaq = () => {
@@ -122,6 +102,10 @@ const handleUpdateFaq = () => {
   }
 }
 
+const onFileChange = (file: File[]) => {
+  attachedFile.value = file
+}
+
 const handleChangeUpdateMode = () => {
   updateMode.value = false
 }
@@ -134,8 +118,8 @@ const handleCancel = () => {
   updateMode.value = true
 }
 
-onMounted(() => {
-  setFaqDetail()
+onMounted(async () => {
+  await setFaqDetail()
 })
 </script>
 
@@ -145,43 +129,31 @@ onMounted(() => {
       {{ t('faq.admin-title') }}
     </h2>
     <div class="content__box">
-      <div class="form">
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">제목</label>
-        <CustomInput v-model="faqForm.title" :readonly="updateMode" />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-user') }}</label>
-        <CustomInput v-model="faqForm.createUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-date') }}</label>
-        <CustomInput v-model="faqForm.createDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.update-user') }}</label>
-        <CustomInput v-model="faqForm.updateUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.update-date') }}</label>
-        <CustomInput v-model="faqForm.updateDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.file') }}</label>
-        <div ref="dropZoneRef" class="form__upload">
-          <button v-if="!updateMode" class="btn__secondary-line--md" @click="openFileUpload">
-            {{ t('common.button.file') }}
-          </button>
-          <p v-if="!updateMode">{{ t('common.label.file-placeholder') }}</p>
-          <p>{{ fileName }}</p>
-          <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
-        </div>
-      </div>
-      <div>
-        <label :class="updateMode ? 'form__label' : 'form__label--required'">{{ t('common.label.content') }}</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
-          :read-only="updateMode" />
-      </div>
+      <form class="form">
+        <FormItem :label="t('common.label.title')" :required="!updateMode">
+          <CustomInput v-model="faqForm.title" :readonly="updateMode" />
+        </FormItem>
+        <FormItem :label="t('common.label.create-user')" :required="!updateMode">
+          <CustomInput v-model="faqForm.createUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-date')" :required="!updateMode">
+          <CustomInput v-model="faqForm.createDate" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-user')" :required="!updateMode">
+          <CustomInput v-model="faqForm.updateUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-date')" :required="!updateMode">
+          <CustomInput v-model="faqForm.updateDate" readonly />
+        </FormItem>
+        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')" :required="!updateMode">
+          <Editor v-model:content="contents" toolbar="full" theme="snow"
+            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+            :read-only="updateMode" />
+        </FormItem>
+      </form>
     </div>
     <div class="content__btns">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoFaqPage">

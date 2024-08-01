@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import "@ollion/flow-core";
 import "@ollion/flow-lineage";
 import { html } from "lit";
 import { ref } from "vue";

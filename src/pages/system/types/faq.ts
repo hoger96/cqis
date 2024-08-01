@@ -18,7 +18,6 @@ export interface IFaqDetail {
   title: string
   createUser: string
   createDate: string
-  file?: any[]
   detail: string
 }
 

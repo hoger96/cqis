@@ -4,64 +4,39 @@ import { useRouter, useRoute } from 'vue-router'
 import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 import { IQnaDetail } from '../types/qna.ts'
+import Editor from '~/components/Editor.vue'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const qnaId = ref(route.params.id)
-const createAnwerMode = ref(true)
-const dropZoneRef = ref<HTMLDivElement>()
-const attachedFile = ref<File>([])
-const fileRef = ref<HTMLInputElement | null>(null)
+const questionUpload = ref(false)
+const createAnswerMode = ref(true)
+const attachedAnswerFile = ref<File[]>([])
+const attachedQuestionFile = ref<File[]>([])
+const dataLoaded = ref(false)
+const questionContents = ref<string | Delta>()
+const answerContents = ref<string | Delta>()
 
-const onDrop = (files: File[] | null, event: DragEvent) => {
-  if (files) {
-    uploadFile(event, files)
-  }
-}
-useDropZone(dropZoneRef, {
-  onDrop,
-  // dataTypes: ['application/pdf', 'application/vnd.hancom.hwp', 'application/haansofthwp', 'application/x-hwp', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
-})
-
-
-const openFileUpload = (e: Event) => {
-  if (fileRef.value !== null)
-    fileRef.value.value = ''
-  if (!fileRef.value)
-    return e.preventDefault()
-  fileRef.value.click()
-}
-
-const setFileName = () => {
-  qnaForm.answer.file = attachedFile.value[0].name
-}
-
-const uploadFile = (e: Event | DragEvent, dropFile?: File) => {
-  const target = e.target as HTMLInputElement
-  const files = dropFile || target.files
-
-  if (!files)
-    return
-
-  attachedFile.value = files as any
-  setFileName()
-}
+const fileData = {
+  lastModified: 1721021632831,
+  lastModifiedDate: 'Mon Jul 15 2024 14: 33: 52 GMT +0900(한국 표준시)',
+  name: '호걸가계부.xlsx',
+  size: 14083,
+  type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  webkitRelativePath: ''
+};
 
 const qnaForm = reactive<IQnaDetail>({
   question: {
     title: '',
     createUser: '',
     createDate: '',
-    detail: '',
-    file: ''
   },
   answer: {
     title: '',
     createUser: '',
     createDate: '',
-    detail: '',
-    file: '',
   }
 })
 
@@ -69,26 +44,36 @@ const onEditorChange = (value: string) => {
   qnaForm.answer.detail = value
 }
 
-const getQnaDetail = () => {
+const onFileChange = (file: File[]) => {
+  attachedAnswerFile.value = file
+}
+
+const getQnaDetail = async () => {
   try {
     // const res = await request({
     //   method: 'GET',
     //   url: `/qna/${qnaId.value}`
     // })
-    const res = {
+    const res = await {
       question: {
         title: '검색결과 노출기준에 관련 문의',
         createUser: '문지연',
         createDate: '2024-07-18',
         detail: '안녕하세요. 검색결과 노출기준에 대해 궁금합니다.',
-        file: '캡처.jpg'
+        file: new File([""], fileData.name, {
+          type: fileData.type,
+          lastModified: fileData.lastModified
+        })
       },
       answer: {
         title: 'RE: 검색결과 노출기준에 관련 문의',
         createUser: '김수철',
         createDate: '2024-07-19',
         detail: '안녕하세요. 기준에 대해 말씀드리겠습니다.',
-        file: '캡처.jpg'
+        file: new File([""], fileData.name, {
+          type: fileData.type,
+          lastModified: fileData.lastModified
+        })
       }
     }
     return res
@@ -98,30 +83,35 @@ const getQnaDetail = () => {
   }
 }
 
-const setQnaDetail = () => {
-  const data = getQnaDetail()
+const setQnaDetail = async () => {
+  const data = await getQnaDetail()
   qnaForm.question.title = data.question.title
   qnaForm.question.createUser = data.question.createUser
   qnaForm.question.createDate = data.question.createDate
-  qnaForm.question.detail = data.question.detail
-  qnaForm.question.file = data.question.file
+  questionContents.value = data.question.detail
+  if (data.question.file) {
+    attachedQuestionFile.value = [data.question.file]
+  }
   if (data.answer) {
     qnaForm.answer.title = data.answer.title
     qnaForm.answer.createUser = data.answer.createUser
     qnaForm.answer.createDate = data.answer.createDate
-    qnaForm.answer.detail = data.answer.detail
-    qnaForm.answer.file = data.answer.file
+    answerContents.value = data.answer.detail
+    if (data.answer.file) {
+      attachedAnswerFile.value = [data.answer.file]
+    }
   } else {
-    createAnwerMode.value = false
+    createAnswerMode.value = false
   }
+  dataLoaded.value = true
 }
 
 const handleAnswerQna = () => {
   try {
     const data = ref({})
-    if (attachedFile.value.length) {
+    if (attachedAnswerFile.value.length) {
       const formData = new FormData()
-      formData.append('file', attachedFile.value[0])
+      formData.append('file', attachedAnswerFile.value[0])
       data.value = {
         detail: qnaForm.answer.detail,
         file: formData
@@ -133,7 +123,7 @@ const handleAnswerQna = () => {
       }
     }
     console.log('등록: ', data.value)
-    createAnwerMode.value = true
+    createAnswerMode.value = true
     setQnaDetail()
   }
   catch (error) {
@@ -145,8 +135,12 @@ const handleGoQnaPage = () => {
   router.push({ path: '/system/qna/admin-index' })
 }
 
-onMounted(() => {
-  setQnaDetail()
+const onFileChangeQuestion = () => {
+  console.log('ddd')
+}
+
+onMounted(async () => {
+  await setQnaDetail()
 })
 </script>
 
@@ -156,72 +150,55 @@ onMounted(() => {
       {{ t('qna.admin-title') }}
     </h2>
     <div class="content__box">
-      <div class="form">
-        <label class="form__label">{{ t('common.label.title') }}</label>
-        <CustomInput v-model="qnaForm.question.title" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-user') }}</label>
-        <CustomInput v-model="qnaForm.question.createUser" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.create-date') }}</label>
-        <CustomInput v-model="qnaForm.question.createDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.file') }}</label>
-        <div class="form__upload">
-          <p>{{ qnaForm.question.file }}</p>
-          <input id="file-upload" ref="fileRef" type="file" style="display: none;">
-        </div>
-      </div>
-      <div>
-        <label class='form__label'>{{ t('common.label.content') }}</label>
-        <Editor v-model:content="qnaForm.question.detail" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
-          :read-only="true" />
-      </div>
+      <form class="form">
+        <FormItem :label="t('common.label.title')">
+          <CustomInput v-model="qnaForm.question.title" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-user')">
+          <CustomInput v-model="qnaForm.question.createUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-date')">
+          <CustomInput v-model="qnaForm.question.createDate" readonly />
+        </FormItem>
+        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChangeQuestion" :show="questionUpload" :file="attachedQuestionFile" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')">
+          <Editor v-model:content="questionContents" toolbar="full" theme="snow"
+            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+            :read-only="true" />
+        </FormItem>
+      </form>
     </div>
     <div class="content__box">
-      <div v-if="createAnwerMode" class="form">
-        <label class='form__label'>{{ t('common.label.title') }}</label>
-        <CustomInput v-model="qnaForm.answer.title" readonly />
-      </div>
-      <div v-if="createAnwerMode" class="form">
-        <label class="form__label">{{ t('common.label.create-user') }}</label>
-        <CustomInput v-model="qnaForm.answer.createUser" readonly />
-      </div>
-      <div v-if="createAnwerMode" class="form">
-        <label class="form__label">{{ t('common.label.create-date') }}</label>
-        <CustomInput v-model="qnaForm.answer.createDate" readonly />
-      </div>
-      <div class="form">
-        <label class="form__label">{{ t('common.label.file') }}</label>
-        <div ref="dropZoneRef" class="form__upload">
-          <button v-if="!createAnwerMode" class="btn__secondary-line--md" @click="openFileUpload">
-            {{ t('common.button.file') }}
-          </button>
-          <p v-if="!createAnwerMode">{{ t('common.label.file-placeholder') }}</p>
-          <p>{{ qnaForm.answer.file }}</p>
-          <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
-        </div>
-      </div>
-      <div>
-        <label :class="createAnwerMode ? 'form__label' : 'form__label--required'">{{ t('common.label.content')
-          }}</label>
-        <Editor v-model:content="qnaForm.answer.detail" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
-          :read-only="createAnwerMode" />
-      </div>
+      <form class="form">
+        <FormItem v-if="createAnswerMode" :label="t('common.label.title')" :required="!createAnswerMode">
+          <CustomInput v-model="qnaForm.answer.title" :readonly="createAnswerMode" />
+        </FormItem>
+        <FormItem v-if="createAnswerMode" :label="t('common.label.create-user')" :required="!createAnswerMode">
+          <CustomInput v-model="qnaForm.answer.createUser" :readonly="createAnswerMode" />
+        </FormItem>
+        <FormItem v-if="createAnswerMode" :label="t('common.label.create-date')" :required="!createAnswerMode">
+          <CustomInput v-model="qnaForm.answer.createDate" :readonly="createAnswerMode" />
+        </FormItem>
+        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" :show="!createAnswerMode" :file="attachedAnswerFile" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')" :required="!createAnswerMode">
+          <Editor v-model:content="answerContents" toolbar="full" theme="snow"
+            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+            :read-only="createAnswerMode" />
+        </FormItem>
+      </form>
     </div>
-    <div class="content__btns">
-      <button type="button" class="btn__secondary-line--lg" @click="handleGoQnaPage">
-        {{ t('common.button.cancel') }}
-      </button>
-      <button v-if="!createAnwerMode" type="button" class="btn__primary--lg" @click="handleAnswerQna">
-        {{ t('common.button.confirm') }}
-      </button>
-    </div>
+  </div>
+  <div class="content__btns">
+    <button type="button" class="btn__secondary-line--lg" @click="handleGoQnaPage">
+      {{ t('common.button.cancel') }}
+    </button>
+    <button v-if="!createAnswerMode" type="button" class="btn__primary--lg" @click="handleAnswerQna">
+      {{ t('common.button.confirm') }}
+    </button>
   </div>
 </template>
 
