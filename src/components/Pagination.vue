@@ -83,10 +83,10 @@ const changeLimit = () => {
       <VueAwesomePaginate v-model="currentPage" :total-items="props.totalCount" :items-per-page="props.limit"
         :max-pages-shown="props.maxPagesShown" :show-breakpoint-buttons="false" :show-ending-buttons="true">
         <template #first-page-button>
-          <Icon name="double-arrow-l__line--555" width="32" height="32" alt="첫 페이지로 이동" />
+          <Icon name="d-arrow-l__line--555" width="32" height="32" alt="첫 페이지로 이동" />
         </template>
         <template #last-page-button>
-          <Icon name="double-arrow-r__line--555" width="32" height="32" alt="마지막 페이지로 이동" />
+          <Icon name="d-arrow-l__line--555" width="32" height="32" alt="마지막 페이지로 이동" class="rotate-180" />
         </template>
       </VueAwesomePaginate>
     </template>
