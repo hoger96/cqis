@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IBatchData } from '../types/batch-mgmt.ts'
+import { ISearchParams, IBatchData } from '../types/batch-history.ts'
 import { useRouter } from 'vue-router'
 import { MODAL_SIZE } from '../../types/modal.ts'
 import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
@@ -12,6 +12,7 @@ const popupSignal = ref(false)
 const batchId = ref('')
 const deletedBatch = ref<string[]>([])
 const popupMode = ref('')
+const batchPeriod = ref('')
 
 const searchConditionOptions = [
   {
@@ -23,26 +24,26 @@ const searchConditionOptions = [
     label: '배치 코드'
   },
 ]
-const kindStateOptions = [
+const batchStateOptions = [
   {
     value: 'all',
     label: '전체'
   },
   {
-    value: 'year',
-    label: '년'
+    value: 'complete',
+    label: '완료'
   },
   {
-    value: 'month',
-    label: '월'
+    value: 'wait',
+    label: '대기'
   },
   {
-    value: 'day',
-    label: '일'
+    value: 'fail',
+    label: '실패'
   },
   {
-    value: 'minute',
-    label: '분'
+    value: 'processing',
+    label: '진행중'
   },
 ]
 const mockupList = ref([
@@ -51,53 +52,65 @@ const mockupList = ref([
     batchId: 'batch_1',
     batchCode: 'B001',
     batchName: '배치 이름1',
-    batchKind: '일',
-    createDate: '2024-05-29'
+    batchState: 'complete',
+    startDate: '2024-05-29',
+    endDate: '2024-06-05',
+    count: 1000
   },
   {
     index: 2,
     batchId: 'batch_2',
     batchCode: 'B002',
     batchName: '배치 이름2',
-    batchKind: '일',
-    createDate: '2024-05-29'
+    batchState: 'fail',
+    startDate: '2024-05-29',
+    endDate: '',
+    count: 0
   },
   {
     index: 3,
     batchId: 'batch_3',
     batchCode: 'B003',
     batchName: '배치 이름3',
-    batchKind: '년',
-    createDate: '2024-05-29'
+    batchState: 'processing',
+    startDate: '2024-05-29',
+    endDate: '',
+    count: 0
   },
   {
     index: 4,
     batchId: 'batch_4',
     batchCode: 'B004',
     batchName: '배치 이름4',
-    batchKind: '일',
-    createDate: '2024-05-29'
+    batchState: 'wait',
+    startDate: '2024-05-29',
+    endDate: '',
+    count: 0
   },
   {
     index: 5,
     batchId: 'batch_5',
     batchCode: 'B005',
     batchName: '배치 이름5',
-    batchKind: '월',
-    createDate: '2024-05-29'
+    batchState: 'fail',
+    startDate: '2024-05-29',
+    endDate: '',
+    count: 0
   }
 ])
 
 
 const searchParam = reactive<ISearchParams>({
   searchCondition: 'name',
-  batchKind: 'all',
+  batchState: 'all',
+  batchPeriod: '',
   keyword: '',
   page: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
-  batchKind: '',
+  batchState: '',
+  batchPeriod: '',
   keyword: '',
   page: 1,
 })
@@ -107,7 +120,8 @@ const batchList = ref<IBatchData[]>([])
 const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
-    batchKind: searchParam.batchKind,
+    batchState: searchParam.batchState,
+    batchPeriod: searchParam.batchPeriod,
     keyword: searchParam.keyword,
     page: searchParam.page,
   }
@@ -123,7 +137,8 @@ const changePage = async (newPage: number) => {
 
 const handleReset = () => {
   searchParam.searchCondition = 'name',
-    searchParam.batchKind = 'all',
+    searchParam.batchState = 'all',
+    searchParam.batchPeriod = '',
     searchParam.keyword = ''
 }
 
@@ -145,7 +160,8 @@ const getBatchList = (params: ISearchParams) => {
 
 const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
-  searchedParam.batchKind = searchParam.batchKind
+  searchedParam.batchState = searchParam.batchState
+  searchedParam.batchPeriod = searchParam.batchPeriod
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
   params.page = 1
@@ -153,56 +169,8 @@ const handleSearch = () => {
   getBatchList(params)
 }
 
-const handleCreateBatch = () => {
-  batchId.value = ''
-  popupSignal.value = true
-  popupMode.value = 'Create'
-}
-
-const handleBatchDetail = (data: IUserData) => {
-  batchId.value = data.batchId
-  popupSignal.value = true
-  popupMode.value = 'Detail'
-}
-
-const handleCancel = () => {
-  popupSignal.value = false
-}
-
-const handleUpdateBatch = (data) => {
-  try {
-    // FIXME: api 연결
-    console.log(data)
-    // const res = await request({
-    //   method: 'POST',
-    //   url: '/user/${userId.value}',
-    //   userInfo,
-    // })
-    console.log('수정 or 등록')
-  }
-  catch (error) {
-    console.error(error)
-  }
-}
-
-const handleSelectionChange = (target: IBatchData[]) => {
-  deletedBatch.value = target.map(i => i.batchId)
-}
-
-const handleDeleteBatch = () => {
-  try {
-    // FIXME: api 연결
-    // const res = await request({
-    //   method: 'DELETE',
-    //   url: '/faq',
-    //   deletedFaq.value,
-    // })
-    console.log(deletedBatch.value)
-    handleSearch()
-  }
-  catch (error) {
-    console.error(error)
-  }
+const handleRestart = (batchId: string) => {
+  console.log(batchId)
 }
 
 onMounted(() => {
@@ -213,7 +181,7 @@ onMounted(() => {
 <template>
   <div>
     <h2 class="title">
-      {{ t('batch.title') }}
+      {{ t('batch-history.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
       <SearchItem>
@@ -221,8 +189,12 @@ onMounted(() => {
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
       </SearchItem>
-      <SearchItem :label="t('batch.label.kind')">
-        <basic-select-box v-model="searchParam.batchKind" :options="kindStateOptions" />
+      <SearchItem :label="t('batch-history.label.state')">
+        <basic-select-box v-model="searchParam.batchState" :options="batchStateOptions" />
+      </SearchItem>
+      <SearchItem :label="t('batch-history.label.date-range')">
+        <el-date-picker v-model="searchParam.batchPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
+          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" />
       </SearchItem>
     </SearchForm>
     <div class="content__box">
@@ -230,29 +202,41 @@ onMounted(() => {
         <span class="total">
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
-        <div class="flex">
-          <button type="button" class="btn__secondary--md" @click="handleDeleteBatch">
-            {{ t('common.button.delete') }}
-          </button>
-          <button type="button" class="btn__primary-line--md" @click="handleCreateBatch">
-            {{ t('common.button.create') }}
-          </button>
-        </div>
       </div>
-      <el-table :data="batchList" style="width: 100%" @row-dblclick="handleBatchDetail"
-        @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" />
+      <el-table :data="batchList" style="width: 100%">
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="batchCode" :label="t('batch.label.code')" min-width="150" align="center" />
         <el-table-column prop="batchName" :label="t('batch.label.name')" min-width="150" align="center" />
-        <el-table-column prop="batchKind" :label="t('batch.label.kind')" min-width="150" align="center" />
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="150" align="center" />
+        <el-table-column prop="batchState" :label="t('batch-history.label.state')" min-width="100" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.batchState === 'complete' ? t('batch-history.label.complete') : scope.row.batchState ===
+                'fail' ? t('batch-history.label.fail') : scope.row.batchState === 'wait' ? t('batch-history.label.wait') :
+                t('batch-history.label.processing') }}
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column prop="startDate" :label="t('batch-history.label.start-date')" min-width="150" align="center" />
+        <el-table-column prop="endDate" :label="t('batch-history.label.end-date')" min-width="150" align="center" />
+        <el-table-column prop="count" :label="t('batch-history.label.count')" min-width="150" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.count === 0 ? '' : scope.row.count }}
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('batch-history.label.restart')" min-width="100" align="center">
+          <template #default="scope">
+            <button v-if="scope.row.batchState === 'fail'" class="btn__secondary--sm"
+              @click="handleRestart(scope.row.batchId)">
+              {{ t('batch-history.label.restart') }}
+            </button>
+          </template>
+        </el-table-column>
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
-    <BatchPopup v-model:model-value="popupSignal" :batch-id="batchId" @cancel="handleCancel"
-      @confirm="handleUpdateBatch" :popup-mode="popupMode" />
   </div>
 </template>
 <style></style>

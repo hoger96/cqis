@@ -199,18 +199,16 @@ onMounted(() => {
       {{ t('user.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem :label="t('common.search-bar.condition')">
+      <SearchItem>
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
+          @keyup.enter="handleSearch" />
       </SearchItem>
       <SearchItem :label="t('user.label.admin-state')">
         <basic-select-box v-model="searchParam.adminState" :options="userStateOptions" />
       </SearchItem>
       <SearchItem :label="t('common.search-bar.use')">
         <basic-select-box v-model="searchParam.use" :options="useStateOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.keyword')">
-        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
     <div class="content__box">

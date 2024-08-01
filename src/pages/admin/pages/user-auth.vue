@@ -170,20 +170,18 @@ onMounted(() => {
       {{ t('user-auth.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem :label="t('common.search-bar.condition')">
+      <SearchItem>
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
-    <div class="flex">
-      <span class="table__count">
-        {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
-      </span>
-    </div>
-    <div class="mgmt__box">
+    <div class="content__box">
+      <div class="total__bar">
+        <span class="total">
+          {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
+        </span>
+      </div>
       <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />
