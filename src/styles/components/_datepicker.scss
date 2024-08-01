@@ -27,7 +27,7 @@
 /* ========================== Styles ========================== */
 .el-date-editor {
   &.el-range-editor {
-    height: $input-size !important;
+    height: $form-height-md !important;
     padding: 0 15px !important;
 
     .el-icon {
@@ -54,14 +54,14 @@
 .el-picker__popper {
   @include typo(12px, 600);
   border: 1px solid $gray-60 !important;
-  border-radius: 2px !important;
+  border-radius: $radius-sm !important;
   box-shadow: none !important;
   .el-popper__arrow:before {
     content: none;
   }
   .el-picker-panel {
     @include typo($color: $gray-400);
-    border-radius: 2px;
+    border-radius: $radius-sm;
     &__icon-btn {
       @include typo(16px, $color: #444459);
       @include before {

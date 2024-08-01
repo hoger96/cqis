@@ -78,7 +78,7 @@ const initData = ref(3)
     <!-- select -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        Select-box
+        Dropdown
       </mark>
       <form class="form">
         <FormItem label="Basic">

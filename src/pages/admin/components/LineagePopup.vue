@@ -162,24 +162,24 @@ watchEffect(() => {
 </script>
 
 <template>
-  <common-modal v-model="isShow" :title="t('data-visual.label.lineage')" :size="MODAL_SIZE.XXXLARGE"
+  <common-modal v-model="isShow" :title="t('data-visual.label.lineage')" :size="MODAL_SIZE.XXXLARGE" class="lineage-p"
     @cancel="handleCancel">
     <template #content>
-      <div class="flex">
+      <div class="lineage-p__content">
         <f-lineage direction="horizontal" :padding="28" :gap="100" :node-size.prop="{ width: 240, height: 60 }"
           :children-node-size.prop="{ width: 240, height: 32 }" :max-childrens="8" :links.prop="links"
           :nodes.prop="nodes" :node-template.prop="nodeTemplate" :children-node-template.prop="childNodeTemplate"
-          :background="{ color: 'white' }">
+          :background="{ color: '$white' }">
         </f-lineage>
-        <form v-if="lineageForm.name" class="form ml-5 p-5 border-2">
+        <form v-if="lineageForm.name" class="form">
           <FormItem :label="t('data-visual.lineage.name')">
             <CustomInput v-model="lineageForm.name" max-length="10" readonly />
           </FormItem>
           <FormItem :label="t('data-visual.lineage.description')">
             <CustomInput v-model="lineageForm.description" max-length="10" readonly />
           </FormItem>
-          <FormItem v-if="lineageForm.children.length > 0" :label="t('data-visual.lineage.column')">
-            <div v-for="(table, index) in lineageForm.children" :key="index" class="flex">
+          <FormItem v-if="lineageForm.children.length > 0" :label="t('data-visual.lineage.column')" use-group>
+            <div v-for="(table, index) in lineageForm.children" :key="index">
               <CustomInput v-model="lineageForm.children[index]" max-length="10" readonly />
             </div>
           </FormItem>
