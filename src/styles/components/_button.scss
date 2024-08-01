@@ -67,18 +67,18 @@
 @mixin btn-size($size: 'md') {
   @if $size == 'sm' {
     min-width: 65px;
-    height: $form-size-sm;
-    line-height: $form-size-sm;
+    height: $form-height-sm;
+    line-height: $form-height-sm;
     padding: 0 15px;
   } @else if $size == 'md' {
     min-width: 65px;
-    height: $form-size-md;
-    line-height: $form-size-md;
+    height: $form-height-md;
+    line-height: $form-height-md;
     padding: 0 15px;
   } @else if $size == 'lg' {
     min-width: 70px;
-    height: $form-size-lg;
-    line-height: $form-size-lg;
+    height: $form-height-lg;
+    line-height: $form-height-lg;
     padding: 0 20px;
   }
   // 아이콘 버튼인 경우

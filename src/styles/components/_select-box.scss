@@ -1,8 +1,8 @@
 /* ========================== Variables ========================== */
 $selectbox-size: (
-  sm: $form-size-sm,
-  default: $form-size-md,
-  lg: $form-size-lg
+  sm: $form-height-sm,
+  default: $form-height-md,
+  lg: $form-height-lg
 );
 
 /* ========================== Mixins ========================== */
@@ -18,7 +18,7 @@ $selectbox-size: (
 
 .el-select {
   @include selectbox-size();
-  height: $form-size-md;
+  height: $form-height-md;
 
   .el-select {
     &__wrapper {

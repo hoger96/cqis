@@ -1,12 +1,12 @@
 /* ========================== Variables ========================== */
 
 /* ========================== Mixins ========================== */
-@mixin input-size($size: $form-size-md) {
+@mixin input-size($size: $form-height-md) {
   input {
     @if $size == 'sm' {
-      height: $form-size-sm;
+      height: $form-height-sm;
     } @else if $size == 'lg' {
-      height: $form-size-lg;
+      height: $form-height-lg;
     }
   }
 }
@@ -17,7 +17,7 @@
 .custom-input {
   input {
     width: 100%;
-    height: $form-size-md;
+    height: $form-height-md;
     padding: 13px 15px;
     background: $white;
     border: 1px solid $input-border-color;
