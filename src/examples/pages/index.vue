@@ -66,7 +66,7 @@ const movePage = (target: any) => {
     <h1 class="mb-10 text-3xl font-semibold">
       UI Examples
     </h1>
-    <div class="content__box">
+    <div class="p-10 bg-white rounded-3xl">
       <el-table :data="uiComponentData" row-class-name="cursor-pointer" @row-click="movePage">
         <el-table-column type="index" width="'5%'" />
         <el-table-column property="name" label="Name" width="'20%'" />

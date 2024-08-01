@@ -6,6 +6,11 @@
     <h2 class="text-3xl font-semibold">
       button
     </h2>
+    <div class="flex flex-col gap-2 mt-10 p-10 bg-white rounded-3xl">
+      <p>button size는 <em class="font-bold">"sm", "md", "lg"</em>가 있습니다.</p>
+      <p>icon 넣을 때 <em class="font-bold">$type이 line인 경우</em> Icon 컴포넌트가 아닌, <em class="font-bold">svg</em>태그를 사용합니다.
+      </p>
+    </div>
     <!-- btn__primary -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
@@ -31,15 +36,15 @@
           버튼
         </button>
         <button type="button" class="btn__primary--sm">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
         <button type="button" class="btn__primary--md">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
         <button type="button" class="btn__primary--lg">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
       </div>
@@ -71,15 +76,24 @@
           버튼
         </button>
         <button type="button" class="btn__primary-line--sm">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
+          <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11.2324" cy="10.4824" r="5.5" stroke="#6724B8" />
+            <path d="M14.7324 14.9824L18.268 18.518" stroke="#6724B8" stroke-linecap="round" />
+          </svg>
           버튼
         </button>
         <button type="button" class="btn__primary-line--md">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
+          <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11.2324" cy="10.4824" r="5.5" stroke="#6724B8" />
+            <path d="M14.7324 14.9824L18.268 18.518" stroke="#6724B8" stroke-linecap="round" />
+          </svg>
           버튼
         </button>
         <button type="button" class="btn__primary-line--lg">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
+          <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11.2324" cy="10.4824" r="5.5" stroke="#6724B8" />
+            <path d="M14.7324 14.9824L18.268 18.518" stroke="#6724B8" stroke-linecap="round" />
+          </svg>
           버튼
         </button>
       </div>
@@ -111,15 +125,15 @@
           버튼
         </button>
         <button type="button" class="btn__secondary--sm">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
         <button type="button" class="btn__secondary--md">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
         <button type="button" class="btn__secondary--lg">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
       </div>
@@ -148,18 +162,6 @@
           버튼
         </button>
         <button type="button" class="btn__secondary-line--lg">
-          버튼
-        </button>
-        <button type="button" class="btn__secondary-line--sm">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
-          버튼
-        </button>
-        <button type="button" class="btn__secondary-line--md">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
-          버튼
-        </button>
-        <button type="button" class="btn__secondary-line--lg">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
           버튼
         </button>
       </div>
@@ -191,15 +193,15 @@
           버튼
         </button>
         <button type="button" class="btn__negative--sm">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
         <button type="button" class="btn__negative--md">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
         <button type="button" class="btn__negative--lg">
-          <Icon name="plus__line--fff" width="24" height="24" alt="" />
+          <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
       </div>
@@ -228,18 +230,6 @@
           버튼
         </button>
         <button type="button" class="btn__negative-line--lg">
-          버튼
-        </button>
-        <button type="button" class="btn__negative-line--sm">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
-          버튼
-        </button>
-        <button type="button" class="btn__negative-line--md">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
-          버튼
-        </button>
-        <button type="button" class="btn__negative-line--lg">
-          <Icon name="plus__line--999" width="24" height="24" alt="" />
           버튼
         </button>
       </div>

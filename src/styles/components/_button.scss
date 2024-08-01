@@ -3,7 +3,7 @@
 /* ========================== Mixins ========================== */
 @mixin btn($type: 'positive', $form: 'full', $color: 'primary') {
   @apply flex items-center justify-center;
-  border-radius: 2px;
+  border-radius: $radius-sm;
   border: 1px solid transparent;
   transition: $transition;
   white-space: nowrap;
@@ -67,18 +67,18 @@
 @mixin btn-size($size: 'md') {
   @if $size == 'sm' {
     min-width: 65px;
-    height: 32px;
-    line-height: 32px;
+    height: $form-size-sm;
+    line-height: $form-size-sm;
     padding: 0 15px;
   } @else if $size == 'md' {
     min-width: 65px;
-    height: 36px;
-    line-height: 36px;
+    height: $form-size-md;
+    line-height: $form-size-md;
     padding: 0 15px;
   } @else if $size == 'lg' {
     min-width: 70px;
-    height: 40px;
-    line-height: 40px;
+    height: $form-size-lg;
+    line-height: $form-size-lg;
     padding: 0 20px;
   }
   // 아이콘 버튼인 경우

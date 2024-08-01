@@ -30,7 +30,7 @@
   }
 
   &__label {
-    @include typo(15px, 500, $gray-400, $input-size);
+    @include typo(15px, 500, $gray-400, $form-size-md);
     display: inline-block;
     min-width: 140px;
     margin-right: 20px;
@@ -39,7 +39,7 @@
 
     &.is-required {
       @include after {
-        @include typo(15px, 500, $error, $input-size);
+        @include typo(15px, 500, $error, $form-size-md);
         content: '*';
         padding-left: 2px;
         padding-right: 2px;
@@ -127,7 +127,7 @@
   }
 
   &__label {
-    @include typo($font-weight: 500, $line-height: $input-size);
+    @include typo($font-weight: 500, $line-height: $form-size-md);
     min-width: fit-content;
     margin-right: 10px;
     white-space: nowrap;
