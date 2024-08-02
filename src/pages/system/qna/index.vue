@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IQnaData } from '../types/qna.ts'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()

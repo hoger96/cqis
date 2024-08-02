@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Resumable from 'resumablejs'
-import type { IFileList, IUploadOptions } from '../../../types/upload.ts'
+import type { IFileList, IUploadOptions } from '~/types/upload.ts'
 
 const props = withDefaults(defineProps<IUploadOptions>(), {
   uploadURL: '/upload',

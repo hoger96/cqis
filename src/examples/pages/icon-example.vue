@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Icon from '../../components/Icon.vue'
+import Icon from '~/components/Icon.vue'
 
 const icons = [
   { fileName: 'arrow-l__line--555' },

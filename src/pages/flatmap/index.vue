@@ -116,7 +116,7 @@ const setMarkers = (map, markers) => {
 const handleLoadMap = () => {
   const map: Map = new maplibregl.Map({
     container: mapContainer.value,
-    style: 'http://localhost:5173/public/mapstyle.json',
+    style: '/src/assets/mapstyle.json',
     center: [-96, 37.8],
     zoom: 1,
   });
@@ -149,7 +149,7 @@ onMounted(() => {
 
 .map-container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   position: relative;
 }
 

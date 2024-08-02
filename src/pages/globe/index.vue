@@ -16,6 +16,7 @@ const handleClose = (done: () => void) => {
     })
 }
 
+const myGlobe = Globe();
 const handleLoadGlobe = () => {
   const markerSvg = `<svg viewBox="-4 0 36 36" />`;
 
@@ -30,16 +31,15 @@ const handleLoadGlobe = () => {
   */
   const marker = [
     {
-      lat: 37.4913, lng: 127.0165, size: 30, color: 'yellow', image: '/src/assets/미국국기.jpeg'
+      lat: 37.4913, lng: 127.0165, size: 30, color: 'yellow', image: '/src/assets/다운로드.png'
     },
     {
-      lat: 37.7749295, lng: -122.4194155, size: 30, color: 'yellow', image: '/src/assets/다운로드.png'
+      lat: 37.7749295, lng: -122.4194155, size: 30, color: 'yellow', image: '/src/assets/미국국기.jpeg'
     },
   ]
   const gData = marker;
 
-  const myGlobe = Globe();
-  myGlobe(globeDiv.value).globeImageUrl(new URL('/src/assets/blue.jpeg', import.meta.url).href);
+  myGlobe(globeDiv.value).globeImageUrl(new URL('/src/assets/3.png', import.meta.url).href).backgroundColor('white')
 
   myGlobe.htmlElementsData(gData)
     .htmlElement(d => {
@@ -76,15 +76,40 @@ const handleLoadGlobe = () => {
   myGlobe.controls().autoRotateSpeed = 1.0;
 }
 
+const handleStopGlobe = () => {
+  myGlobe.controls().autoRotate = false;
+}
+const handleActiveGlobe = () => {
+  myGlobe.controls().autoRotate = true;
+  myGlobe.controls().autoRotateSpeed = 1.0;
+}
+
 onMounted(() => {
   handleLoadGlobe()
 });
 </script>
 
 <template>
-  <div>
+  <div class="flex">
+    <button type="button" class="btn__primary-line--md" @click="handleStopGlobe">
+      지구본 멈추기
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleActiveGlobe">
+      지구본 돌기
+    </button>
+  </div>
+  <div class="globe-wrapper">
     <div ref="globeDiv"></div>
   </div>
 </template>
 
-<style></style>
+<style>
+.globe-wrapper {
+  width: 95%;
+  height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+</style>

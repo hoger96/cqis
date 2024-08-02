@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FileUpload from '../../components/FileUpload.vue'
+import FileUpload from '~/components/FileUpload.vue'
 
 const onFileChange = (file: File[]) => {
   console.log('ee', file)

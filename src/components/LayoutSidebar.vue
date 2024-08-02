@@ -21,12 +21,12 @@ const menuList = reactive([
     menuUrl: '/system/faq/admin-index',
     disabled: false,
   },
-  {
-    menuId: 'Q&A(관리자)',
-    menuName: 'Q&A(관리자)',
-    menuIndex: '3',
-    menuUrl: '/system/qna/admin-index',
-  },
+  // {
+  //   menuId: 'Q&A(관리자)',
+  //   menuName: 'Q&A(관리자)',
+  //   menuIndex: '3',
+  //   menuUrl: '/system/qna/admin-index',
+  // },
   {
     menuId: '공지사항(사용자)',
     menuName: '공지사항(사용자)',
@@ -41,12 +41,12 @@ const menuList = reactive([
     menuUrl: '/system/faq',
     disabled: false,
   },
-  {
-    menuId: 'Q&A(사용자)',
-    menuName: 'Q&A(사용자)',
-    menuIndex: '6',
-    menuUrl: '/system/qna',
-  },
+  // {
+  //   menuId: 'Q&A(사용자)',
+  //   menuName: 'Q&A(사용자)',
+  //   menuIndex: '6',
+  //   menuUrl: '/system/qna',
+  // },
   {
     menuId: '사용자 관리',
     menuName: '사용자 관리',
@@ -83,6 +83,19 @@ const menuList = reactive([
     menuIndex: '12',
     menuUrl: '/admin/pages/batch-history',
   },
+  {
+    menuId: 'Globe',
+    menuName: 'Globe',
+    menuIndex: '13',
+    menuUrl: '/globe',
+  },
+  {
+    menuId: 'FlatMap',
+    menuName: 'FlatMap',
+    menuIndex: '14',
+    menuUrl: '/Flatmap',
+  },
+
 ])
 
 const router = useRouter()

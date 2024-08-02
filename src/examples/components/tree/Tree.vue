@@ -3,10 +3,10 @@ import { ElTree } from 'element-plus'
 import type Node from 'element-plus/es/components/tree/src/model/node'
 import type { DragEvents } from 'element-plus/es/components/tree/src/model/useDragNode'
 import type { NodeDropType } from 'element-plus/es/components/tree/src/tree.type'
-import type { ICheckedList, ISearchTree, ITreeProps } from '../../../types/tree'
-import type { ITreeData } from '../../types/tree'
+import type { ICheckedList, ISearchTree } from '~/types/tree'
 
-const props = withDefaults(defineProps<ITreeProps<ITreeData>>(), {
+
+const props = withDefaults(defineProps(), {
   treeData: () => [],
   draggable: false,
   showCheckbox: false,

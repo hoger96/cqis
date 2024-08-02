@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IAnnouncementData } from '../types/announcement.ts'
+import type { ISearchParams, IAnnouncementData } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 
 

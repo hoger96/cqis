@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import CustomInput from '../../components/CustomInput.vue'
+import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '../components/custom-textarea/CustomTextarea.vue'
 
 // select
 import type { IOptions } from '../types/select-box'
-import BasicSelectBox from '../../components/BasicSelectBox.vue'
+import BasicSelectBox from '~/components/BasicSelectBox.vue'
 import mockOptions from '../mock/options.js'
 
 const form = {

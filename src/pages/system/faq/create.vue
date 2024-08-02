@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IFaqCreate } from '../types/faq.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
 import Editor from '~/components/Editor.vue'
