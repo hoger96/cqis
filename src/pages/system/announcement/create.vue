@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import type { IAnnouncementCreate } from '../types/announcement.ts'
+import { type IAnnouncementCreate } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
-import Editor from '~/components/Editor.vue'
+import Editor from '../../../components/Editor.vue'
 
 const router = useRouter()
 const { t } = useI18n()
 const contents = ref<string | Delta>()
 const attachedFile = ref<File[]>([])
 
-const anncForm = reactive<IAnnouncementDetail>({
+const anncForm = reactive({
   title: '',
   postingPeriod: '',
 })

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VueAwesomePaginate } from 'vue-awesome-paginate'
-import type { ILimitOptions, IPaginationOptions } from '../types/pagination'
+import { ILimitOptions, IPaginationOptions } from '../types/pagination'
 import { defineComponent } from 'vue';
 import { ElIcon } from 'element-plus';
 import { Edit } from '@element-plus/icons-vue';

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Edit } from '@element-plus/icons-vue'
-import type { TreeNode } from '~/composables/tree'
-import type { IMenuDetail } from '~/types/menu'
+import { TreeNode } from '~/composables/tree'
+import { IMenuDetail } from '~/types/menu'
 
 defineProps<{
   treeData: TreeNode<IMenuDetail>
@@ -31,11 +31,9 @@ const leaveMenu = () => {
       </el-icon>
       {{ treeData.menuName }}
     </div>
-    <div
-      v-else link :class="`menu ${treeData.data.menuUrl === route.path ? 'menu--active' : ''}`"
+    <div v-else link :class="`menu ${treeData.data.menuUrl === route.path ? 'menu--active' : ''}`"
       style="font-size: 0.9rem; margin-bottom: 1%;" @mouseover="hoverMenu(treeData.menuId)" @mouseleave="leaveMenu()"
-      @click="movePage(treeData)"
-    >
+      @click="movePage(treeData)">
       {{ treeData.menuName }}
     </div>
     <ul class="sidebar__child">

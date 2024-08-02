@@ -15,8 +15,9 @@ const handleClose = (done: () => void) => {
       console.error(error)
     })
 }
+
 const myGlobe = Globe();
-const imageUrl = ref('/src/assets/3.png')
+const imageUrl = ref('')
 const storedImageUrl = localStorage.getItem('globeImageUrl');
 if (storedImageUrl) {
   imageUrl.value = storedImageUrl;
@@ -89,13 +90,20 @@ const handleActiveGlobe = () => {
   myGlobe.controls().autoRotateSpeed = 1.0;
 }
 
+const getImageUrl = (num: number) => {
+  return new URL(`/public/assets/ball_0${num}.png`, import.meta.url).href;
+}
+
 const handleChangeImage = (num: number) => {
-  imageUrl.value = `/src/assets/지구본_0${num}.png`
+  imageUrl.value = getImageUrl(num)
   localStorage.setItem('globeImageUrl', imageUrl.value);
   window.location.reload();
 }
 
 onMounted(() => {
+  if (imageUrl.value === '') {
+    imageUrl.value = getImageUrl(1)
+  }
   handleLoadGlobe(imageUrl.value)
 });
 </script>

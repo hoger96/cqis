@@ -40,133 +40,133 @@ const dataSet = reactive({
 //     }
 //   }
 // ])
-const tableData = ref<ITargetData[]>([])
-const originData = ref<ITargetData[]>([
-  {
-    id: 'Source',
-    tableName: '1',
-    column: '1',
-    description: '1'
-  },
-  {
-    id: 'Target',
-    tableName: '1',
-    column: '1',
-    description: '1'
-  },
-])
-const data = [
-  {
-    id: 'Source',
-    tableName: '1',
-    column: '1',
-    description: '1'
-  },
-  {
-    id: 'Target',
-    tableName: '1',
-    column: '1',
-    description: '1'
-  },
-]
+// const tableData = ref<ITargetData[]>([])
+// const originData = ref<ITargetData[]>([
+//   {
+//     id: 'Source',
+//     tableName: '1',
+//     column: '1',
+//     description: '1'
+//   },
+//   {
+//     id: 'Target',
+//     tableName: '1',
+//     column: '1',
+//     description: '1'
+//   },
+// ])
+// const data = [
+//   {
+//     id: 'Source',
+//     tableName: '1',
+//     column: '1',
+//     description: '1'
+//   },
+//   {
+//     id: 'Target',
+//     tableName: '1',
+//     column: '1',
+//     description: '1'
+//   },
+// ]
 
-const setData = () => {
-  tableData.value = originData.value
-}
+// const setData = () => {
+//   tableData.value = originData.value
+// }
 
-const handleGoDataSetPage = () => {
-  router.push({ path: '/admin/pages/data-set' })
-}
+// const handleGoDataSetPage = () => {
+//   router.push({ path: '/admin/pages/data-set' })
+// }
 
-const handleCreateDataSet = () => {
-  try {
-    const data = {
-      title: dataSet.name,
-      description: dataSet.description,
-      targetTableList: targetTableList.value,
-      batchType: dataSet.batchType,
-      batchPeriod: dataSet.batchPeriod,
-      job: dataSet.job,
-      playTime: dataSet.playTime
-    }
-    console.log('등록: ', data)
-    router.push({ path: '/admin/pages/data-set' })
-  } catch (error) {
-    console.error(error)
-  }
-}
+// const handleCreateDataSet = () => {
+//   try {
+//     const data = {
+//       title: dataSet.name,
+//       description: dataSet.description,
+//       targetTableList: targetTableList.value,
+//       batchType: dataSet.batchType,
+//       batchPeriod: dataSet.batchPeriod,
+//       job: dataSet.job,
+//       playTime: dataSet.playTime
+//     }
+//     console.log('등록: ', data)
+//     router.push({ path: '/admin/pages/data-set' })
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
-const handleAddTargetTable = () => {
-  const newData = {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
-      }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: ''
-    }
-  }
-  targetTableList.value.push(newData)
-}
+// const handleAddTargetTable = () => {
+//   const newData = {
+//     sourceList: [
+//       {
+//         tableName: '',
+//         column: '',
+//         description: '',
+//       }
+//     ],
+//     target: {
+//       tableName: '',
+//       column: '',
+//       description: ''
+//     }
+//   }
+//   targetTableList.value.push(newData)
+// }
 
-const handleAddSource = (index: number) => {
-  const newData = {
-    tableName: '',
-    column: '',
-    description: '',
-  }
-  targetTableList.value[index].sourceList.push(newData)
-}
+// const handleAddSource = (index: number) => {
+//   const newData = {
+//     tableName: '',
+//     column: '',
+//     description: '',
+//   }
+//   targetTableList.value[index].sourceList.push(newData)
+// }
 
-const handleRemoveSource = (tableIndex: number, sourceIndex: number) => {
-  targetTableList.value[tableIndex].sourceList.splice(sourceIndex, 1)
-}
+// const handleRemoveSource = (tableIndex: number, sourceIndex: number) => {
+//   targetTableList.value[tableIndex].sourceList.splice(sourceIndex, 1)
+// }
 
-// FIXME 개발자 : 퍼블리싱하면서 임시 추가한 영역입니다.
-const addRowspan = ({
-  rowIndex,
-  columnIndex,
-}: SpanMethodProps) => {
-  if (columnIndex === 0) {
-    const currentId = tableData[rowIndex].id;
-    if (currentId === 'Source') {
-      if (rowIndex === 0 || tableData[rowIndex - 1].id !== 'Source') {
-        let rowspan = 1;
-        for (let i = rowIndex + 1; i < tableData.length; i++) {
-          if (tableData[i].id === 'Source') {
-            rowspan++;
-          } else {
-            break;
-          }
-        }
-        return {
-          rowspan,
-          colspan: 1,
-        };
-      } else {
-        return {
-          rowspan: 0,
-          colspan: 0,
-        };
-      }
-    }
-  }
-}
+// // FIXME 개발자 : 퍼블리싱하면서 임시 추가한 영역입니다.
+// const addRowspan = ({
+//   rowIndex,
+//   columnIndex,
+// }: SpanMethodProps) => {
+//   if (columnIndex === 0) {
+//     const currentId = tableData[rowIndex].id;
+//     if (currentId === 'Source') {
+//       if (rowIndex === 0 || tableData[rowIndex - 1].id !== 'Source') {
+//         let rowspan = 1;
+//         for (let i = rowIndex + 1; i < tableData.length; i++) {
+//           if (tableData[i].id === 'Source') {
+//             rowspan++;
+//           } else {
+//             break;
+//           }
+//         }
+//         return {
+//           rowspan,
+//           colspan: 1,
+//         };
+//       } else {
+//         return {
+//           rowspan: 0,
+//           colspan: 0,
+//         };
+//       }
+//     }
+//   }
+// }
 
-const addSourceData = () => {
-  console.log('add')
-  const newSource = {
-    id: 'Source',
-    tableName: '',
-    column: '',
-    description: ''
-  }
-}
+// const addSourceData = () => {
+//   console.log('add')
+//   const newSource = {
+//     id: 'Source',
+//     tableName: '',
+//     column: '',
+//     description: ''
+//   }
+// }
 
 onMounted(() => {
   // setData()
@@ -194,7 +194,7 @@ onMounted(() => {
         </template>
         <!-- FIXME 개발자 :: 추가버튼 클릭 시 아래 div가 복제되도록 요청드립니다.
         table 형태로 변경하면서 이전 소스는 주석처리하였습니다. -->
-        <div class="mb-2.5 box--f7f">
+        <!-- <div class="mb-2.5 box--f7f">
           <el-table :data="data" :span-method="addRowspan" style="width: 100%;" class="no-hover">
             <el-table-column prop="id" align="center" min-width="15" />
             <el-table-column prop="tableName" :label="t('data-set.label.table')" min-width="25">
@@ -225,7 +225,7 @@ onMounted(() => {
               </template>
             </el-table-column>
           </el-table>
-        </div>
+        </div> -->
         <div>
           <p>&#8251; Sorce 테이블을 추가 하시려면 &#39;&#43;&#39; 버튼을 클릭해주세요.</p>
           <p class="mt-1">&#8251; Target Table 이 여러 개 일경우 &#39;추가&#39; 버튼을 클릭해주세요.</p>
