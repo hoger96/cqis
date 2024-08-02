@@ -60,29 +60,26 @@ const onFileChange = (file: File[]) => {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <h2 class="title">
       {{ t('annc.title') }} {{ t('common.button.create') }}
     </h2>
-    <div class="content__box">
-      <form class="form">
-        <FormItem :label="t('common.label.title')" required>
-          <CustomInput v-model="anncForm.title" />
-        </FormItem>
-        <FormItem :label="t('common.label.period')" required>
-          <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~"
-            value-format="YYYY-MM-DD" :start-placeholder="t('common.label.start-date')"
-            :end-placeholder="t('common.label.end-date')" />
-        </FormItem>
-        <FormItem :label="t('common.label.file')">
-          <FileUpload @file-change="onFileChange" />
-        </FormItem>
-        <FormItem :label="t('common.label.content')" required>
-          <Editor v-model:content="contents" toolbar="full" theme="snow"
-            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
-        </FormItem>
-      </form>
-    </div>
+    <form class="form form__table">
+      <FormItem :label="t('common.label.title')" required>
+        <CustomInput v-model="anncForm.title" />
+      </FormItem>
+      <FormItem :label="t('common.label.period')" required>
+        <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
+          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" />
+      </FormItem>
+      <FormItem :label="t('common.label.content')" required>
+        <Editor v-model:content="contents" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
+      </FormItem>
+      <FormItem :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" />
+      </FormItem>
+    </form>
     <div class="content__btns">
       <button type="button" class="btn__secondary--lg" @click="handleGoAnncPage">
         {{ t('common.button.cancel') }}

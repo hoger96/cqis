@@ -4,8 +4,10 @@
 
 /* ========================== Styles ========================== */
 .editor {
+  @include flex-box(column);
   width: 100%;
   height: 100%;
+  background-color: $white;
 
   .ql-toolbar {
     border-color: $input-border-color !important;
@@ -14,7 +16,8 @@
   .ql-container {
     @include typo($color: $gray-400, $font-family: $font-family);
     overflow-y: auto;
-    max-height: 100px;
+    min-height: 100px;
+    height: 100%;
     border-color: $input-border-color !important;
     border-radius: 0 0 2px 2px;
     word-break: break-all;

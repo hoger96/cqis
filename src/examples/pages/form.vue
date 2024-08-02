@@ -108,6 +108,9 @@ const tableData: RowList[] = [
     description: ''
   },
 ]
+
+//editor
+const contents = ref<string | Delta>()
 </script>
 
 <template>
@@ -115,13 +118,6 @@ const tableData: RowList[] = [
     <h2 class="text-3xl font-semibold">
       Form
     </h2>
-    <div class="flex flex-col gap-2 mt-10 p-10 bg-white rounded-3xl">
-      <p><em class="font-bold">form-col-group</em>은 <em class="font-bold">list를 필수로 사용</em>해야합니다.</p>
-      <p><em class="font-bold">form-col</em> 일때만<em class="font-bold">use-btn</em>사용이 가능합니다.</p>
-      <p class="text-rose-500">&#8251; 아래 예제 중 <em class="font-bold">타겟 테이블의 형태</em>는 <em
-          class="font-bold">form-col</em>로만
-        사용합니다.</p>
-    </div>
     <!-- Form row -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
@@ -175,6 +171,13 @@ const tableData: RowList[] = [
         <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
           Form col (form-col)
         </mark>
+        <div class="flex flex-col gap-2 mt-10 p-10 bg-white rounded-3xl">
+          <p><em class="font-bold">form-col-group</em>은 <em class="font-bold">list를 필수로 사용</em>해야합니다.</p>
+          <p><em class="font-bold">form-col</em> 일때만<em class="font-bold">use-btn</em>사용이 가능합니다.</p>
+          <p class="text-rose-500">&#8251; 아래 예제 중 <em class="font-bold">타겟 테이블의 형태</em>는 <em
+              class="font-bold">form-col</em>로만
+            사용합니다.</p>
+        </div>
         <form class="form content__box">
           <FormItem label="&quot;form-col&quot;" form-col>
             <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
@@ -234,7 +237,33 @@ const tableData: RowList[] = [
       </div>
     </div>
     <hr>
-
+    <!-- Form Table -->
+    <div class="my-10">
+      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
+        Form table (form__table)
+      </mark>
+      <div class="flex flex-col gap-2 my-10 p-10 bg-white rounded-3xl">
+        <p><em class="font-bold">한줄에 두개의 form이 들어가는 경우</em>에는 <em class="font-bold">form__item</em>으로 묶어줍니다.</p>
+        <!-- <p><em class="font-bold">form-col</em> 일때만<em class="font-bold">use-btn</em>사용이 가능합니다.</p> -->
+      </div>
+      <form class="form form__table">
+        <FormItem label="Basic">
+          <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+        </FormItem>
+        <FormItem label="Required" required>
+          <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+        </FormItem>
+        <div class="form__item">
+          <FormItem label="Basic">
+            <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+          </FormItem>
+          <FormItem label="Required" required>
+            <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+          </FormItem>
+        </div>
+      </form>
+    </div>
+    <hr>
     <!-- Search Form -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">

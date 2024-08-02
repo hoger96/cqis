@@ -130,42 +130,44 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <h2 class="title">
       {{ t('annc.admin-title') }}
     </h2>
-    <div class="content__box">
-      <form class="form">
-        <FormItem :label="t('common.label.title')" :required="!updateMode">
-          <CustomInput v-model="anncForm.title" :readonly="updateMode" />
-        </FormItem>
-        <FormItem :label="t('common.label.period')" :required="!updateMode">
-          <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~"
-            value-format="YYYY-MM-DD" :start-placeholder="t('common.label.start-date')"
-            :end-placeholder="t('common.label.end-date')" :readonly="updateMode" />
-        </FormItem>
+    <form class="form form__table">
+      <FormItem :label="t('common.label.title')" :required="!updateMode">
+        <CustomInput v-model="anncForm.title" :readonly="updateMode" />
+      </FormItem>
+      <FormItem :label="t('common.label.period')" :required="!updateMode">
+        <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
+          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')"
+          :readonly="updateMode" />
+      </FormItem>
+      <div class="form__item">
         <FormItem :label="t('common.label.create-user')" :required="!updateMode">
           <CustomInput v-model="anncForm.createUser" readonly />
         </FormItem>
         <FormItem :label="t('common.label.create-date')" :required="!updateMode">
           <CustomInput v-model="anncForm.createDate" readonly />
         </FormItem>
+      </div>
+      <div class="form__item">
         <FormItem :label="t('common.label.update-user')" :required="!updateMode">
           <CustomInput v-model="anncForm.updateUser" readonly />
         </FormItem>
         <FormItem :label="t('common.label.update-date')" :required="!updateMode">
           <CustomInput v-model="anncForm.updateDate" readonly />
         </FormItem>
-        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
-          <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
-        </FormItem>
-        <FormItem :label="t('common.label.content')" :required="!updateMode">
-          <Editor v-model:content="contents" toolbar="full" theme="snow"
-            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
-            :read-only="updateMode" />
-        </FormItem>
-      </form>
-    </div>
+      </div>
+      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
+      </FormItem>
+      <FormItem :label="t('common.label.content')" :required="!updateMode">
+        <Editor v-model:content="contents" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+          :read-only="updateMode" />
+      </FormItem>
+    </form>
     <div class="content__btns">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoAnncPage">
         {{ t('common.button.cancel') }}
