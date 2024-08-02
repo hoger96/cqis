@@ -41,7 +41,7 @@
   }
 
   &__btns {
-    @apply flex items-center justify-center;
+    @include flex-box(itemx-center justify-center);
     margin-top: 30px;
   }
 }
