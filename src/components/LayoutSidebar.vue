@@ -95,7 +95,6 @@ const menuList = reactive([
     menuIndex: '14',
     menuUrl: '/Flatmap',
   },
-
 ])
 
 const router = useRouter()

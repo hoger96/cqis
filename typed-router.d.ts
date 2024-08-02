@@ -47,6 +47,7 @@ declare module 'vue-router/auto-routes' {
     '/examples/table': RouteRecordInfo<'/examples/table', '/examples/table', Record<never, never>, Record<never, never>>,
     '/examples/textfield': RouteRecordInfo<'/examples/textfield', '/examples/textfield', Record<never, never>, Record<never, never>>,
     '/examples/tree': RouteRecordInfo<'/examples/tree', '/examples/tree', Record<never, never>, Record<never, never>>,
+    'date-picker': RouteRecordInfo<'date-picker', '/examples/vue-date-picker', Record<never, never>, Record<never, never>>,
     '/flatmap/': RouteRecordInfo<'/flatmap/', '/flatmap', Record<never, never>, Record<never, never>>,
     '/globe/': RouteRecordInfo<'/globe/', '/globe', Record<never, never>, Record<never, never>>,
     '/map/': RouteRecordInfo<'/map/', '/map', Record<never, never>, Record<never, never>>,

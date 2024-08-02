@@ -15,9 +15,14 @@ const handleClose = (done: () => void) => {
       console.error(error)
     })
 }
-
 const myGlobe = Globe();
-const handleLoadGlobe = () => {
+const imageUrl = ref('/src/assets/3.png')
+const storedImageUrl = localStorage.getItem('globeImageUrl');
+if (storedImageUrl) {
+  imageUrl.value = storedImageUrl;
+}
+
+const handleLoadGlobe = (url: string) => {
   const markerSvg = `<svg viewBox="-4 0 36 36" />`;
 
   // Lat: 37.4913 Lon: 127.0165
@@ -39,7 +44,7 @@ const handleLoadGlobe = () => {
   ]
   const gData = marker;
 
-  myGlobe(globeDiv.value).globeImageUrl(new URL('/src/assets/3.png', import.meta.url).href).backgroundColor('white')
+  myGlobe(globeDiv.value).globeImageUrl(new URL(url, import.meta.url).href).backgroundColor('white')
 
   myGlobe.htmlElementsData(gData)
     .htmlElement(d => {
@@ -84,8 +89,14 @@ const handleActiveGlobe = () => {
   myGlobe.controls().autoRotateSpeed = 1.0;
 }
 
+const handleChangeImage = (num: number) => {
+  imageUrl.value = `/src/assets/지구본_0${num}.png`
+  localStorage.setItem('globeImageUrl', imageUrl.value);
+  window.location.reload();
+}
+
 onMounted(() => {
-  handleLoadGlobe()
+  handleLoadGlobe(imageUrl.value)
 });
 </script>
 
@@ -97,8 +108,26 @@ onMounted(() => {
     <button type="button" class="btn__primary-line--md" @click="handleActiveGlobe">
       지구본 돌기
     </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(1)">
+      1
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(2)">
+      2
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(3)">
+      3
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(4)">
+      4
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(5)">
+      5
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(6)">
+      6
+    </button>
   </div>
-  <div class="globe-wrapper">
+  <div v-if="imageUrl" class="globe-wrapper">
     <div ref="globeDiv"></div>
   </div>
 </template>

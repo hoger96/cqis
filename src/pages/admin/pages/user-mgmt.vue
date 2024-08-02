@@ -2,8 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ISearchParams, IUserData } from '../types/user-mgmt.ts'
 import { useRouter } from 'vue-router'
-import { MODAL_SIZE } from '~/types/modal.ts'
-import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
+import { MODAL_SIZE } from '../../../types/modal.ts'
+import CustomTextarea from '../../../examples/components/custom-textarea/CustomTextarea.vue'
 import UserPopup from '../components/UserPopup.vue'
 
 const router = useRouter()

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ITargetData, ISpanMethodProps } from '../../types/data-set.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ITextareaProps } from 's'
+import { ITextareaProps } from '../../../types/custom-textarea.ts'
 
 const props = withDefaults(defineProps(), {
   modelValue: '',
