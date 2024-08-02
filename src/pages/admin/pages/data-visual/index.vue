@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IDatasetVisualData } from '../types/data-visual.ts'
+import { ISearchParams, IDatasetVisualData } from '../../types/data-visual.ts'
 import { useRouter } from 'vue-router'
 import LineagePopup from '../../components/LineagePopup.vue'
 

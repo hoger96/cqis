@@ -3,7 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
-import { IQnaDetail } from '~/types/qna.ts'
+import type { Delta } from '@vueup/vue-quill'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -17,7 +17,7 @@ const dataLoaded = ref(false)
 const questionContents = ref<string | Delta>()
 const answerContents = ref<string | Delta>()
 
-const qnaForm = reactive<IQnaDetail>({
+const qnaForm = reactive({
   question: {
     title: '',
     createUser: '',

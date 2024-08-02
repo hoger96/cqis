@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Pagination from '../../components/Pagination.vue'
-import type { IPaginationOptions } from '../../types/pagination'
+import Pagination from '~/components/Pagination.vue'
+import type { IPaginationOptions } from '~/types/pagination'
 
 const tableData = [
   {

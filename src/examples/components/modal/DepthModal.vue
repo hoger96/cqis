@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ElTable } from 'element-plus';
-import { IModalProps } from '../../../types/modal';
 import Modal from '../modal/Modal.vue';
 
 interface User {
@@ -11,7 +10,7 @@ interface User {
 
 const currentRow = ref()
 const inputValue = ref('')
-const props = withDefaults(defineProps<IModalProps>(), {
+const props = withDefaults(defineProps(), {
   title: '',
   closeOnClickModal: true,
 })

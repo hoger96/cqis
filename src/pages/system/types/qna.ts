@@ -1,7 +1,7 @@
 export interface ISearchParams {
   searchCondition: string
   state: string
-  keyword: string
+  keyword?: string
   page?: number
 }
 
@@ -11,7 +11,7 @@ export interface IQnaData{
   title: string | Delta
   createUser: string
   createDate: string
-  state: wait
+  state: string
 }
 
 export interface IQnaDetail {
@@ -21,19 +21,19 @@ export interface IQnaDetail {
     createUser: string
     createDate: string
     detail: string | Delta
-    file: any[]
+    file?: File[]
   }
-  answer: {
+  answer?: {
     title: string
     createUser: string
     createDate: string
     detail: string | Delta
-    file: any[]
+    file: File[]
   }
 }
 
 export interface IQnaCreate {
   title?: string
   detail: string | Delta
-  file: any[]
+  file: File[]
 }
