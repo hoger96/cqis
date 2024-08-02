@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { defineComponent, onMounted, onBeforeUnmount, ref } from 'vue';
 import createGlobe from 'cobe';
+import type { Delta } from '@vueup/vue-quill'
 import { ElMessageBox } from 'element-plus'
 const buttonsContainerRef = ref();
 const dialogVisible = ref(false)

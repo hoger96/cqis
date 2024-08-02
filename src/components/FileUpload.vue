@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IUploadProps } from '../examples/types/upload.ts'
 
 const { t } = useI18n()
 
@@ -10,7 +9,7 @@ const fileName = ref('')
 const fileExtension = ref('')
 const fileUrl = ref('')
 
-const props = withDefaults(defineProps<IUploadProps>(), {
+const props = withDefaults(defineProps(), {
   show: true,
   file: []
 })

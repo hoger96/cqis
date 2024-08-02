@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ChartData, ArcElement, ChartOptions, AnimationEvent } from 'chart.js'
-import BarChart from '../../components/chartJs/BarChart.vue'
-import LineChart from '../../components/chartJs/LineChart.vue'
-import DoughnutChart from '../../components/chartJs/DoughnutChart.vue'
+import BarChart from '~/components/chartJs/BarChart.vue'
+import LineChart from '~/components/chartJs/LineChart.vue'
+import DoughnutChart from '~/components/chartJs/DoughnutChart.vue'
 
 const barData = ref<ChartData<'bar', number[], string>>({
   labels: [

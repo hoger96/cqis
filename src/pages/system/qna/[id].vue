@@ -17,7 +17,7 @@ const dataLoaded = ref(false)
 const questionContents = ref<string | Delta>()
 const answerContents = ref<string | Delta>()
 
-const qnaForm = reactive<IQnaDetail>({
+const qnaForm = reactive({
   question: {
     title: '',
     createUser: '',

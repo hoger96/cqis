@@ -14,7 +14,7 @@ const attachedFile = ref<File[]>([])
 const dataLoaded = ref(false)
 const noUpload = ref(false)
 
-const faqForm = reactive<IFaqDetail>({
+const faqForm = reactive({
   title: '',
   createUser: '',
   createDate: '',

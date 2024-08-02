@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import CustomInput from '../../components/CustomInput.vue'
-import BasicSelectBox from '../../components/BasicSelectBox.vue'
+import CustomInput from '~/components/CustomInput.vue'
+import BasicSelectBox from '~/components/BasicSelectBox.vue'
 // select-box
 import type { IOptions } from '../types/select-box'
 import mockOptions from '../mock/options.js'
 // File
-import FileUpload from '../../components/FileUpload.vue'
+import FileUpload from '~/components/FileUpload.vue'
 
 const { t } = useI18n()
 
@@ -27,6 +27,22 @@ const handleReset = () => { }
 const onFileChange = (file: File[]) => {
   console.log('ee', file)
 }
+
+// form-col-group
+const formColRowList = [
+  {
+    id: 1,
+    input: '',
+  },
+  {
+    id: 2,
+    input: '',
+  },
+  {
+    id: 3,
+    input: '',
+  },
+]
 
 // target Table
 interface RowList {
@@ -99,10 +115,17 @@ const tableData: RowList[] = [
     <h2 class="text-3xl font-semibold">
       Form
     </h2>
+    <div class="flex flex-col gap-2 mt-10 p-10 bg-white rounded-3xl">
+      <p><em class="font-bold">form-col-group</em>은 <em class="font-bold">list를 필수로 사용</em>해야합니다.</p>
+      <p><em class="font-bold">form-col</em> 일때만<em class="font-bold">use-btn</em>사용이 가능합니다.</p>
+      <p class="text-rose-500">&#8251; 아래 예제 중 <em class="font-bold">타겟 테이블의 형태</em>는 <em
+          class="font-bold">form-col</em>로만
+        사용합니다.</p>
+    </div>
     <!-- Form row -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        Form row (Basic)
+        Form row (Default)
       </mark>
       <!-- 복사영역 -->
       <form class="form content__box">
@@ -134,6 +157,17 @@ const tableData: RowList[] = [
         <FormItem label="&quot;use-group&quot;" use-group>
           <basic-select-box v-model="initData" :options="options" />
           <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+        </FormItem>
+        <FormItem label="&quot;use-col-group&quot;" use-col-group :list="formColRowList">
+          <template #default="{ row, index }">
+            <CustomInput v-model="row.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+            <button v-if="index === formColRowList.length - 1" type="button">
+              <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
+            </button>
+            <button type="button">
+              <icon name="minus-round__full" width="32" height="32" :alt="t('common.button.delete')" />
+            </button>
+          </template>
         </FormItem>
       </form>
       <!-- // -->

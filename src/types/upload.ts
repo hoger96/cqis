@@ -8,3 +8,8 @@ export interface IFileList {
 export interface IUploadOptions {
   file: any[]
 }
+
+export interface IUploadProps {
+  show: boolean
+  file: File[]
+}

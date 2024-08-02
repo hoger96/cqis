@@ -4,10 +4,10 @@ import type { Delta } from '@vueup/vue-quill'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import '@vueup/vue-quill/dist/vue-quill.bubble.css'
-import type { IEditorProps } from '../../types/editor.ts'
-import { CONTENT_TYPE, EDITOR_MODE, THEME_TYPE, TOOLBAR_TYPE } from '../../types/enums/editor.ts'
+import type { IEditorProps } from '~/types/editor.ts'
+import { CONTENT_TYPE, EDITOR_MODE, THEME_TYPE, TOOLBAR_TYPE } from '~/types/enums/editor.ts'
 
-const props = withDefaults(defineProps<IEditorProps>(), {
+const props = withDefaults(defineProps(), {
   toolbar: TOOLBAR_TYPE.NONE,
   theme: THEME_TYPE.SNOW,
   mode: EDITOR_MODE.EDIT,

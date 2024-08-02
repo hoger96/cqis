@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Delta } from '@vueup/vue-quill'
-import { CONTENT_TYPE, THEME_TYPE } from '../../types/enums/editor'
-import Editor from '../../components/Editor.vue'
+import { CONTENT_TYPE, THEME_TYPE } from '~/types/enums/editor'
+import Editor from '~/components/Editor.vue'
 
 const toolbar = ref<string | Array<string | Array<string>>>('full')
 const theme = ref<THEME_TYPE>(THEME_TYPE.SNOW)

@@ -24,22 +24,55 @@ const dataSet = reactive({
   job: '',
   playTime: ''
 })
-const targetTableList = ref<[]>([
+// const targetTableList = ref<[]>([
+//   {
+//     sourceList: [
+//       {
+//         tableName: '',
+//         column: '',
+//         description: '',
+//       }
+//     ],
+//     target: {
+//       tableName: '',
+//       column: '',
+//       description: '',
+//     }
+//   }
+// ])
+const tableData = ref<ITargetData[]>([])
+const originData = ref<ITargetData[]>([
   {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
-      }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: '',
-    }
-  }
+    id: 'Source',
+    tableName: '1',
+    column: '1',
+    description: '1'
+  },
+  {
+    id: 'Target',
+    tableName: '1',
+    column: '1',
+    description: '1'
+  },
 ])
+const data = [
+  {
+    id: 'Source',
+    tableName: '1',
+    column: '1',
+    description: '1'
+  },
+  {
+    id: 'Target',
+    tableName: '1',
+    column: '1',
+    description: '1'
+  },
+]
+
+const setData = () => {
+  tableData.value = originData.value
+}
 
 const handleGoDataSetPage = () => {
   router.push({ path: '/admin/pages/data-set' })
@@ -95,19 +128,6 @@ const handleRemoveSource = (tableIndex: number, sourceIndex: number) => {
 }
 
 // FIXME 개발자 : 퍼블리싱하면서 임시 추가한 영역입니다.
-interface RowList {
-  id: string
-  tableName: string
-  column: string
-  description: string
-}
-
-interface SpanMethodProps {
-  row: RowList
-  rowIndex: number
-  columnIndex: number
-}
-
 const addRowspan = ({
   rowIndex,
   columnIndex,
@@ -138,26 +158,19 @@ const addRowspan = ({
   }
 }
 
-const tableData: RowList[] = [
-  {
+const addSourceData = () => {
+  console.log('add')
+  const newSource = {
     id: 'Source',
     tableName: '',
     column: '',
     description: ''
-  },
-  {
-    id: 'Source',
-    tableName: '',
-    column: '',
-    description: ''
-  },
-  {
-    id: 'Target',
-    tableName: '',
-    column: '',
-    description: ''
-  },
-]
+  }
+}
+
+onMounted(() => {
+  // setData()
+})
 </script>
 
 <template>
@@ -182,7 +195,7 @@ const tableData: RowList[] = [
         <!-- FIXME 개발자 :: 추가버튼 클릭 시 아래 div가 복제되도록 요청드립니다.
         table 형태로 변경하면서 이전 소스는 주석처리하였습니다. -->
         <div class="mb-2.5 box--f7f">
-          <el-table :data="tableData" :span-method="addRowspan" style="width: 100%;" class="no-hover">
+          <el-table :data="data" :span-method="addRowspan" style="width: 100%;" class="no-hover">
             <el-table-column prop="id" align="center" min-width="15" />
             <el-table-column prop="tableName" :label="t('data-set.label.table')" min-width="25">
               <template #default="scope">
@@ -202,7 +215,7 @@ const tableData: RowList[] = [
             <el-table-column align="center" label="row" min-width="10">
               <template #default="scope">
                 <div v-if="scope.row.id === 'Source'" class="flex justify-center">
-                  <button type="button" class="mr-2.5">
+                  <button type="button" class="mr-2.5" @click="addSourceData">
                     <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
                   </button>
                   <button type="button">

@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import CustomInput from '~/components/CustomInput.vue'
-import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
-import { IFaqDetail } from '../types/faq.ts'
+import type { Delta } from '@vueup/vue-quill'
 import FileUpload from '~/components/FileUpload.vue'
 import Editor from '~/components/Editor.vue'
 
@@ -16,7 +14,7 @@ const contents = ref<string | Delta>()
 const attachedFile = ref<File[]>([])
 const dataLoaded = ref(false)
 
-const faqForm = reactive<IFaqDetail>({
+const faqForm = reactive({
   title: '',
   createUser: '',
   createDate: '',

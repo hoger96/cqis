@@ -1,5 +1,5 @@
 import type { Delta } from '@vueup/vue-quill'
-import type { CONTENT_TYPE, THEME_TYPE, TOOLBAR_TYPE } from '~/types/enums/editor'
+import { CONTENT_TYPE, THEME_TYPE, TOOLBAR_TYPE } from '~/types/enums/editor'
 
 export interface IEditorProps {
   toolbar?: TOOLBAR_TYPE | ObjectConstructor | ArrayConstructor

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import CustomInput from '~/components/CustomInput.vue'
-import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
+import type { Delta } from '@vueup/vue-quill'
+import type { IAnnouncementDetail } from '../types/announcement.ts'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -37,7 +37,7 @@ const getAnncDetail = async () => {
     //   method: 'GET',
     //   url: `/annc/${anncId.value}`
     // })
-    const res = await {
+    const res: IAnnouncementDetail = await {
       title: '[전사공지] 안전관리',
       createUser: '김영현',
       createDate: '2024-07-18',
