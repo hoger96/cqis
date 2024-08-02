@@ -2,14 +2,14 @@
 // ================ modal ================
 import type { MessageOptions } from 'element-plus'
 import Modal from '../components/modal/Modal.vue'
-import { MODAL_SIZE } from '~/types/modal'
-import { openConfirm } from '~/composables/utils.ts'
+import { MODAL_SIZE } from '../../types/modal'
+import { openConfirm } from '../../composables/utils.ts'
 
 // ================ Toast ================
-import { IToastType } from '~/types/modal'
+import { IToastType } from '../../types/modal'
 import type { IModalPopup } from '~/types/modal'
 import DepthModal from '../components/modal/DepthModal.vue'
-import { openToast } from '~/composables/utils.ts'
+import { openToast } from '../../composables/utils.ts'
 
 // ================ confirm ================
 const basicConfirm = {

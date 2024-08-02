@@ -21,9 +21,8 @@ export interface IAnnouncementDetail {
   updateUser?: string
   updateDate?: string
   file?: File[]
-  detail: string | Delta
-  startDate: string
-  endDate: string
+  contents: string | Delta
+  postingPeriod: any[]
 }
 
 export interface IAnnouncementCreate{

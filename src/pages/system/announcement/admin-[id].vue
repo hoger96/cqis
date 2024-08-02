@@ -13,7 +13,7 @@ const contents = ref<string | Delta>()
 const attachedFile = ref<File[]>([])
 const dataLoaded = ref(false)
 
-const anncForm = reactive<IAnnouncementDetail>({
+const anncForm = reactive({
   title: '',
   createUser: '',
   createDate: '',
@@ -37,7 +37,7 @@ const getAnncDetail = async () => {
     //   method: 'GET',
     //   url: `/annc/${anncId.value}`
     // })
-    const res: IAnnouncementDetail = await {
+    const res = await {
       title: '[전사공지] 안전관리',
       createUser: '김영현',
       createDate: '2024-07-18',
@@ -47,29 +47,33 @@ const getAnncDetail = async () => {
       file: new File([""], fileData.name, {
         type: fileData.type,
         lastModified: fileData.lastModified
-      })
+      }),
+      updateUser: '',
+      updateDate: ''
     }
     return res
   }
-  catch (error: Error) {
+  catch (error) {
     console.error(error)
   }
 }
 
 const setAnncDetail = async () => {
   const data = await getAnncDetail()
-  const period = [data.startDate, data.endDate]
-  anncForm.title = data.title
-  anncForm.createUser = data.createUser
-  anncForm.createDate = data.createDate
-  anncForm.updateUser = data.updateUser ? data.updateUser : '-'
-  anncForm.updateDate = data.updateDate ? data.updateDate : '-'
-  contents.value = data.detail
-  anncForm.postingPeriod = period
-  if (data.file) {
-    attachedFile.value = [data.file]
+  if (data) {
+    const period = [data.startDate, data.endDate]
+    anncForm.title = data.title
+    anncForm.createUser = data.createUser
+    anncForm.createDate = data.createDate
+    anncForm.updateUser = data.updateUser ? data.updateUser : '-'
+    anncForm.updateDate = data.updateDate ? data.updateDate : '-'
+    contents.value = data.detail
+    anncForm.postingPeriod = period
+    if (data.file) {
+      attachedFile.value = [data.file]
+    }
+    dataLoaded.value = true
   }
-  dataLoaded.value = true
 }
 
 const onEditorChange = (value: string) => {

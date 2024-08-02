@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { EditorView } from '@codemirror/view'
 import { Compartment, EditorState } from '@codemirror/state'
 import { basicSetup } from '@codemirror/basic-setup'
@@ -61,4 +61,4 @@ const copyToClipboard = () => {
   color: #fff;
   border: none;
 }
-</style>
+</style> -->

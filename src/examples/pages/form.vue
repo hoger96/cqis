@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import CustomInput from '~/components/CustomInput.vue'
-import BasicSelectBox from '~/components/BasicSelectBox.vue'
+import CustomInput from '../../components/CustomInput.vue'
+import BasicSelectBox from '../../components/BasicSelectBox.vue'
 // select-box
 import type { IOptions } from '../types/select-box'
 import mockOptions from '../mock/options.js'
 // File
-import FileUpload from '~/components/FileUpload.vue'
+import FileUpload from '../../components/FileUpload.vue'
 
 const { t } = useI18n()
 

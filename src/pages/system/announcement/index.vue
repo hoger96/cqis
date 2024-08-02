@@ -115,7 +115,7 @@ const handleSearch = () => {
   getAnnouncementList(params)
 }
 
-const handleAnncDetail = (e) => {
+const handleAnncDetail = (e: IAnnouncementData) => {
   router.push({ path: `/system/announcement/${e.anncId}` })
 }
 

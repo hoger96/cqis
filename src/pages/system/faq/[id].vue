@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import CustomInput from '~/components/CustomInput.vue'
-import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
-import { IFaqDetail } from '../types/faq.ts'
+import CustomTextarea from '../../../examples/components/custom-textarea/CustomTextarea.vue'
+import { type IFaqDetail } from '../types/faq.ts'
+import type { Delta } from '@vueup/vue-quill'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -46,21 +46,23 @@ const getFaqDetail = async () => {
     }
     return res
   }
-  catch (error: Error) {
+  catch (error) {
     console.error(error)
   }
 }
 
 const setFaqDetail = async () => {
   const data = await getFaqDetail()
-  faqForm.title = data.title
-  faqForm.createUser = data.createUser
-  faqForm.createDate = data.createDate
-  contents.value = data.detail
-  if (data.file) {
-    attachedFile.value = [data.file]
+  if (data) {
+    faqForm.title = data.title
+    faqForm.createUser = data.createUser
+    faqForm.createDate = data.createDate
+    contents.value = data.detail
+    if (data.file) {
+      attachedFile.value = [data.file]
+    }
+    dataLoaded.value = true
   }
-  dataLoaded.value = true
 }
 
 const handleGoFaqPage = () => {

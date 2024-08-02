@@ -2,8 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { IUserAuthDetail, IUserAuthPopup } from '../types/user-auth.ts'
 import { useRouter } from 'vue-router'
-import { MODAL_SIZE } from '~/types/modal.ts'
-import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
+import { MODAL_SIZE } from '../../../types/modal.ts'
+import CustomTextarea from '../../../examples/components/custom-textarea/CustomTextarea.vue'
 
 
 const { t } = useI18n()

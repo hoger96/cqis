@@ -2,8 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
-import Editor from '~/components/Editor.vue'
-import FileUpload from '~/components/FileUpload.vue'
+import Editor from '../../../components/Editor.vue'
+import FileUpload from '../../../components/FileUpload.vue'
 
 const router = useRouter()
 const { t } = useI18n()

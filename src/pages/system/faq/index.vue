@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IFaqData } from '../types/faq.ts'
+import { type ISearchParams, type IFaqData } from '../types/faq.ts'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
@@ -120,7 +120,7 @@ const handleSearch = () => {
   getFaqList(params)
 }
 
-const handleFaqDetail = (e) => {
+const handleFaqDetail = (e: IFaqData) => {
   router.push({ path: `/system/faq/${e.faqId}` })
 }
 

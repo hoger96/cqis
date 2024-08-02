@@ -2,8 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
-import FileUpload from '~/components/FileUpload.vue'
-import Editor from '~/components/Editor.vue'
+import FileUpload from '../../../components/FileUpload.vue'
+import Editor from '../../../components/Editor.vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -45,27 +45,31 @@ const getFaqDetail = async () => {
       file: new File([""], fileData.name, {
         type: fileData.type,
         lastModified: fileData.lastModified
-      })
+      }),
+      updateDate: '',
+      updateUser: ''
     }
     return res
   }
-  catch (error: Error) {
+  catch (error) {
     console.error(error)
   }
 }
 
 const setFaqDetail = async () => {
   const data = await getFaqDetail()
-  faqForm.title = data.title
-  faqForm.createUser = data.createUser
-  faqForm.createDate = data.createDate
-  faqForm.updateUser = data.updateUser ? data.updateUser : '-'
-  faqForm.updateDate = data.updateDate ? data.updateDate : '-'
-  contents.value = data.detail
-  if (data.file) {
-    attachedFile.value = [data.file]
+  if (data) {
+    faqForm.title = data.title
+    faqForm.createUser = data.createUser
+    faqForm.createDate = data.createDate
+    faqForm.updateUser = data.updateUser ? data.updateUser : '-'
+    faqForm.updateDate = data.updateDate ? data.updateDate : '-'
+    contents.value = data.detail
+    if (data.file) {
+      attachedFile.value = [data.file]
+    }
+    dataLoaded.value = true
   }
-  dataLoaded.value = true
 }
 
 const onEditorChange = (value: string) => {

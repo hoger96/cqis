@@ -1,4 +1,4 @@
-import type { ITree } from '~/types/select-box'
+import type { ITree } from '../../types/select-box'
 
 export interface ITreeData extends ITree<ITreeData> {
   value: string | number
