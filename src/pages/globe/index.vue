@@ -15,8 +15,14 @@ const handleClose = (done: () => void) => {
       console.error(error)
     })
 }
+const myGlobe = Globe();
+const imageUrl = ref('/src/assets/3.png')
+const storedImageUrl = localStorage.getItem('globeImageUrl');
+if (storedImageUrl) {
+  imageUrl.value = storedImageUrl;
+}
 
-const handleLoadGlobe = () => {
+const handleLoadGlobe = (url: string) => {
   const markerSvg = `<svg viewBox="-4 0 36 36" />`;
 
   // Lat: 37.4913 Lon: 127.0165
@@ -30,16 +36,15 @@ const handleLoadGlobe = () => {
   */
   const marker = [
     {
-      lat: 37.4913, lng: 127.0165, size: 30, color: 'yellow', image: '/src/assets/미국국기.jpeg'
+      lat: 37.4913, lng: 127.0165, size: 30, color: 'yellow', image: '/src/assets/다운로드.png'
     },
     {
-      lat: 37.7749295, lng: -122.4194155, size: 30, color: 'yellow', image: '/src/assets/다운로드.png'
+      lat: 37.7749295, lng: -122.4194155, size: 30, color: 'yellow', image: '/src/assets/미국국기.jpeg'
     },
   ]
   const gData = marker;
 
-  const myGlobe = Globe();
-  myGlobe(globeDiv.value).globeImageUrl(new URL('/src/assets/blue.jpeg', import.meta.url).href);
+  myGlobe(globeDiv.value).globeImageUrl(new URL(url, import.meta.url).href).backgroundColor('white')
 
   myGlobe.htmlElementsData(gData)
     .htmlElement(d => {
@@ -76,15 +81,64 @@ const handleLoadGlobe = () => {
   myGlobe.controls().autoRotateSpeed = 1.0;
 }
 
+const handleStopGlobe = () => {
+  myGlobe.controls().autoRotate = false;
+}
+const handleActiveGlobe = () => {
+  myGlobe.controls().autoRotate = true;
+  myGlobe.controls().autoRotateSpeed = 1.0;
+}
+
+const handleChangeImage = (num: number) => {
+  imageUrl.value = `/src/assets/지구본_0${num}.png`
+  localStorage.setItem('globeImageUrl', imageUrl.value);
+  window.location.reload();
+}
+
 onMounted(() => {
-  handleLoadGlobe()
+  handleLoadGlobe(imageUrl.value)
 });
 </script>
 
 <template>
-  <div>
+  <div class="flex">
+    <button type="button" class="btn__primary-line--md" @click="handleStopGlobe">
+      지구본 멈추기
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleActiveGlobe">
+      지구본 돌기
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(1)">
+      1
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(2)">
+      2
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(3)">
+      3
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(4)">
+      4
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(5)">
+      5
+    </button>
+    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(6)">
+      6
+    </button>
+  </div>
+  <div v-if="imageUrl" class="globe-wrapper">
     <div ref="globeDiv"></div>
   </div>
 </template>
 
-<style></style>
+<style>
+.globe-wrapper {
+  width: 95%;
+  height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+</style>

@@ -113,10 +113,14 @@ const setMarkers = (map, markers) => {
   markers.forEach(marker => marker.addTo(map))
 }
 
+const getStyle = () => {
+  return new URL('/src/assets/mapstyle.json', import.meta.url).href;
+}
+
 const handleLoadMap = () => {
   const map: Map = new maplibregl.Map({
     container: mapContainer.value,
-    style: 'http://localhost:5173/public/mapstyle.json',
+    style: getStyle(),
     center: [-96, 37.8],
     zoom: 1,
   });

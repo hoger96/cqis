@@ -3,7 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
-import { IFaqDetail } from '~/types/faq.ts'
+import { IFaqDetail } from '../types/faq.ts'
 
 const { t } = useI18n()
 const route = useRoute()

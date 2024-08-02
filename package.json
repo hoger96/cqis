@@ -24,6 +24,7 @@
     "axios": "^1.6.7",
     "chart.js": "^4.4.2",
     "cobe": "^0.6.3",
+    "dayjs": "^1.11.12",
     "echarts": "^5.5.1",
     "element-plus": "^2.7.7",
     "globe.gl": "^2.32.5",

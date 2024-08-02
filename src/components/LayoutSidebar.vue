@@ -83,6 +83,18 @@ const menuList = reactive([
     menuIndex: '12',
     menuUrl: '/admin/pages/batch-history',
   },
+  {
+    menuId: 'Globe',
+    menuName: 'Globe',
+    menuIndex: '13',
+    menuUrl: '/globe',
+  },
+  {
+    menuId: 'FlatMap',
+    menuName: 'FlatMap',
+    menuIndex: '14',
+    menuUrl: '/Flatmap',
+  },
 ])
 
 const router = useRouter()

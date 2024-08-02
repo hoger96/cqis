@@ -36,7 +36,7 @@ const onPointerUp = () => {
   pointerInteracting.value = null;
   if (canvasRef.value) {
     canvasRef.value.style.cursor = 'grab';
-  } 이
+  }
 };
 
 const onMouseMove = (e: MouseEvent) => {
@@ -78,7 +78,7 @@ const createButtonAtLocation = (lat, long) => {
   const button = document.createElement('button');
   button.innerText = `📍 ${lat}, ${long}`;
   button.style.position = 'absolute';
-  button.style.cursot = 'pointer'
+  button.style.cursor = 'pointer'
 
   // const [phi, theta] = locationToAngles(lat, long);
   // const x = (0.5 + 0.5 * Math.sin(phi) * Math.cos(theta)) * canvasRef.value.width;
