@@ -48,6 +48,8 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SearchForm: typeof import('./components/SearchForm.vue')['default']
     SearchItem: typeof import('./components/SearchItem.vue')['default']
+    SidebarMgmtSidebar: typeof import('./components/sidebar/MgmtSidebar.vue')['default']
+    SidebarUserMenuSidebar: typeof import('./components/sidebar/UserMenuSidebar.vue')['default']
     Tab: typeof import('./components/Tab.vue')['default']
     TreeSection: typeof import('./components/TreeSection.vue')['default']
   }
