@@ -30,7 +30,8 @@ const handleGetDataset = () => {
       name: '데이터셋1',
       description: '데이터셋1 입니다.',
       tableList: ['테이블1', '테이블2'],
-      use: 'N'
+      use: 'N',
+      lineageId: 'lineage_01'
     }
 
     return res
@@ -81,6 +82,7 @@ const handleRemoveTable = (index: number) => {
 
 const handleChangeMode = () => {
   updateMode.value = false
+  handleSetDataset()
 }
 
 const handleUpdateMode = () => {
@@ -107,47 +109,43 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="p-20">
-    <h2 class="text-3xl font-semibold">
+  <div>
+    <h2 class="title">
       {{ t('data-set.title') }} {{ t('common.label.detail') }}
     </h2>
-    <div class="my-10">
-      <form class="form">
-        <FormItem :label="t('data-visual.label.app-name')" :required="updateMode">
-          <CustomInput v-model="dataset.name" :placeholder="t('data-visual.placeholder.app-name')"
+    <form class="form content__box">
+      <FormItem :label="t('data-visual.label.app-name')" :required="updateMode">
+        <CustomInput v-model="dataset.name" :placeholder="t('data-visual.placeholder.app-name')"
+          :readonly="!updateMode" />
+      </FormItem>
+      <FormItem :label="t('data-visual.label.app-description')" :required="updateMode">
+        <CustomTextarea v-model="dataset.description" :placeholder="t('data-visual.placeholder.app-description')"
+          :readonly="!updateMode" />
+      </FormItem>
+      <FormItem :label="t('data-visual.label.table')" :required="updateMode" use-col-group :list="tableList">
+        <template #default="{ row, index }">
+          <CustomInput v-model="tableList[index]" :placeholder="t('data-visual.placeholder.table')"
             :readonly="!updateMode" />
-        </FormItem>
-        <FormItem :label="t('data-visual.label.app-description')" :required="updateMode">
-          <CustomTextarea v-model="dataset.description" :placeholder="t('data-visual.placeholder.app-description')"
-            :readonly="!updateMode" />
-        </FormItem>
-        <FormItem :label="t('data-visual.label.table')" :required="updateMode">
-          <div v-for="(table, index) in tableList" :key="index" class="flex">
-            <CustomInput v-model="tableList[index]" :placeholder="t('data-visual.label.table')"
-              :readonly="!updateMode" />
-            <button v-if="index === 0 && updateMode" type="button" class="btn__secondary--sm"
-              @click="handleAddTable(index)">
-              {{ t('common.button.add') }}
-            </button>
-            <button v-if="tableList.length > 1 && updateMode" type="button" class="btn__secondary--sm"
-              @click="handleRemoveTable(index)">
-              {{ t('common.button.delete') }}
-            </button>
-          </div>
-        </FormItem>
-        <FormItem :label="t('common.search-bar.use')" :required="updateMode">
-          <el-radio-group v-model="dataset.use" :disabled="!updateMode">
-            <el-radio value="Y">
-              {{ t('common.label.use-yes') }}
-            </el-radio>
-            <el-radio value="N">
-              {{ t('common.label.use-no') }}
-            </el-radio>
-          </el-radio-group>
-        </FormItem>
-      </form>
-    </div>
-    <div class="mgmt__btn">
+          <button v-if="index === 0 && updateMode" type="button" @click="handleAddTable(index)">
+            <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
+          </button>
+          <button v-if="tableList.length > 1 && updateMode" type="button" @click="handleRemoveTable(index)">
+            <icon name="minus-round__full" width="32" height="32" :alt="t('common.button.delete')" />
+          </button>
+        </template>
+      </FormItem>
+      <FormItem :label="t('common.search-bar.use')" :required="updateMode">
+        <el-radio-group v-model="dataset.use" :disabled="!updateMode">
+          <el-radio value="Y">
+            {{ t('common.label.use-yes') }}
+          </el-radio>
+          <el-radio value="N">
+            {{ t('common.label.use-no') }}
+          </el-radio>
+        </el-radio-group>
+      </FormItem>
+    </form>
+    <div class="content__btns">
       <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleLineagePopup">
         {{ t('data-visual.label.lineage') }}
       </button>
