@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IDatasetVisualData } from '../types/data-visual.ts'
+import { ISearchParams, IDatasetVisualData } from '../../types/data-visual.ts'
 import { useRouter } from 'vue-router'
 import LineagePopup from '../../components/LineagePopup.vue'
 
@@ -175,10 +175,8 @@ onMounted(() => {
       {{ t('data-visual.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem :label="t('data-set.label.data-set')">
+      <SearchItem>
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
       </SearchItem>

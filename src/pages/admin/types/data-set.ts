@@ -16,3 +16,16 @@ export interface IDatasetData{
   job: string
   period: string
 }
+
+interface ITargetData {
+  id: string
+  tableName: string
+  column: string
+  description: string
+}
+
+interface ISpanMethodProps {
+  row: ITargetDate
+  rowIndex: number
+  columnIndex: number
+}

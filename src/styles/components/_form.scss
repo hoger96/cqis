@@ -4,11 +4,14 @@
 
 /* ========================== Styles ========================== */
 .form {
+  @include flex-box(column);
+
   &--col {
     @include flex-box(column);
 
     .form__label-wrap {
       margin-bottom: 5px;
+      margin-right: 0;
     }
   }
   &__item {
@@ -30,16 +33,14 @@
   }
 
   &__label {
-    @include typo(15px, 500, $gray-400, $input-size);
+    @include typo(15px, 500, $gray-400, $form-height-md);
     display: inline-block;
     min-width: 140px;
-    margin-right: 20px;
-    color: $gray-400;
     align-self: normal;
 
     &.is-required {
       @include after {
-        @include typo(15px, 500, $error, $input-size);
+        @include typo(15px, 500, $error, $form-height-md);
         content: '*';
         padding-left: 2px;
         padding-right: 2px;
@@ -47,6 +48,7 @@
     }
     &-wrap {
       @include flex-box(items-center justify-between);
+      margin-right: 20px;
     }
   }
 
@@ -56,6 +58,10 @@
     flex: 1 1 0%;
     .el-select {
       max-width: 167px;
+    }
+    &--col {
+      @include space-y(10px);
+      flex: 1 1 0%;
     }
   }
 
@@ -82,25 +88,41 @@
     }
   }
 
-  // &__box {
-  //   @apply flex-1;
-  //   padding: 30px;
-  //   background: $gray-30;
-  //   border-radius: 6px;
+  &__table {
+    height: 100%;
+    background-color: $white;
+    border: 1px solid $gray-240;
 
-  //   &-btns {
-  //     @apply flex items-center;
-  //     width: 74px;
-  //     margin-left: 20px;
-  //     button {
-  //       & + button {
-  //         margin-left: 10px;
-  //       }
-  //     }
-  //   }
-  // }
+    .form {
+      &__item {
+        @include flex-box(items-center);
+        padding-right: 15px;
+        &:has(.editor) {
+          flex: 1 1 0%;
+        }
+        & + .form__item {
+          margin-top: 0;
+          border-top: 1px solid $gray-240;
+        }
+        // row에 form__item 두개 들어간 경우
+        .form__item {
+          border-top: 0;
+          &:last-child {
+            padding-right: 0;
+          }
+        }
+      }
+      &__label-wrap {
+        padding: 10px 0 10px 30px;
+        height: 100%;
+        background-color: $gray-45;
+        & + div {
+          padding: 10px 0;
+        }
+      }
+    }
+  }
 }
-
 .search-form {
   @include flex-box(justify-between items-start);
   @include box(20px 40px);
@@ -127,7 +149,7 @@
   }
 
   &__label {
-    @include typo($font-weight: 500, $line-height: $input-size);
+    @include typo($font-weight: 500, $line-height: $form-height-md);
     min-width: fit-content;
     margin-right: 10px;
     white-space: nowrap;

@@ -1,0 +1,48 @@
+// {
+//   "editor.codeActionsOnSave": {
+//     "source.fixAll": ""
+//   },
+//   "editor.formatOnSave": true,
+//   "editor.defaultFormatter": "esbenp.prettier-vscode"
+// }
+{
+  "cSpell.words": [
+    "antfu",
+    "demi",
+    "iconify",
+    "intlify",
+    "pinia",
+    "pnpm",
+    "regx",
+    "SELECTLESS",
+    "unplugin",
+    "Vite",
+    "vitejs",
+    "Vitesse",
+    "vitest",
+    "vueuse"
+  ],
+  "prettier.enable": true,
+  "editor.tabSize": 2,
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "editor.formatOnSave": true,
+  "github-enterprise.uri": "https://gitlab.abacussw.co.kr/",
+  "i18n-ally.localesPaths": [
+    "locales"
+  ]
+}

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import CustomInput from '../../components/CustomInput.vue'
+import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '../components/custom-textarea/CustomTextarea.vue'
 
 // select
 import type { IOptions } from '../types/select-box'
-import BasicSelectBox from '../../components/BasicSelectBox.vue'
+import BasicSelectBox from '~/components/BasicSelectBox.vue'
 import mockOptions from '../mock/options.js'
 
 const form = {
@@ -78,7 +78,7 @@ const initData = ref(3)
     <!-- select -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        Select-box
+        Dropdown
       </mark>
       <form class="form">
         <FormItem label="Basic">

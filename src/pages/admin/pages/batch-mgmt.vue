@@ -2,8 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ISearchParams, IBatchData } from '../types/batch-mgmt.ts'
 import { useRouter } from 'vue-router'
-import { MODAL_SIZE } from '../../types/modal.ts'
-import CustomTextarea from '../../examples/components/custom-textarea/CustomTextarea.vue'
+import { MODAL_SIZE } from '../../../types/modal.ts'
+import CustomTextarea from '../../../examples/components/custom-textarea/CustomTextarea.vue'
 import BatchPopup from '../components/BatchPopup.vue'
 
 const router = useRouter()
@@ -216,15 +216,13 @@ onMounted(() => {
       {{ t('batch.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem :label="t('common.search-bar.condition')">
+      <SearchItem>
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
+          @keyup.enter="handleSearch" />
       </SearchItem>
       <SearchItem :label="t('batch.label.kind')">
         <basic-select-box v-model="searchParam.batchKind" :options="kindStateOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.keyword')">
-        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
       </SearchItem>
     </SearchForm>
     <div class="content__box">

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IFaqCreate } from '../types/faq.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
-import Editor from '~/components/Editor.vue'
-import FileUpload from '~/components/FileUpload.vue'
+import Editor from '../../../components/Editor.vue'
+import FileUpload from '../../../components/FileUpload.vue'
 
 const router = useRouter()
 const { t } = useI18n()
 const title = ref('')
 const contents = ref<string | Delta>()
+const attachedFile = ref<File[]>([])
 
 const onEditorChange = (value: string) => {
   contents.value = value
@@ -39,7 +39,7 @@ const handleCreateFaq = () => {
       }
     }
     console.log('등록: ', data.value)
-    //router.push({ path: '/admin/faq' })
+    router.push({ path: '/system/faq/admin-index' })
   }
   catch (error) {
     console.error(error)
@@ -56,17 +56,19 @@ const onFileChange = (file: File[]) => {
     <h2 class="title">
       {{ t('faq.admin-title') }}{{ t('common.button.create') }}
     </h2>
-    <div>
-      <div class="form">
-        <label class="form__label--required">{{ t('common.label.title') }}</label>
-        <CustomInput v-model="title" />
-      </div>
-      <div>
-        <label class="form__label--required">{{ t('common.label.content') }}</label>
-        <Editor v-model:content="contents" toolbar="full" theme="snow"
-          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
-      </div>
-      <FileUpload @file-change="onFileChange" />
+    <div class="content__box">
+      <form class="form">
+        <FormItem :label="t('common.label.title')" required>
+          <CustomInput v-model="title" />
+        </FormItem>
+        <FormItem :label="t('common.label.file')">
+          <FileUpload @file-change="onFileChange" />
+        </FormItem>
+        <FormItem :label="t('common.label.content')" required>
+          <Editor v-model:content="contents" toolbar="full" theme="snow"
+            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
+        </FormItem>
+      </form>
     </div>
     <div class="content__btns">
       <button type="button" class="btn__secondary--lg" @click="handleGoFaqPage">

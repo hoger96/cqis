@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IAnnouncementData } from '../types/announcement.ts'
+import type { ISearchParams, IAnnouncementData } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 
 
@@ -117,7 +117,7 @@ const handleSearch = () => {
   getAnnouncementList(params)
 }
 
-const handleAnncDetail = (e) => {
+const handleAnncDetail = (e: IAnnouncementData) => {
   router.push({ path: `/system/announcement/admin-${e.anncId}` })
 }
 
@@ -155,10 +155,8 @@ onMounted(() => {
       {{ t('annc.admin-title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem :label="t('common.search-bar.condition')">
+      <SearchItem>
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
       </SearchItem>

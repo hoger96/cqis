@@ -28,6 +28,22 @@ const onFileChange = (file: File[]) => {
   console.log('ee', file)
 }
 
+// form-col-group
+const formColRowList = [
+  {
+    id: 1,
+    input: '',
+  },
+  {
+    id: 2,
+    input: '',
+  },
+  {
+    id: 3,
+    input: '',
+  },
+]
+
 // target Table
 interface RowList {
   id: string
@@ -80,18 +96,54 @@ const tableData: RowList[] = [
     description: ''
   },
   {
-    id: 'Source',
-    tableName: '',
-    column: '',
-    description: ''
-  },
-  {
     id: 'Target',
     tableName: '',
     column: '',
     description: ''
   },
 ]
+
+const targetTable = ref<[]>([])
+const addSource = (tableIndex: number) => {
+  const newSource = {
+    id: 'Source',
+    tableName: '',
+    column: '',
+    description: ''
+  }
+  const targetIndex = targetTable.value[tableIndex].findIndex(i => i.id === 'Target')
+  targetTable.value[tableIndex].splice(targetIndex, 0, newSource)
+}
+
+
+const deleteSource = (tableIndex: number, rowIndex: number) => {
+  targetTable.value[tableIndex].splice(rowIndex, 1)
+}
+
+const addTargetTable = () => {
+  const newTable = [
+    {
+      id: 'Source',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+    {
+      id: 'Target',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+  ]
+  targetTable.value.push(newTable)
+}
+
+//editor
+const contents = ref<string | Delta>()
+
+onMounted(() => {
+  targetTable.value = [tableData]
+})
 </script>
 
 <template>
@@ -102,7 +154,7 @@ const tableData: RowList[] = [
     <!-- Form row -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        Form row (Basic)
+        Form row (Default)
       </mark>
       <!-- 복사영역 -->
       <form class="form content__box">
@@ -135,12 +187,30 @@ const tableData: RowList[] = [
           <basic-select-box v-model="initData" :options="options" />
           <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
         </FormItem>
+        <FormItem label="&quot;use-col-group&quot;" use-col-group :list="formColRowList">
+          <template #default="{ row, index }">
+            <CustomInput v-model="row.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+            <button v-if="index === formColRowList.length - 1" type="button">
+              <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
+            </button>
+            <button type="button">
+              <icon name="minus-round__full" width="32" height="32" :alt="t('common.button.delete')" />
+            </button>
+          </template>
+        </FormItem>
       </form>
       <!-- // -->
       <div class="my-10">
         <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
           Form col (form-col)
         </mark>
+        <div class="flex flex-col gap-2 mt-10 p-10 bg-white rounded-3xl">
+          <p><em class="font-bold">form-col-group</em>은 <em class="font-bold">list를 필수로 사용</em>해야합니다.</p>
+          <p><em class="font-bold">form-col</em> 일때만<em class="font-bold">use-btn</em>사용이 가능합니다.</p>
+          <p class="text-rose-500">&#8251; 아래 예제 중 <em class="font-bold">타겟 테이블의 형태</em>는 <em
+              class="font-bold">form-col</em>로만
+            사용합니다.</p>
+        </div>
         <form class="form content__box">
           <FormItem label="&quot;form-col&quot;" form-col>
             <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
@@ -155,12 +225,12 @@ const tableData: RowList[] = [
           </FormItem>
           <FormItem :label="t('data-set.label.target-table')" required form-col use-btn>
             <template #label-btn>
-              <button type="button" class="btn__secondary--sm">
+              <button type="button" class="btn__secondary--sm" @click="addTargetTable">
                 {{ t('common.button.add') }}
               </button>
             </template>
-            <div class="mb-2.5 box--f7f">
-              <el-table :data="tableData" :span-method="addRowspan" style="width: 100%;" class="no-hover">
+            <div v-for="(table, tableIndex) in targetTable" :key="tableIndex" class="mb-2.5 box--f7f">
+              <el-table :data="table" :span-method="addRowspan" style="width: 100%;" class="no-hover">
                 <el-table-column prop="id" align="center" min-width="15" />
                 <el-table-column prop="tableName" :label="t('data-set.label.table')" min-width="25">
                   <template #default="scope">
@@ -180,10 +250,10 @@ const tableData: RowList[] = [
                 <el-table-column align="center" label="row" min-width="10">
                   <template #default="scope">
                     <div v-if="scope.row.id === 'Source'" class="flex justify-center">
-                      <button type="button" class="mr-2.5">
+                      <button v-if="scope.$index === 0" type="button" class="mr-2.5" @click="addSource(tableIndex)">
                         <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
                       </button>
-                      <button type="button">
+                      <button type="button" @click="deleteSource(tableIndex, scope.$index)">
                         <icon name="minus-round__full" width="32" height="32" :alt="t('common.button.delete')" />
                       </button>
                     </div>
@@ -200,7 +270,33 @@ const tableData: RowList[] = [
       </div>
     </div>
     <hr>
-
+    <!-- Form Table -->
+    <div class="my-10">
+      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
+        Form table (form__table)
+      </mark>
+      <div class="flex flex-col gap-2 my-10 p-10 bg-white rounded-3xl">
+        <p><em class="font-bold">한줄에 두개의 form이 들어가는 경우</em>에는 <em class="font-bold">form__item</em>으로 묶어줍니다.</p>
+        <!-- <p><em class="font-bold">form-col</em> 일때만<em class="font-bold">use-btn</em>사용이 가능합니다.</p> -->
+      </div>
+      <form class="form form__table">
+        <FormItem label="Basic">
+          <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+        </FormItem>
+        <FormItem label="Required" required>
+          <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+        </FormItem>
+        <div class="form__item">
+          <FormItem label="Basic">
+            <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+          </FormItem>
+          <FormItem label="Required" required>
+            <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
+          </FormItem>
+        </div>
+      </form>
+    </div>
+    <hr>
     <!-- Search Form -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">

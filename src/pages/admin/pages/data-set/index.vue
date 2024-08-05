@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IDatasetData } from '../types/data-set.ts'
+import { ISearchParams, IDatasetData } from '../../types/data-set.ts'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

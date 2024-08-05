@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ITreeSelectProps } from '../../../types/select-box'
+import type { ITreeSelectProps } from '~/types/select-box'
 import type { ITreeData } from '~/example/types/select-box'
 
 const props = withDefaults(defineProps<ITreeSelectProps<ITreeData>>(), {

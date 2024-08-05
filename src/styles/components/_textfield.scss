@@ -1,12 +1,12 @@
 /* ========================== Variables ========================== */
 
 /* ========================== Mixins ========================== */
-@mixin input-size($size: $input-size) {
+@mixin input-size($size: $form-height-md) {
   input {
     @if $size == 'sm' {
-      height: $input-size-sm;
+      height: $form-height-sm;
     } @else if $size == 'lg' {
-      height: $input-size-lg;
+      height: $form-height-lg;
     }
   }
 }
@@ -17,11 +17,11 @@
 .custom-input {
   input {
     width: 100%;
-    height: $input-size;
+    height: $form-height-md;
     padding: 13px 15px;
     background: $white;
     border: 1px solid $input-border-color;
-    border-radius: $input-radius;
+    border-radius: $radius-sm;
     color: $input-color;
     transition: $transition;
 
@@ -96,34 +96,33 @@
     @include input-size($size: 'lg');
   }
 
-  // FIXME :: 임시
-  &:has(.el-tag) {
-    input {
-      margin-bottom: 5px;
-    }
-  }
-  .el-tag {
-    padding: 0 10px;
-    background-color: $purple-5;
-    border: 0;
-    border-radius: 30px;
-    color: $purple-120;
-    &__content {
-      @include typo($font-size: 12, $font-weight: 500);
-    }
-    &.is-closable {
-      padding-right: 0;
-      margin-right: 10px;
-      margin-top: 5px;
-    }
-    &__close {
-      margin-right: 6px;
-      color: unset !important;
-      &:hover {
-        background-color: transparent !important;
-      }
-    }
-  }
+  // &:has(.el-tag) {
+  //   input {
+  //     margin-bottom: 5px;
+  //   }
+  // }
+  // .el-tag {
+  //   padding: 0 10px;
+  //   background-color: $purple-5;
+  //   border: 0;
+  //   border-radius: 30px;
+  //   color: $purple-120;
+  //   &__content {
+  //     @include typo($font-size: 12, $font-weight: 500);
+  //   }
+  //   &.is-closable {
+  //     padding-right: 0;
+  //     margin-right: 10px;
+  //     margin-top: 5px;
+  //   }
+  //   &__close {
+  //     margin-right: 6px;
+  //     color: unset !important;
+  //     &:hover {
+  //       background-color: transparent !important;
+  //     }
+  //   }
+  // }
 }
 
 // Textarea
@@ -135,7 +134,7 @@
     padding: 15px;
     background-color: $white;
     border: 1px solid $input-border-color;
-    border-radius: $input-radius;
+    border-radius: $radius-sm;
     color: $input-color;
     transition: $transition;
     resize: none;
@@ -186,7 +185,7 @@
   min-height: 100px;
   padding: 15px;
   border: 1px solid $input-border-color;
-  border-radius: $input-radius;
+  border-radius: $radius-sm;
   background: $white;
   &.is-disabled {
     background: $input-disabled-bg-color;
@@ -235,6 +234,6 @@
   }
 
   &__light {
-    color: $pink-50;
+    // color: $pink-50;
   }
 }

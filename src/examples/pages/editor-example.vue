@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Delta } from '@vueup/vue-quill'
-import { CONTENT_TYPE, THEME_TYPE } from '../../types/enums/editor'
-import Editor from '../../components/Editor.vue'
+import { CONTENT_TYPE, THEME_TYPE } from '~/types/enums/editor'
+import Editor from '~/components/Editor.vue'
 
 const toolbar = ref<string | Array<string | Array<string>>>('full')
 const theme = ref<THEME_TYPE>(THEME_TYPE.SNOW)
@@ -59,62 +59,45 @@ const handleContentTypeChange = (e: string) => {
       Editor
     </h2>
     <div class="my-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        툴바 옵션
-      </mark>
-      <div>
-        <el-radio-group v-model="toolbar">
-          <el-radio v-for="toolbarType in toolbarTypes" :key="toolbarType" :value="toolbarType">
-            {{ toolbarType || 'none' }}
-          </el-radio>
-        </el-radio-group>
-      </div>
-      <div v-if="toolbar === 'custom'">
-        <pre>
-          {{ toolbarOptions }}
-        </pre>
-      </div>
-    </div>
-
-    <div class="mb-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        Contents Type
-      </mark>
-      <div>
-        <el-radio-group v-model="contentType" @change="handleContentTypeChange">
-          <el-radio v-for="valueType in contentTypes" :key="`theme-option-${valueType}`" :value="valueType">
-            {{ valueType }}
-          </el-radio>
-        </el-radio-group>
-      </div>
-    </div>
-
-    <div class="mb-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        테마 옵션
-      </mark>
-      <div>
-        <el-radio-group v-model="theme">
-          <el-radio v-for="themeOption in themes" :key="`theme-option-${themeOption}`" :value="themeOption">
-            {{ themeOption }}
-          </el-radio>
-        </el-radio-group>
-      </div>
-    </div>
-
-    <div class="mb-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        Readonly
-      </mark>
-      <div>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" class="sr-only peer">
-          <div
-            class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
-            @click="handleReadOnly(readOnly)" />
-          <span class="ml-3 text-sm font-medium text-gray-900">ReadOnly: {{ readOnly }}</span>
-        </label>
-      </div>
+      <form class="form">
+        <FormItem label="툴바 옵션">
+          <el-radio-group v-model="toolbar">
+            <el-radio v-for="toolbarType in toolbarTypes" :key="toolbarType" :value="toolbarType">
+              {{ toolbarType || 'none' }}
+            </el-radio>
+          </el-radio-group>
+          <!-- <div v-if="toolbar === 'custom'">
+            <pre>
+              {{ toolbarOptions }}
+            </pre>
+          </div> -->
+        </FormItem>
+        <FormItem label="Contents Type">
+          <el-radio-group v-model="contentType" @change="handleContentTypeChange">
+            <el-radio v-for="valueType in contentTypes" :key="`theme-option-${valueType}`" :value="valueType">
+              {{ valueType }}
+            </el-radio>
+          </el-radio-group>
+        </FormItem>
+        <FormItem label="테마 옵션">
+          <el-radio-group v-model="theme">
+            <el-radio v-for="themeOption in themes" :key="`theme-option-${themeOption}`" :value="themeOption">
+              {{ themeOption }}
+            </el-radio>
+          </el-radio-group>
+        </FormItem>
+        <FormItem label="Readonly">
+          <div class="flex items-center">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" value="" class="sr-only peer">
+              <div
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+                @click="handleReadOnly(readOnly)" />
+              <span class="ml-3 text-sm font-medium text-gray-900">ReadOnly: {{ readOnly }}</span>
+            </label>
+          </div>
+        </FormItem>
+      </form>
     </div>
 
     <div class="mb-10">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { ISearchParams, IFaqData } from '../types/faq.ts'
+import { type ISearchParams, type IFaqData } from '../types/faq.ts'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
@@ -120,7 +120,7 @@ const handleSearch = () => {
   getFaqList(params)
 }
 
-const handleFaqDetail = (e) => {
+const handleFaqDetail = (e: IFaqData) => {
   router.push({ path: `/system/faq/${e.faqId}` })
 }
 
@@ -135,10 +135,8 @@ onMounted(() => {
       {{ t('faq.title') }}
     </h2>
     <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem :label="t('common.search-bar.condition')">
+      <SearchItem>
         <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.keyword')">
         <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
           @keyup.enter="handleSearch" />
       </SearchItem>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { IModalProps } from '../../../types/modal'
-import { MODAL_SIZE } from '../../../types/modal'
+import { MODAL_SIZE } from '~/types/modal'
 
-const props = withDefaults(defineProps<IModalProps>(), {
+const props = withDefaults(defineProps(), {
   title: '',
   size: MODAL_SIZE.MEDIUM,
   closeOnClickModal: true,

@@ -1,8 +1,8 @@
 /* ========================== Variables ========================== */
 $selectbox-size: (
-  sm: $input-size-sm,
-  default: $input-size,
-  lg: $input-size-lg
+  sm: $form-height-sm,
+  default: $form-height-md,
+  lg: $form-height-lg
 );
 
 /* ========================== Mixins ========================== */
@@ -18,14 +18,14 @@ $selectbox-size: (
 
 .el-select {
   @include selectbox-size();
-  height: $input-size;
+  height: $form-height-md;
 
   .el-select {
     &__wrapper {
       height: 100%;
       padding: 6px 10px 6px 15px;
       border: 1px solid $input-border-color;
-      border-radius: $input-radius;
+      border-radius: $radius-sm;
       box-shadow: none !important;
 
       &.is-focused {
@@ -90,7 +90,7 @@ $selectbox-size: (
       box-shadow: 3px 4px 6px 0px rgba(0, 0, 0, 0.1);
 
       .el-select-dropdown {
-        border-radius: $input-radius;
+        border-radius: $radius-sm;
 
         &__list {
           padding: 0;

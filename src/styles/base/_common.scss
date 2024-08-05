@@ -7,19 +7,19 @@
 }
 
 /* ========================== Drag and drop(파일첨부) ========================== */
-.el-upload {
-  .el-upload-dragger {
-    @apply flex flex-col items-center justify-center;
-    height: 130px;
-    border: 1px solid $gray-90 !important;
-    border-radius: 2px;
-    .el-upload__text {
-      @apply flex flex-col items-center justify-center;
-      @include typo($font-size: 13, $line-height: 18px);
-      color: $gray-300;
-    }
-  }
-}
+// .el-upload {
+//   .el-upload-dragger {
+//     @apply flex flex-col items-center justify-center;
+//     height: 130px;
+//     border: 1px solid $gray-90 !important;
+//     border-radius: 2px;
+//     .el-upload__text {
+//       @apply flex flex-col items-center justify-center;
+//       @include typo($font-size: 13, $line-height: 18px);
+//       color: $gray-300;
+//     }
+//   }
+// }
 
 /* ========================== page ========================== */
 .title {
@@ -29,7 +29,7 @@
 
 .content {
   &__box {
-    @include box(40px, $radius: 20px);
+    @include box(40px, $radius: $radius-lg);
     width: 100%;
     margin-top: 30px;
 
@@ -41,7 +41,7 @@
   }
 
   &__btns {
-    @apply flex items-center justify-center;
+    @include flex-box(itemx-center justify-center);
     margin-top: 30px;
   }
 }

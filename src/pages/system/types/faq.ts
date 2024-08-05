@@ -1,6 +1,7 @@
+import type { Delta } from '@vueup/vue-quill'
 export interface ISearchParams {
   searchCondition: string
-  keyword: string
+  keyword?: string
   page?: number
 }
 
@@ -18,12 +19,12 @@ export interface IFaqDetail {
   title: string
   createUser: string
   createDate: string
-  file?: any[]
-  detail: string
+  detail: string | Delta
+  file? : File[]
 }
 
 export interface IFaqCreate {
   title: string
-  detail: string
-  file: any[]
+  detail: string | Delta
+  file?: File[]
 }

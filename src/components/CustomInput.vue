@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IInputProps } from '../types/custom-input'
+import { IInputProps } from '../types/custom-input'
 
 const props = withDefaults(defineProps<IInputProps>(), {
   modelValue: '',

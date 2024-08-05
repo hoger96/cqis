@@ -7,7 +7,7 @@ import { openConfirm } from '../../composables/utils.ts'
 
 // ================ Toast ================
 import { IToastType } from '../../types/modal'
-import type { IModalPopup } from '../../types/modal'
+import type { IModalPopup } from '~/types/modal'
 import DepthModal from '../components/modal/DepthModal.vue'
 import { openToast } from '../../composables/utils.ts'
 

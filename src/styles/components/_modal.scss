@@ -1,5 +1,4 @@
 /* ========================== Variables ========================== */
-
 /* ========================== Mixins ========================== */
 
 /* ========================== Styles ========================== */
@@ -14,7 +13,7 @@
   .el-message-box {
     max-width: 258px;
     padding: 0;
-    border-radius: 2px;
+    border-radius: $radius-sm;
     .el-message-box {
       &__header {
         padding: 28px 52px 8px 20px;
@@ -93,7 +92,7 @@
     &.sidebar__cont-menu--popover {
       padding: 15px 20px;
       border: 1px solid $gray-80;
-      border-radius: 10px;
+      border-radius: $radius-md;
       box-shadow: none;
       .el-popper__arrow {
         display: none;
@@ -110,7 +109,7 @@
   min-width: 1100px;
   .el-dialog {
     padding: 0;
-    border-radius: 20px;
+    border-radius: $radius-lg;
     &__title {
       @apply flex justify-center;
       @include typo(24px, 600, $gray-430, 29px);
@@ -152,6 +151,30 @@
       @apply flex items-center justify-center;
       padding: 20px 30px 30px;
       text-align: center;
+    }
+  }
+}
+
+// 리니지 팝업
+.lineage-p {
+  .el-dialog {
+    &__body {
+      height: 800px;
+    }
+  }
+  &__content {
+    @include flex-box(flex);
+    height: 100%;
+
+    f-lineage {
+      @include flex-box(items-start);
+      overflow: hidden;
+      flex: 1 1 0%;
+    }
+    .form {
+      width: 40%;
+      padding-left: 30px;
+      border-left: 1px solid $gray-47;
     }
   }
 }

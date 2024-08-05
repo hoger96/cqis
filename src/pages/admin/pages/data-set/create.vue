@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IAnnouncementCreate } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
@@ -25,89 +24,7 @@ const dataSet = reactive({
   job: '',
   playTime: ''
 })
-const targetTableList = ref<[]>([
-  {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
-      }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: '',
-    }
-  }
-])
-
-const handleGoDataSetPage = () => {
-  router.push({ path: '/admin/pages/data-set' })
-}
-
-const handleCreateDataSet = () => {
-  try {
-    const data = {
-      title: dataSet.name,
-      description: dataSet.description,
-      targetTableList: targetTableList.value,
-      batchType: dataSet.batchType,
-      batchPeriod: dataSet.batchPeriod,
-      job: dataSet.job,
-      playTime: dataSet.playTime
-    }
-    console.log('등록: ', data)
-    router.push({ path: '/admin/pages/data-set' })
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const handleAddTargetTable = () => {
-  const newData = {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
-      }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: ''
-    }
-  }
-  targetTableList.value.push(newData)
-}
-
-const handleAddSource = (index: number) => {
-  const newData = {
-    tableName: '',
-    column: '',
-    description: '',
-  }
-  targetTableList.value[index].sourceList.push(newData)
-}
-
-const handleRemoveSource = (tableIndex: number, sourceIndex: number) => {
-  targetTableList.value[tableIndex].sourceList.splice(sourceIndex, 1)
-}
-
-// FIXME 개발자 : 퍼블리싱하면서 임시 추가한 영역입니다.
-interface RowList {
-  id: string
-  tableName: string
-  column: string
-  description: string
-}
-
-interface SpanMethodProps {
-  row: RowList
-  rowIndex: number
-  columnIndex: number
-}
+const targetTable = ref<[]>([])
 
 const addRowspan = ({
   rowIndex,
@@ -147,18 +64,78 @@ const tableData: RowList[] = [
     description: ''
   },
   {
-    id: 'Source',
-    tableName: '',
-    column: '',
-    description: ''
-  },
-  {
     id: 'Target',
     tableName: '',
     column: '',
     description: ''
   },
 ]
+
+const addSource = (tableIndex: number) => {
+  const newSource = {
+    id: 'Source',
+    tableName: '',
+    column: '',
+    description: ''
+  }
+  const targetIndex = targetTable.value[tableIndex].findIndex(i => i.id === 'Target')
+  targetTable.value[tableIndex].splice(targetIndex, 0, newSource)
+}
+
+
+const deleteSource = (tableIndex: number, rowIndex: number) => {
+  targetTable.value[tableIndex].splice(rowIndex, 1)
+}
+
+const addTargetTable = () => {
+  const newTable = [
+    {
+      id: 'Source',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+    {
+      id: 'Target',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+  ]
+  targetTable.value.push(newTable)
+}
+
+const handleCreateDataSet = () => {
+  try {
+    const data = {
+      datasetName: dataSet.name,
+      datasetDescription: dataSet.description,
+      targetTableList: targetTable.value,
+      batchType: dataSet.batchType,
+      batchPeriod: dataSet.batchPeriod,
+      job: dataSet.job,
+      playTime: dataSet.playTime
+    }
+    // const res = await request({
+    //   method: 'POST',
+    //   url: `/dataset`,
+    //   data
+    // })
+    console.log('등록: ', data)
+    router.push({ path: '/admin/pages/data-set' })
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
+const handleGoDataSetPage = () => {
+  router.push({ path: '/admin/pages/data-set' })
+}
+
+onMounted(() => {
+  targetTable.value = [tableData]
+})
 </script>
 
 <template>
@@ -176,14 +153,12 @@ const tableData: RowList[] = [
 
       <FormItem :label="t('data-set.label.target-table')" required form-col use-btn>
         <template #label-btn>
-          <button type="button" class="btn__secondary--sm">
+          <button type="button" class="btn__secondary--sm" @click="addTargetTable">
             {{ t('common.button.add') }}
           </button>
         </template>
-        <!-- FIXME 개발자 :: 추가버튼 클릭 시 아래 div가 복제되도록 요청드립니다.
-        table 형태로 변경하면서 이전 소스는 주석처리하였습니다. -->
-        <div class="mb-2.5 box--f7f">
-          <el-table :data="tableData" :span-method="addRowspan" style="width: 100%;" class="no-hover">
+        <div v-for="(table, tableIndex) in targetTable" :key="tableIndex" class="mb-2.5 box--f7f">
+          <el-table :data="table" :span-method="addRowspan" style="width: 100%;" class="no-hover">
             <el-table-column prop="id" align="center" min-width="15" />
             <el-table-column prop="tableName" :label="t('data-set.label.table')" min-width="25">
               <template #default="scope">
@@ -203,10 +178,10 @@ const tableData: RowList[] = [
             <el-table-column align="center" label="row" min-width="10">
               <template #default="scope">
                 <div v-if="scope.row.id === 'Source'" class="flex justify-center">
-                  <button type="button" class="mr-2.5">
+                  <button v-if="scope.$index === 0" type="button" class="mr-2.5" @click="addSource(tableIndex)">
                     <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
                   </button>
-                  <button type="button">
+                  <button type="button" @click="deleteSource(tableIndex, scope.$index)">
                     <icon name="minus-round__full" width="32" height="32" :alt="t('common.button.delete')" />
                   </button>
                 </div>
@@ -219,33 +194,6 @@ const tableData: RowList[] = [
           <p class="mt-1">&#8251; Target Table 이 여러 개 일경우 &#39;추가&#39; 버튼을 클릭해주세요.</p>
         </div>
       </FormItem>
-      <!-- <FormItem :label="t('data-set.label.target-table')" required>
-        <button type="button" class="btn__secondary--sm" @click="handleAddTargetTable">
-          {{ t('common.button.add') }}
-        </button>
-
-        <div v-for="(targetTable, index) in targetTableList" :key="index" class="p-3 m-5">
-          <FormItem :label="t('data-set.table.source')" required>
-            <div v-for="(source, sourceIndex) in targetTable.sourceList" :key="sourceIndex" class="flex">
-              <CustomInput v-model="source.tableName" :placeholder="t('data-set.label.table')" />
-              <CustomInput v-model="source.column" :placeholder="t('data-set.label.column')" />
-              <CustomInput v-model="source.description" :placeholder="t('data-set.label.dd')" />
-              <button v-if="sourceIndex === 0" type="button" class="btn__secondary--sm" @click="handleAddSource(index)">
-                {{ t('common.button.add') }}
-              </button>
-              <button v-if="targetTable.sourceList.length > 1" type="button" class="btn__secondary--sm"
-                @click="handleRemoveSource(index, sourceIndex)">
-                {{ t('common.button.delete') }}
-              </button>
-            </div>
-          </FormItem>
-          <FormItem :label="t('data-set.table.target')" required>
-            <CustomInput v-model="targetTable.target.tableName" :placeholder="t('data-set.label.table')" />
-            <CustomInput v-model="targetTable.target.column" :placeholder="t('data-set.label.column')" />
-            <CustomInput v-model="targetTable.target.description" :placeholder="t('data-set.label.dd')" />
-          </FormItem>
-        </div>
-      </FormItem> -->
       <FormItem :label="t('data-set.label.batch')" required use-group>
         <basic-select-box v-model="dataSet.batchType" :options="batchTypeOptions"
           :placeholder="t('data-set.placeholder.batch-type')" />

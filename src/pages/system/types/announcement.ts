@@ -1,6 +1,7 @@
+import type { Delta } from '@vueup/vue-quill'
 export interface ISearchParams {
   searchCondition: string
-  keyword: string
+  keyword?: string
   page?: number
 }
 
@@ -13,16 +14,15 @@ export interface IAnnouncementData{
 }
 
 export interface IAnnouncementDetail {
-  anncId: string
+  anncId?: string
   title: string
   createUser: string
   createDate: string
   updateUser?: string
   updateDate?: string
-  file?: any[]
-  detail: string | Delta
-  startDate: string
-  endDate: string
+  file?: File[]
+  contents: string | Delta
+  postingPeriod: any[]
 }
 
 export interface IAnnouncementCreate{
@@ -30,5 +30,5 @@ export interface IAnnouncementCreate{
   startDate: string
   endDate: string
   contents: string | Delta
-  file?: any[]
+  file?: File[]
 }

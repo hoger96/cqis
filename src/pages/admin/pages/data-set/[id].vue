@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IAnnouncementCreate } from '../types/announcement.ts'
 import { useRouter } from 'vue-router'
 import type { Delta } from '@vueup/vue-quill'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
 
 const router = useRouter()
-const route = useRoute()
 const { t } = useI18n()
 const updateMode = ref(false)
-const datasetId = ref(route.params.id)
 
 const batchTypeOptions = ref([
   {
@@ -21,8 +18,7 @@ const batchTypeOptions = ref([
     label: 'type2'
   },
 ])
-
-const dataset = reactive({
+const dataSet = reactive({
   name: '',
   description: '',
   batchType: '',
@@ -30,73 +26,102 @@ const dataset = reactive({
   job: '',
   playTime: ''
 })
+const targetTable = ref<[]>([])
 
-const targetTableList = ref<[]>([
-  {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
+const addRowspan = ({
+  rowIndex,
+  columnIndex,
+}: SpanMethodProps) => {
+  if (columnIndex === 0) {
+    const currentId = tableData[rowIndex].id;
+    if (currentId === 'Source') {
+      if (rowIndex === 0 || tableData[rowIndex - 1].id !== 'Source') {
+        let rowspan = 1;
+        for (let i = rowIndex + 1; i < tableData.length; i++) {
+          if (tableData[i].id === 'Source') {
+            rowspan++;
+          } else {
+            break;
+          }
+        }
+        return {
+          rowspan,
+          colspan: 1,
+        };
+      } else {
+        return {
+          rowspan: 0,
+          colspan: 0,
+        };
       }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: '',
     }
   }
-])
+}
 
-const handleGetDataset = () => {
+const tableData: RowList[] = [
+  {
+    id: 'Source',
+    tableName: '소스테이블1',
+    column: '소스컬럼1',
+    description: '소스설명1'
+  },
+  {
+    id: 'Source',
+    tableName: '소스테이블1-2',
+    column: '소스컬럼1-2',
+    description: '소스설명1-2'
+  },
+  {
+    id: 'Target',
+    tableName: '타겟테이블1',
+    column: '타겟컬럼1',
+    description: '타겟설명1'
+  },
+]
+
+const addSource = (tableIndex: number) => {
+  const newSource = {
+    id: 'Source',
+    tableName: '',
+    column: '',
+    description: ''
+  }
+  const targetIndex = targetTable.value[tableIndex].findIndex(i => i.id === 'Target')
+  targetTable.value[tableIndex].splice(targetIndex, 0, newSource)
+}
+
+
+const deleteSource = (tableIndex: number, rowIndex: number) => {
+  targetTable.value[tableIndex].splice(rowIndex, 1)
+}
+
+const addTargetTable = () => {
+  const newTable = [
+    {
+      id: 'Source',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+    {
+      id: 'Target',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+  ]
+  targetTable.value.push(newTable)
+}
+
+const handleGetDataset = async () => {
   try {
     // const res = await request({
     //   method: 'GET',
     //   url: `/dataset/${datasetId.value}`
     // })
-    const res = {
+    const res = await {
       name: '데이터셋1',
       description: '데이터셋1 입니다.',
-      targetTableList: [
-        {
-          sourceList: [
-            {
-              tableName: '소스테이블1',
-              column: '소스컬럼1',
-              description: '소스설명1'
-            },
-            {
-              tableName: '소스테이블2',
-              column: '소스컬럼2',
-              description: '소스설명2'
-            }
-          ],
-          target: {
-            tableName: '타겟테이블1',
-            column: '타겟컬럼1',
-            description: '타겟설명1'
-          }
-        },
-        {
-          sourceList: [
-            {
-              tableName: '소스테이블1',
-              column: '소스컬럼1',
-              description: '소스설명1'
-            },
-            {
-              tableName: '소스테이블2',
-              column: '소스컬럼2',
-              description: '소스설명2'
-            }
-          ],
-          target: {
-            tableName: '타겟테이블1',
-            column: '타겟컬럼1',
-            description: '타겟설명1'
-          }
-        }
-      ],
       batchType: 'type1',
       batchPeriod: '주 3회',
       job: '선행 job',
@@ -109,154 +134,145 @@ const handleGetDataset = () => {
   }
 }
 
-const handleSetDataset = () => {
-  const data = handleGetDataset()
-  dataset.name = data.name
-  dataset.description = data.description
-  targetTableList.value = data.targetTableList
-  dataset.batchType = data.batchType
-  dataset.batchPeriod = data.batchPeriod
-  dataset.job = data.job
-  dataset.playTime = data.playTime
+const handleSetDataset = async () => {
+  try {
+    const data = await handleGetDataset()
+    dataSet
+      .name = data.name
+    dataSet
+      .description = data.description
+    dataSet
+      .batchType = data.batchType
+    dataSet
+      .batchPeriod = data.batchPeriod
+    dataSet
+      .job = data.job
+    dataSet
+      .playTime = data.playTime
+    targetTable.value = [tableData]
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
 const handleUpdateDataset = () => {
   try {
     const data = {
-      title: dataset.name,
-      description: dataset.description,
-      targetTableList: targetTableList.value,
-      batchType: dataset.batchType,
-      batchPeriod: dataset.batchPeriod,
-      job: dataset.job,
-      playTime: dataset.playTime
+      datasetName: dataSet.name,
+      datasetDescription: dataSet.description,
+      targetTableList: targetTable.value,
+      batchType: dataSet.batchType,
+      batchPeriod: dataSet.batchPeriod,
+      job: dataSet.job,
+      playTime: dataSet.playTime
     }
     // const res = await request({
     //   method: 'POST',
-    //   url: `/dataset/${datasetId.value}`,
+    //   url: `/dataset`,
     //   data
     // })
     console.log('수정: ', data)
     router.push({ path: '/admin/pages/data-set' })
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error)
   }
-}
-
-const handleAddTargetTable = () => {
-  const newData = {
-    sourceList: [
-      {
-        tableName: '',
-        column: '',
-        description: '',
-      }
-    ],
-    target: {
-      tableName: '',
-      column: '',
-      description: ''
-    }
-  }
-  targetTableList.value.push(newData)
-}
-
-const handleAddSource = (index: number) => {
-  const newData = {
-    tableName: '',
-    column: '',
-    description: '',
-  }
-  targetTableList.value[index].sourceList.push(newData)
-}
-
-const handleRemoveSource = (tableIndex: number, sourceIndex: number) => {
-  targetTableList.value[tableIndex].sourceList.splice(sourceIndex, 1)
-}
-
-const handleChangeMode = () => {
-  updateMode.value = false
-}
-
-const handleUpdateMode = () => {
-  updateMode.value = true
 }
 
 const handleGoDatasetPage = () => {
   router.push({ path: '/admin/pages/data-set' })
 }
 
+const handleChangeMode = () => {
+  updateMode.value = false
+  handleSetDataset()
+}
+
+const handleUpdateMode = () => {
+  updateMode.value = true
+}
+
 onMounted(() => {
-  if (datasetId) {
-    handleSetDataset()
-  }
+  handleSetDataset()
 })
 </script>
 
 <template>
-  <div class="p-20">
-    <h2 class="text-3xl font-semibold">
+  <div>
+    <h2 class="title">
       {{ t('data-set.title') }} {{ t('common.label.detail') }}
     </h2>
-    <div class="my-10">
-      <form class="form">
-        <FormItem :label="t('data-set.label.data-set')" :required="updateMode">
-          <CustomInput v-model="dataset.name" :placeholder="t('data-set.placeholder.name')" :readonly="!updateMode" />
-        </FormItem>
-        <FormItem :label="t('data-set.label.description')" :required="updateMode">
-          <CustomTextarea v-model="dataset.description" :placeholder="t('data-set.placeholder.description')"
-            :readonly="!updateMode" />
-        </FormItem>
-        <FormItem :label="t('data-set.label.target-table')" :required="updateMode">
-          <button v-if="updateMode" type="button" class="btn__secondary--sm" @click="handleAddTargetTable">
+    <form class="form content__box">
+      <FormItem :label="t('data-set.label.data-set')" :required="updateMode">
+        <CustomInput v-model="dataSet.name" :placeholder="t('data-set.placeholder.name')" :readonly="!updateMode" />
+      </FormItem>
+      <FormItem :label="t('data-set.label.description')" :required="updateMode">
+        <CustomTextarea v-model="dataSet.description" :placeholder="t('data-set.placeholder.description')"
+          :readonly="!updateMode" />
+      </FormItem>
+
+      <FormItem :label="t('data-set.label.target-table')" :required="updateMode" form-col use-btn>
+        <template #label-btn>
+          <button v-if="updateMode" type="button" class="btn__secondary--sm" @click="addTargetTable">
             {{ t('common.button.add') }}
           </button>
-          <div v-for="(targetTable, index) in targetTableList" :key="index" class="p-3 m-5">
-            <FormItem :label="t('data-set.table.source')" :required="updateMode">
-              <div v-for="(source, sourceIndex) in targetTable.sourceList" :key="sourceIndex" class="flex">
-                <CustomInput v-model="source.tableName" :placeholder="t('data-set.label.table')"
+        </template>
+        <div v-for="(table, tableIndex) in targetTable" :key="tableIndex" class="mb-2.5 box--f7f">
+          <el-table :data="table" :span-method="addRowspan" style="width: 100%;" class="no-hover">
+            <el-table-column prop="id" align="center" min-width="15" />
+            <el-table-column prop="tableName" :label="t('data-set.label.table')" min-width="25">
+              <template #default="scope">
+                <CustomInput v-model="scope.row.tableName" :placeholder="t('data-set.label.table')"
                   :readonly="!updateMode" />
-                <CustomInput v-model="source.column" :placeholder="t('data-set.label.column')"
+              </template>
+            </el-table-column>
+            <el-table-column prop="column" :label="t('data-set.label.column')" min-width="25">
+              <template #default="scope">
+                <CustomInput v-model="scope.row.column" :placeholder="t('data-set.label.column')"
                   :readonly="!updateMode" />
-                <CustomInput v-model="source.description" :placeholder="t('data-set.label.dd')"
+              </template>
+            </el-table-column>
+            <el-table-column prop="description" :label="t('data-set.label.dd')" min-width="25">
+              <template #default="scope">
+                <CustomInput v-model="scope.row.description" :placeholder="t('data-set.label.dd')"
                   :readonly="!updateMode" />
-                <button v-if="sourceIndex === 0 && updateMode" type="button" class="btn__secondary--sm"
-                  @click="handleAddSource(index)">
-                  {{ t('common.button.add') }}
-                </button>
-                <button v-if="targetTable.sourceList.length > 1 && updateMode" type="button" class="btn__secondary--sm"
-                  @click="handleRemoveSource(index, sourceIndex)">
-                  {{ t('common.button.delete') }}
-                </button>
-              </div>
-            </FormItem>
-            <FormItem :label="t('data-set.table.target')" :required="updateMode">
-              <CustomInput v-model="targetTable.target.tableName" :placeholder="t('data-set.label.table')"
-                :readonly="!updateMode" />
-              <CustomInput v-model="targetTable.target.column" :placeholder="t('data-set.label.column')"
-                :readonly="!updateMode" />
-              <CustomInput v-model="targetTable.target.description" :placeholder="t('data-set.label.dd')"
-                :readonly="!updateMode" />
-            </FormItem>
-          </div>
-        </FormItem>
-        <FormItem :label="t('data-set.label.batch')" use-group :required="updateMode">
-          <basic-select-box v-model="dataset.batchType" :options="batchTypeOptions"
-            :placeholder="t('data-set.placeholder.batch-type')" :readonly="!updateMode" />
-          <CustomInput v-model="dataset.batchPeriod" :placeholder="t('data-set.placeholder.name')"
-            :readonly="!updateMode" />
-        </FormItem>
-        <FormItem :label="t('data-set.label.first-job')" :required="updateMode">
-          <CustomInput v-model="dataset.job" :placeholder="t('data-set.placeholder.first-job')"
-            :readonly="!updateMode" />
-        </FormItem>
-        <FormItem :label="t('data-set.label.batch-time')" :required="updateMode">
-          <CustomInput v-model="dataset.playTime" :placeholder="t('data-set.placeholder.batch-time')"
-            :readonly="!updateMode" />
-        </FormItem>
-      </form>
-    </div>
-    <div class="mgmt__btn">
+              </template>
+            </el-table-column>
+            <el-table-column v-if="updateMode" align="center" label="row" min-width="10">
+              <template #default="scope">
+                <div v-if="scope.row.id === 'Source'" class="flex justify-center">
+                  <button v-if="scope.$index === 0" type="button" class="mr-2.5" @click="addSource(tableIndex)">
+                    <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
+                  </button>
+                  <button type="button" @click="deleteSource(tableIndex, scope.$index)">
+                    <icon name="minus-round__full" width="32" height="32" :alt="t('common.button.delete')" />
+                  </button>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div>
+          <p>&#8251; Sorce 테이블을 추가 하시려면 &#39;&#43;&#39; 버튼을 클릭해주세요.</p>
+          <p class="mt-1">&#8251; Target Table 이 여러 개 일경우 &#39;추가&#39; 버튼을 클릭해주세요.</p>
+        </div>
+      </FormItem>
+      <FormItem :label="t('data-set.label.batch')" :required="updateMode" use-group>
+        <basic-select-box v-model="dataSet.batchType" :options="batchTypeOptions"
+          :placeholder="t('data-set.placeholder.batch-type')" :readonly="!updateMode" />
+        <CustomInput v-model="dataSet.batchPeriod" :placeholder="t('data-set.placeholder.name')"
+          :readonly="!updateMode" />
+      </FormItem>
+      <FormItem :label="t('data-set.label.first-job')" :required="updateMode">
+        <CustomInput v-model="dataSet.job" :placeholder="t('data-set.placeholder.first-job')" :readonly="!updateMode" />
+      </FormItem>
+      <FormItem :label="t('data-set.label.batch-time')" :required="updateMode">
+        <CustomInput v-model="dataSet.playTime" :placeholder="t('data-set.placeholder.batch-time')"
+          :readonly="!updateMode" />
+      </FormItem>
+    </form>
+    <div class="content__btns">
       <button v-if="!updateMode" type="button" class="btn__secondary--lg" @click="handleGoDatasetPage">
         {{ t('common.button.cancel') }}
       </button>
