@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { IOptions } from '../types/select-box'
 import { ref } from 'vue'
-const keyword = ref()
+const keyword = ref('어쩌구')
 const useStates = ref('Y')
 const groupCode = ref(1)
 const groupCodeOption = [
@@ -14,7 +13,7 @@ const groupCodeOption = [
     label: '그룹 코드 명',
   },
 ]
-const totalCount = ref(0)
+const totalCount = ref(1)
 
 const groupCodeList = [
   {
@@ -43,7 +42,7 @@ const handleReset = () => { }
     <h1 class="title">공통 코드 관리</h1>
     <div class="common-code__wrap">
       <div class="common-code__content">
-        <SearchForm use-reset>
+        <SearchForm use-reset @search="handleSearch" @clear="handleReset">
           <h2 class="title--sm">그룹 코드 검색</h2>
           <SearchItem label="사용여부">
             <el-radio-group v-model="useStates">
@@ -75,7 +74,7 @@ const handleReset = () => { }
             <el-table-column prop="desc" label="설명" />
             <el-table-column prop="useStatus" label="사용여부" align="center" />
           </el-table>
-          <!-- <Pagination v-model="pagination.modelValue" /> -->
+          <Pagination v-model="totalCount" />
         </div>
       </div>
       <div class="common-code__content">
@@ -113,7 +112,7 @@ const handleReset = () => { }
             <el-table-column prop="sequence" label="순서" />
             <el-table-column prop="useStatus" label="사용여부" align="center" />
           </el-table>
-          <!-- <Pagination v-model="pagination.modelValue" /> -->
+          <Pagination v-model="totalCount" />
         </div>
       </div>
     </div>
