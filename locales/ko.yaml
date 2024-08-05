@@ -74,6 +74,31 @@ common:
     placeholder: 검색어를 입력하세요.
     state: 답변 상태
     use: 사용 여부
+corporation:
+  label:
+    city: 도시
+    close: 폐업 여부
+    close-down: 폐업
+    continent: 대륙
+    cor-state: 법인 유형
+    country: 국가
+    electricity: 사용 전압
+    latitude: 위도
+    longitude: 경도
+    machine: 생산/판매 기기
+    name: 법인명
+    operate: 운영
+    sale: 판매
+    product: 생산
+  placeholder:
+    city: 도시를 입력하세요.
+    country: 국가를 입력하세요.
+    electricity: 사용 전압을 입력하세요.
+    latitude: 위도를 입력하세요.
+    longitude: 경도를 입력하세요.
+    machine: 생산/판매 기기를 입력하세요.
+    name: 법인 명을 입력하세요.
+  title: 법인 관리
 data-set:
   label:
     batch: 배치 주기

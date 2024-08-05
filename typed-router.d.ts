@@ -20,11 +20,13 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/admin/components/BatchPopup': RouteRecordInfo<'/admin/components/BatchPopup', '/admin/components/BatchPopup', Record<never, never>, Record<never, never>>,
+    '/admin/components/CorPopup': RouteRecordInfo<'/admin/components/CorPopup', '/admin/components/CorPopup', Record<never, never>, Record<never, never>>,
     '/admin/components/LineagePopup': RouteRecordInfo<'/admin/components/LineagePopup', '/admin/components/LineagePopup', Record<never, never>, Record<never, never>>,
     '/admin/components/UserAuthPopup': RouteRecordInfo<'/admin/components/UserAuthPopup', '/admin/components/UserAuthPopup', Record<never, never>, Record<never, never>>,
     '/admin/components/UserPopup': RouteRecordInfo<'/admin/components/UserPopup', '/admin/components/UserPopup', Record<never, never>, Record<never, never>>,
     '/admin/pages/batch-history': RouteRecordInfo<'/admin/pages/batch-history', '/admin/pages/batch-history', Record<never, never>, Record<never, never>>,
     '/admin/pages/batch-mgmt': RouteRecordInfo<'/admin/pages/batch-mgmt', '/admin/pages/batch-mgmt', Record<never, never>, Record<never, never>>,
+    '/admin/pages/corporation': RouteRecordInfo<'/admin/pages/corporation', '/admin/pages/corporation', Record<never, never>, Record<never, never>>,
     '/admin/pages/data-set/': RouteRecordInfo<'/admin/pages/data-set/', '/admin/pages/data-set', Record<never, never>, Record<never, never>>,
     '/admin/pages/data-set/[id]': RouteRecordInfo<'/admin/pages/data-set/[id]', '/admin/pages/data-set/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/admin/pages/data-set/create': RouteRecordInfo<'/admin/pages/data-set/create', '/admin/pages/data-set/create', Record<never, never>, Record<never, never>>,
