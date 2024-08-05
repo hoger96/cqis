@@ -20,3 +20,4 @@ acf-mockoon*
 /playwright/.cache/
 **/mockoon*
 test-records
+.vscode/settings.json
