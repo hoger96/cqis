@@ -198,8 +198,8 @@ onMounted(() => {
       </SearchItem>
     </SearchForm>
     <div class="content__box">
-      <div class="total__bar">
-        <span class="total">
+      <div class="total">
+        <span>
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
       </div>
@@ -211,8 +211,8 @@ onMounted(() => {
           <template v-slot="scope">
             <p>
               {{ scope.row.batchState === 'complete' ? t('batch-history.label.complete') : scope.row.batchState ===
-                'fail' ? t('batch-history.label.fail') : scope.row.batchState === 'wait' ? t('batch-history.label.wait') :
-                t('batch-history.label.processing') }}
+        'fail' ? t('batch-history.label.fail') : scope.row.batchState === 'wait' ? t('batch-history.label.wait') :
+        t('batch-history.label.processing') }}
             </p>
           </template>
         </el-table-column>

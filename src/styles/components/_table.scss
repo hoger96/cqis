@@ -5,15 +5,14 @@
 /* ========================== Styles ========================== */
 // Table
 .total {
+  @include flex-box(items-end justify-between);
+  @apply flex items-end justify-between;
+  margin-bottom: 10px;
   em {
-    color: $purple-50;
+    @include typo($color: $purple-50);
   }
   & + .el-table {
     margin-top: 10px;
-  }
-  &__bar {
-    @apply flex items-end justify-between;
-    margin-bottom: 10px;
   }
 }
 

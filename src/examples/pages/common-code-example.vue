@@ -60,8 +60,8 @@ const handleReset = () => { }
           </SearchItem>
         </SearchForm>
         <div class="content__box">
-          <div class="total__bar">
-            <span class="total">
+          <div class="total">
+            <span>
               총<em>{{ totalCount }}</em>건
             </span>
             <button type="button" class="btn__primary--md">
@@ -96,8 +96,8 @@ const handleReset = () => { }
           </SearchItem>
         </SearchForm>
         <div class="content__box">
-          <div class="total__bar">
-            <span class="total">
+          <div class="total">
+            <span>
               총<em>{{ totalCount }}</em>건
             </span>
             <button type="button" class="btn__primary--md">
