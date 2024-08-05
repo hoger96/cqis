@@ -101,9 +101,11 @@ const handleChangeImage = (num: number) => {
 }
 
 onMounted(() => {
+  console.log('1', imageUrl.value)
   if (imageUrl.value === '') {
     imageUrl.value = getImageUrl(1)
   }
+  console.log('2', imageUrl.value)
   handleLoadGlobe(imageUrl.value)
 });
 </script>
@@ -127,12 +129,6 @@ onMounted(() => {
     </button>
     <button type="button" class="btn__primary-line--md" @click="handleChangeImage(4)">
       4
-    </button>
-    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(5)">
-      5
-    </button>
-    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(6)">
-      6
     </button>
   </div>
   <div v-if="imageUrl" class="globe-wrapper">

@@ -96,12 +96,6 @@ const tableData: RowList[] = [
     description: ''
   },
   {
-    id: 'Source',
-    tableName: '',
-    column: '',
-    description: ''
-  },
-  {
     id: 'Target',
     tableName: '',
     column: '',
@@ -109,8 +103,47 @@ const tableData: RowList[] = [
   },
 ]
 
+const targetTable = ref<[]>([])
+const addSource = (tableIndex: number) => {
+  const newSource = {
+    id: 'Source',
+    tableName: '',
+    column: '',
+    description: ''
+  }
+  const targetIndex = targetTable.value[tableIndex].findIndex(i => i.id === 'Target')
+  targetTable.value[tableIndex].splice(targetIndex, 0, newSource)
+}
+
+
+const deleteSource = (tableIndex: number, rowIndex: number) => {
+  targetTable.value[tableIndex].splice(rowIndex, 1)
+}
+
+const addTargetTable = () => {
+  const newTable = [
+    {
+      id: 'Source',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+    {
+      id: 'Target',
+      tableName: '',
+      column: '',
+      description: ''
+    },
+  ]
+  targetTable.value.push(newTable)
+}
+
 //editor
 const contents = ref<string | Delta>()
+
+onMounted(() => {
+  targetTable.value = [tableData]
+})
 </script>
 
 <template>
@@ -192,12 +225,12 @@ const contents = ref<string | Delta>()
           </FormItem>
           <FormItem :label="t('data-set.label.target-table')" required form-col use-btn>
             <template #label-btn>
-              <button type="button" class="btn__secondary--sm">
+              <button type="button" class="btn__secondary--sm" @click="addTargetTable">
                 {{ t('common.button.add') }}
               </button>
             </template>
-            <div class="mb-2.5 box--f7f">
-              <el-table :data="tableData" :span-method="addRowspan" style="width: 100%;" class="no-hover">
+            <div v-for="(table, tableIndex) in targetTable" :key="tableIndex" class="mb-2.5 box--f7f">
+              <el-table :data="table" :span-method="addRowspan" style="width: 100%;" class="no-hover">
                 <el-table-column prop="id" align="center" min-width="15" />
                 <el-table-column prop="tableName" :label="t('data-set.label.table')" min-width="25">
                   <template #default="scope">
@@ -217,10 +250,10 @@ const contents = ref<string | Delta>()
                 <el-table-column align="center" label="row" min-width="10">
                   <template #default="scope">
                     <div v-if="scope.row.id === 'Source'" class="flex justify-center">
-                      <button type="button" class="mr-2.5">
+                      <button v-if="scope.$index === 0" type="button" class="mr-2.5" @click="addSource(tableIndex)">
                         <icon name="plus-round__full" width="32" height="32" :alt="t('common.button.add')" />
                       </button>
-                      <button type="button">
+                      <button type="button" @click="deleteSource(tableIndex, scope.$index)">
                         <icon name="minus-round__full" width="32" height="32" :alt="t('common.button.delete')" />
                       </button>
                     </div>

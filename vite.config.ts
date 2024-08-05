@@ -68,7 +68,7 @@ export default defineConfig({
     VueRouter({
       routesFolder: [
         { src: 'src/pages', path: '' },
-        { src: 'src/example/pages', path: 'example/' },
+        { src: 'src/examples/pages', path: 'examples/' },
       ],
       // extensions: ['.vue', '.md'],
       // importMode: (filepath: string) => 'async',
