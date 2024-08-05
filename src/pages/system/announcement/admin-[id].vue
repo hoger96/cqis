@@ -134,7 +134,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
+  <div>
     <h2 class="title">
       {{ t('annc.admin-title') }}
     </h2>

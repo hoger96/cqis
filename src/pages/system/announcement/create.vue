@@ -60,7 +60,7 @@ const onFileChange = (file: File[]) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
+  <div>
     <h2 class="title">
       {{ t('annc.title') }} {{ t('common.button.create') }}
     </h2>

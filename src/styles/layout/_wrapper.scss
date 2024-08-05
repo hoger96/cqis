@@ -14,4 +14,8 @@
   overflow-y: auto;
   height: calc(100% - $header-height);
   padding: 30px 60px;
+  > div {
+    @include flex-box(column);
+    height: 100%;
+  }
 }
