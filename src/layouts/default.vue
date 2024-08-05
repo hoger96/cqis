@@ -4,7 +4,7 @@
 <template>
   <main class="layout">
     <layout-sidebar />
-    <div class="container">
+    <div class="containers">
       <layout-header />
       <div class="content">
         <router-view />
