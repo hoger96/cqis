@@ -17,7 +17,6 @@ $selectbox-size: (
 /* ========================== Styles ========================== */
 
 .el-select {
-  @include selectbox-size();
   height: $form-height-md;
 
   .el-select {
@@ -80,6 +79,7 @@ $selectbox-size: (
       }
     }
   }
+  @include selectbox-size();
 }
 
 .el-select__popper {

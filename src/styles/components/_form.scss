@@ -17,7 +17,6 @@
   &__item {
     @include flex-box(flex);
     width: 100%;
-
     & + & {
       margin-top: 20px;
     }
@@ -54,14 +53,14 @@
 
   &__group {
     @include flex-box(flex);
-    @include space-x(10px);
     flex: 1 1 0%;
+    @include space-x(10px);
     .el-select {
       max-width: 167px;
     }
     &--col {
-      @include space-y(10px);
       flex: 1 1 0%;
+      @include space-y(10px);
     }
   }
 
@@ -73,13 +72,13 @@
       @include box(25px 0, $gray-90, 2px);
       @include typo($color: $gray-300);
       width: 100%;
+      & + .form__upload--file {
+        margin-top: 10px;
+      }
     }
     &--file {
       @include flex-box(flex);
-      margin-top: 15px;
       a {
-        @include truncate;
-        max-width: 100px;
         &:hover {
           text-decoration: underline;
           text-underline-offset: 2px;
@@ -124,9 +123,12 @@
   }
 }
 .search-form {
-  @include flex-box(justify-between items-start);
+  @include flex-box(justify-between items-end);
   @include box(20px 40px);
   width: 100%;
+  & + .table {
+    margin-top: 30px;
+  }
 
   &__form-area {
     @include flex-box(row);
@@ -135,9 +137,9 @@
 
   &__items {
     @include flex-box(wrap items-center 1);
-    @include gap-margin(30px, 20px);
     width: 100%;
     padding-right: 10px;
+    @include gap-margin(30px, 20px);
   }
 
   &__item {
@@ -157,6 +159,7 @@
 
   &__btn-area {
     @include flex-box(items-center);
+    flex: 1 1 0%;
 
     button + button {
       margin-left: 10px;
@@ -167,9 +170,5 @@
   }
   .custom-input {
     min-width: 300px;
-  }
-
-  & + .table {
-    margin-top: 30px;
   }
 }

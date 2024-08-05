@@ -77,14 +77,12 @@ onMounted(() => {
 
 <template>
   <div class="form__upload">
-    <div v-if="props.show" ref="dropZoneRef">
-      <div class="form__upload-area">
-        <button type="button" @click="openFileUpload">
-          <icon name="file__line--bbb" width="32" height="32" :alt="t('common.button.file')" />
-        </button>
-        <p class="mt-2">{{ t('common.label.file-placeholder') }}</p>
-        <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
-      </div>
+    <div v-if="props.show" ref="dropZoneRef" class="form__upload-area">
+      <button type="button" @click="openFileUpload">
+        <icon name="file__line--bbb" width="32" height="32" :alt="t('common.button.file')" />
+      </button>
+      <p class="mt-2">{{ t('common.label.file-placeholder') }}</p>
+      <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
     </div>
     <div v-if="fileName.length > 0" class="form__upload--file">
       <Icon class="mr-1" :name="`file__${fileExtension}`" :key="fileExtension" width="16" height="16" alt=""

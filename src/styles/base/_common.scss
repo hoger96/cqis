@@ -25,6 +25,10 @@
 .title {
   @include typo(36px, 700, $gray-430);
   margin-bottom: 30px;
+
+  &--sm {
+    @include typo(22px, 600, $gray-430);
+  }
 }
 
 .content {

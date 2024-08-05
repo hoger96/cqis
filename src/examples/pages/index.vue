@@ -6,10 +6,13 @@ const router = useRouter()
 
 const uiComponentData = reactive<any[]>([
   {
+    name: 'common-code-example',
+    desc: '공통코드관리 에제',
+  },
+  {
     name: 'button',
     desc: 'button',
   },
-
   {
     name: 'datepicker',
     desc: 'Range Datepicker',
