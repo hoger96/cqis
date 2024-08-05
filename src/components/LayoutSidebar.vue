@@ -95,6 +95,12 @@ const menuList = reactive([
     menuIndex: '14',
     menuUrl: '/Flatmap',
   },
+  {
+    menuId: '법인 관리',
+    menuName: '법인 관리',
+    menuIndex: '15',
+    menuUrl: '/admin/pages/corporation',
+  },
 ])
 
 const router = useRouter()
