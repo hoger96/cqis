@@ -73,13 +73,13 @@
       @include box(25px 0, $gray-90, 2px);
       @include typo($color: $gray-300);
       width: 100%;
+      & + .form__upload--file {
+        margin-top: 10px;
+      }
     }
     &--file {
       @include flex-box(flex);
-      margin-top: 15px;
       a {
-        @include truncate;
-        max-width: 100px;
         &:hover {
           text-decoration: underline;
           text-underline-offset: 2px;
