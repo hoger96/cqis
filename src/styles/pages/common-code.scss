@@ -1,0 +1,15 @@
+.common-code {
+  @include flex-box(column);
+  height: 100%;
+  &__wrap {
+    @include flex-box(flex);
+    height: 100%;
+  }
+  &__content {
+    @include flex-box(column);
+    width: calc(50% - 15px);
+    & + .common-code__content {
+      margin-left: 30px;
+    }
+  }
+}
