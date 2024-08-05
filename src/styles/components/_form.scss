@@ -17,7 +17,6 @@
   &__item {
     @include flex-box(flex);
     width: 100%;
-
     & + & {
       margin-top: 20px;
     }
@@ -54,14 +53,14 @@
 
   &__group {
     @include flex-box(flex);
-    @include space-x(10px);
     flex: 1 1 0%;
+    @include space-x(10px);
     .el-select {
       max-width: 167px;
     }
     &--col {
-      @include space-y(10px);
       flex: 1 1 0%;
+      @include space-y(10px);
     }
   }
 
@@ -127,6 +126,9 @@
   @include flex-box(justify-between items-start);
   @include box(20px 40px);
   width: 100%;
+  & + .table {
+    margin-top: 30px;
+  }
 
   &__form-area {
     @include flex-box(row);
@@ -135,9 +137,9 @@
 
   &__items {
     @include flex-box(wrap items-center 1);
-    @include gap-margin(30px, 20px);
     width: 100%;
     padding-right: 10px;
+    @include gap-margin(30px, 20px);
   }
 
   &__item {
@@ -167,9 +169,5 @@
   }
   .custom-input {
     min-width: 300px;
-  }
-
-  & + .table {
-    margin-top: 30px;
   }
 }
