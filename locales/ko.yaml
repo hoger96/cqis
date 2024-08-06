@@ -38,6 +38,7 @@ common:
     file: 파일첨부
     reset: 초기화
     save: 저장
+    saveAll: 전체저장
     search: 검색
     update: 수정
   label:
@@ -145,6 +146,19 @@ data-visual:
 faq:
   admin-title: FAQ 관리자
   title: FAQ
+menu-admin:
+  menu-placeholder: 메뉴명을 입력하세요.
+  label:
+    menu-id: 메뉴 ID
+    menu-name: 메뉴 명
+    menu-url: 메뉴 URL
+    menu-desc: 메뉴 설명
+    use: 사용 여부
+    api: API
+    api-name: api 명
+    url: URL
+
+  title: 메뉴 관리
 user:
   label:
     active: 활성화
