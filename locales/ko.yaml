@@ -74,6 +74,30 @@ common:
     placeholder: 검색어를 입력하세요.
     state: 답변 상태
     use: 사용 여부
+comm-code:
+  label:
+    code: 코드
+    code-description: 코드 설명
+    code-name: 코드 명
+    code-search: 코드 검색
+    code-sequence: 코드 순서
+    code-value: 코드 값
+    description: 설명
+    group-code: 그룹 코드
+    group-code-description: 그룹 코드 설명
+    group-code-name: 그룹 코드 명
+    group-code-search: 그룹 코드 검색
+    sequence: 순서
+  placeholder:
+    code: 코드를 입력하세요.
+    code-description: 코드 설명을 입력하세요.
+    code-name: 코드 명을 입력하세요.
+    code-value: 코드 값을 입력하세요.
+    group-code: 그룹 코드를 입력하세요.
+    group-code-description: 그룹 코드 설명을 입력하세요.
+    group-code-name: 그룹 코드 명을 입력하세요.
+    sequence: 코드 순서를 입력하세요.
+  title: 공통 코드 관리
 corporation:
   label:
     city: 도시
