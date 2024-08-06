@@ -5,6 +5,7 @@
 /* ========================== Styles ========================== */
 .form {
   @include flex-box(column);
+  @include space-y(20px);
 
   &--col {
     @include flex-box(column);
@@ -17,17 +18,10 @@
   &__item {
     @include flex-box(flex);
     width: 100%;
-    & + & {
-      margin-top: 20px;
-    }
 
     .el-checkbox-group {
+      @include space-y(10px);
       margin-top: 10px;
-      .el-checkbox {
-        & + .el-checkbox {
-          margin-top: 10px;
-        }
-      }
     }
   }
 
@@ -52,21 +46,19 @@
   }
 
   &__group {
-    @include flex-box(flex);
-    flex: 1 1 0%;
+    @include flex-box(1);
     @include space-x(10px);
     .el-select {
       max-width: 167px;
     }
     &--col {
-      flex: 1 1 0%;
+      @include flex-box(column 1);
       @include space-y(10px);
     }
   }
 
   &__upload {
-    @include flex-box(column);
-    flex: 1 1 0%;
+    @include flex-box(column 1);
     &-area {
       @include flex-box(column items-center justify-center);
       @include box(25px 0, $gray-90, 2px);
@@ -88,6 +80,7 @@
   }
 
   &__table {
+    @include space-y(0px);
     height: 100%;
     background-color: $white;
     border: 1px solid $gray-240;
@@ -97,10 +90,9 @@
         @include flex-box(items-center);
         padding-right: 15px;
         &:has(.editor) {
-          flex: 1 1 0%;
+          @include flex-box(1);
         }
         & + .form__item {
-          margin-top: 0;
           border-top: 1px solid $gray-240;
         }
         // row에 form__item 두개 들어간 경우
@@ -146,7 +138,7 @@
     @include flex-box(items-center);
     @include space-x(10px);
     &:has(.custom-input) {
-      flex: 1 1 0%;
+      @include flex-box(1);
     }
   }
 
@@ -158,12 +150,8 @@
   }
 
   &__btn-area {
-    @include flex-box(items-center);
-    flex: 1 1 0%;
-
-    button + button {
-      margin-left: 10px;
-    }
+    @include flex-box(items-center 1);
+    @include space-x(10px);
   }
   .el-select {
     width: 167px;
