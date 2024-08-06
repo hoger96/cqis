@@ -23,41 +23,36 @@ const mockupList = ref([
     index: 1,
     faqId: 'faq_1',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    views: 105
+    output: 'out',
+    createDate: '2024-07-18'
   },
   {
     index: 2,
     faqId: 'faq_2',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    views: 10
+    output: 'out',
+    createDate: '2024-07-18'
   },
   {
     index: 3,
     faqId: 'faq_3',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    views: 1
+    output: 'out',
+    createDate: '2024-07-18'
   },
   {
     index: 4,
     faqId: 'faq_4',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    views: 10
+    output: 'out',
+    createDate: '2024-07-18'
   },
   {
     index: 5,
     faqId: 'faq_5',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    createUser: 'admin',
-    createDate: '2024-07-18',
-    views: 105
+    output: 'hide',
+    createDate: '2024-07-18'
   }
 ])
 
@@ -184,10 +179,15 @@ onMounted(() => {
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" min-width="5" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
-        <el-table-column prop="title" :label="t('common.label.title')" min-width="35" align="center" />
-        <el-table-column prop="createUser" :label="t('common.label.create-user')" min-width="20" align="center" />
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="20" align="center" />
-        <el-table-column prop="views" :label="t('common.label.views')" min-width="10" align="center" />
+        <el-table-column prop="title" :label="t('common.label.title')" min-width="50" align="center" />
+        <el-table-column prop="output" :label="t('faq.label.output')" min-width="10" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.output === 'out' ? t('faq.label.out') : t('faq.label.hide') }}
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="15" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />

@@ -9,9 +9,8 @@ export interface IFaqData{
   index: number
   title: string
   faqId: string
-  createUser: string
+  output: string
   createDate: string
-  views: number
 }
 
 export interface IFaqDetail {

@@ -23,36 +23,51 @@ const mockupList = ref([
   {
     index: 1,
     anncId: 'annc_1',
+    category: 'guide',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
+    top: 'Y',
     createUser: 'admin',
+    period: ['2024-07-18', '2024-08-18'],
     createDate: '2024-07-18'
   },
   {
     index: 2,
     anncId: 'annc_2',
+    category: 'notification',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
+    top: 'Y',
     createUser: 'admin',
+    period: ['2024-07-18', '2024-08-18'],
     createDate: '2024-07-18'
   },
   {
     index: 3,
     anncId: 'annc_3',
+    category: 'notification',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
+    top: 'Y',
     createUser: 'admin',
+    period: ['2024-07-18', '2024-08-18'],
     createDate: '2024-07-18'
   },
   {
     index: 4,
     anncId: 'annc_4',
+    category: 'notification',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
+    top: '',
     createUser: 'admin',
+    period: ['2024-07-18', '2024-08-18'],
     createDate: '2024-07-18'
   },
   {
     index: 5,
     anncId: 'annc_5',
+    category: 'notification',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
+    top: 'Y',
     createUser: 'admin',
+    period: ['2024-07-18', '2024-08-18'],
     createDate: '2024-07-18'
   }
 ])
@@ -137,6 +152,7 @@ const handleDeleteAnnc = () => {
     //   url: '/annc',
     //   deletedAnnc.value,
     // })
+    console.log(deletedAnnc.value)
     handleSearch()
   }
   catch (error) {
@@ -179,7 +195,28 @@ onMounted(() => {
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" min-width="10" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
+        <el-table-column prop="category" :label="t('annc.label.category')" min-width="30" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.category === 'guide' ? t('annc.label.guide') : t('annc.label.annc') }}
+            </p>
+          </template>
+        </el-table-column>
         <el-table-column prop="title" :label="t('common.label.title')" min-width="50" align="center" />
+        <el-table-column prop="top" :label="t('annc.label.top')" min-width="20" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.top === 'Y' ? scope.row.top : '' }}
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column prop="period" :label="t('annc.label.period')" min-width="30" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.period[0] + '~' + scope.row.period[1] }}
+            </p>
+          </template>
+        </el-table-column>
         <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="30" align="center" />
       </el-table>
       <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown

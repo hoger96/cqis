@@ -9,6 +9,7 @@ const router = useRouter()
 const { t } = useI18n()
 const title = ref('')
 const contents = ref<string | Delta>()
+const output = ref('hide')
 const attachedFile = ref<File[]>([])
 
 const onEditorChange = (value: string) => {
@@ -30,6 +31,7 @@ const handleCreateFaq = () => {
       })
       data.value = {
         title: title.value,
+        output: output.value,
         detail: contents,
         file: formData
       }
@@ -37,6 +39,7 @@ const handleCreateFaq = () => {
     else {
       data.value = {
         title: title.value,
+        output: output.value,
         detail: contents,
       }
     }
@@ -58,20 +61,21 @@ const onFileChange = (file: File[]) => {
     <h2 class="title">
       {{ t('faq.admin-title') }}{{ t('common.button.create') }}
     </h2>
-    <div class="content__box">
-      <form class="form">
-        <FormItem :label="t('common.label.title')" required>
-          <CustomInput v-model="title" />
-        </FormItem>
-        <FormItem :label="t('common.label.file')">
-          <FileUpload @file-change="onFileChange" />
-        </FormItem>
-        <FormItem :label="t('common.label.content')" required>
-          <Editor v-model:content="contents" toolbar="full" theme="snow"
-            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
-        </FormItem>
-      </form>
-    </div>
+    <form class="form form__table">
+      <FormItem :label="t('common.label.title')" required>
+        <CustomInput v-model="title" />
+      </FormItem>
+      <FormItem :label="t('faq.label.output')">
+        <el-checkbox v-model="output" :label="t('faq.label.out')" true-value="out" false-value="hide" />
+      </FormItem>
+      <FormItem :label="t('common.label.content')" required>
+        <Editor v-model:content="contents" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
+      </FormItem>
+      <FormItem :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" />
+      </FormItem>
+    </form>
     <div class="content__btns">
       <button type="button" class="btn__secondary--lg" @click="handleGoFaqPage">
         {{ t('common.button.cancel') }}
