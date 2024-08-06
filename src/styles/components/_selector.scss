@@ -1,5 +1,28 @@
 /* ========================== Variables ========================== */
+.el-checkbox {
+  --el-checkbox-checked-bg-color: #9e4eff !important;
+  --el-checkbox-checked-input-border-color: #9e4eff !important;
+  --el-checkbox-input-border: 1px solid #dddddd !important;
+  --el-checkbox-input-height: 20px !important;
+  --el-checkbox-input-width: 20px !important;
+  --el-checkbox-disabled-border-color: #eaeaea !important;
+  --el-checkbox-disabled-input-fill: #f7f7f7 !important;
+  --el-checkbox-disabled-checked-input-fill: #f7f7f7 !important;
+  --el-checkbox-disabled-checked-input-border-color: #eaeaea !important;
+  --el-checkbox-checked-text-color: var(--el-color-primary);
+  --el-checkbox-input-border-color-hover: #dddddd !important;
+}
 
+.el-radio {
+  --el-radio-text-color: #333333 !important;
+  --el-radio-input-height: 20px !important;
+  --el-radio-input-width: 20px !important;
+  --el-radio-input-border-radius: var(--el-border-radius-circle);
+  --el-radio-input-bg-color: var(--el-fill-color-blank);
+  --el-radio-input-border: 1px solid #dddddd !important;
+  --el-radio-input-border-color: #dddddd !important;
+  --el-radio-input-border-color-hover: #dddddd !important;
+}
 /* ========================== Mixins ========================== */
 
 /* ========================== Styles ========================== */
@@ -13,23 +36,10 @@
   }
 
   .el-checkbox__input {
-    .el-checkbox__inner {
-      width: 20px;
-      height: 20px;
-      border-color: $gray-80;
-
-      &:hover {
-        border-color: $gray-80;
-      }
-    }
-
     &.is-checked {
       .el-checkbox__inner {
-        background: $purple-50;
-        border-color: $purple-50;
-
         &::after {
-          left: 7px;
+          left: 6px;
           height: 10px;
           width: 4px;
           border-width: 2px;
@@ -39,11 +49,19 @@
 
     &.is-disabled {
       .el-checkbox__inner {
-        background: $gray-30;
-        border-color: $gray-80;
-
         &::after {
           border-color: $gray-80 !important;
+        }
+      }
+    }
+
+    &.is-indeterminate {
+      .el-checkbox__inner {
+        &::before {
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 10px;
         }
       }
     }
@@ -53,33 +71,14 @@
     @include typo($font-weight: 500);
     padding-left: 10px;
     color: $gray-400 !important;
-
-    em {
-      @include typo($font-weight: 400);
-      color: $gray-300;
-    }
   }
 }
 
 // Radio
-.selector-only {
-  .el-radio {
-    .el-radio__label {
-      padding-left: 0;
-    }
-  }
-}
-
 .el-radio {
-  margin-right: 20px;
+  margin-right: 20px !important;
 
   .el-radio__input {
-    .el-radio__inner {
-      width: 20px;
-      height: 20px;
-      border-color: $gray-80;
-    }
-
     &.is-checked {
       .el-radio__inner {
         background: $white;
@@ -94,39 +93,27 @@
     }
   }
 
-  .el-radio__label {
-    color: $gray-400;
-
-    // padding-left:0;
-    em {
-      @include typo($font-weight: 400);
-      color: $gray-300;
-    }
-  }
-
   &.is-checked {
     &.el-radio {
       .el-radio__label {
-        color: $gray-400;
+        @include typo($font-weight: 500, $color: $gray-400);
       }
     }
   }
 
   &.is-disabled {
     .el-radio__input {
-      cursor: not-allowed;
-
       .el-radio__inner {
-        background: $gray-30;
-        border-color: $gray-45;
+        background-color: $gray-30 !important;
+        border-color: $gray-45 !important;
 
         &:after {
-          background: $gray-45;
+          background-color: $gray-45 !important;
         }
       }
 
       & + .el-radio__label {
-        color: $gray-400;
+        @include typo($font-weight: 500, $color: $gray-400);
       }
     }
   }
