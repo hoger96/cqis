@@ -5,6 +5,7 @@ const props = withDefaults(defineProps<IInputProps>(), {
   modelValue: '',
   type: 'text',
   width: '100%',
+  size: 'md',
   maxLength: '',
   prefixIcon: '',
   placeholder: '',
@@ -72,7 +73,8 @@ defineExpose({
 </script>
 
 <template>
-  <div :style="{ width: `${props.width}` }" class="custom-input">
+  <div :style="{ width: `${props.width}` }" class="custom-input"
+    :class="{ 'custom-input--sm': size === 'sm', 'custom-input--lg': size === 'lg' }">
     <div class="custom-input__wrap">
       <span v-if="props.prefixIcon" @click="inputModelValueRef?.focus()">
         <Icon :name="props.prefixIcon" width="16" height="16" alt="" />

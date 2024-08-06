@@ -1,6 +1,7 @@
 export interface IInputProps {
   modelValue: string | number | undefined
   type?: 'text' | 'number' | 'password'
+  size?: 'sm' | 'md' | 'lg'
   width?: string
   maxLength?: string
   prefixIcon?: string

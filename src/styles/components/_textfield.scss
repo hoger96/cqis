@@ -1,29 +1,21 @@
 /* ========================== Variables ========================== */
-$dropdown-size: (
+$textfield-size: (
   sm: $form-height-sm,
   default: $form-height-md,
   lg: $form-height-lg
 );
 
 /* ========================== Mixins ========================== */
-@mixin input-size($size: $form-height-md) {
-  input {
-    @if $size == 'sm' {
-      height: $form-height-sm;
-    } @else if $size == 'lg' {
-      height: $form-height-lg;
-    }
-  }
-}
-
-@mixin dropdown-size($size: default) {
-  @each $key, $value in $dropdown-size {
+@mixin textfield-size($size: default) {
+  @each $key, $value in $textfield-size {
     &--#{$key} {
-      height: $value;
+      input,
+      .el-select__wrapper {
+        height: $value;
+      }
     }
   }
 }
-
 /* ========================== Styles ========================== */
 
 //  Input
@@ -99,42 +91,7 @@ $dropdown-size: (
     @include flex-box(items-center);
     @include typo($color: $textfield-validation-color, $line-height: 24px);
   }
-
-  &[size='sm'] {
-    @include input-size($size: 'sm');
-  }
-
-  &[size='lg'] {
-    @include input-size($size: 'lg');
-  }
-
-  // &:has(.el-tag) {
-  //   input {
-  //     margin-bottom: 5px;
-  //   }
-  // }
-  // .el-tag {
-  //   padding: 0 10px;
-  //   background-color: $purple-5;
-  //   border: 0;
-  //   border-radius: 30px;
-  //   color: $purple-120;
-  //   &__content {
-  //     @include typo($font-size: 12, $font-weight: 500);
-  //   }
-  //   &.is-closable {
-  //     padding-right: 0;
-  //     margin-right: 10px;
-  //     margin-top: 5px;
-  //   }
-  //   &__close {
-  //     margin-right: 6px;
-  //     color: unset !important;
-  //     &:hover {
-  //       background-color: transparent !important;
-  //     }
-  //   }
-  // }
+  @include textfield-size;
 }
 
 // Textarea
@@ -190,11 +147,9 @@ $dropdown-size: (
 
 // Dropdown
 .el-select {
-  height: $form-height-md;
-
   .el-select {
     &__wrapper {
-      height: 100%;
+      height: $form-height-md;
       padding: 6px 10px 6px 15px;
       border: 1px solid $textfield-border-color;
       border-radius: $textfield-radius;
@@ -252,7 +207,7 @@ $dropdown-size: (
       }
     }
   }
-  @include dropdown-size();
+  @include textfield-size;
 }
 
 .el-select__popper {
@@ -263,6 +218,7 @@ $dropdown-size: (
       box-shadow: 3px 4px 6px 0px rgba(0, 0, 0, 0.1);
 
       .el-select-dropdown {
+        max-width: 500px;
         border-radius: $textfield-radius;
 
         &__list {
