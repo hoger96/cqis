@@ -15,6 +15,7 @@ const dataLoaded = ref(false)
 
 const anncForm = reactive({
   title: '',
+  top: 'N',
   createUser: '',
   createDate: '',
   updateUser: '',
@@ -39,6 +40,7 @@ const getAnncDetail = async () => {
     // })
     const res = await {
       title: '[전사공지] 안전관리',
+      top: 'Y',
       createUser: '김영현',
       createDate: '2024-07-18',
       detail: '안전관리에 대하여 알려드리겠습니다.',
@@ -63,6 +65,7 @@ const setAnncDetail = async () => {
   if (data) {
     const period = [data.startDate, data.endDate]
     anncForm.title = data.title
+    anncForm.top = data.top
     anncForm.createUser = data.createUser
     anncForm.createDate = data.createDate
     anncForm.updateUser = data.updateUser ? data.updateUser : '-'
@@ -93,6 +96,7 @@ const handleUpdateAnnc = () => {
       formData.append('file', attachedFile.value[0])
       data.value = {
         title: anncForm.title,
+        top: anncForm.top,
         startDate: String(anncForm.postingPeriod[0]),
         endDate: anncForm.postingPeriod[1],
         detail: contents,
@@ -102,6 +106,7 @@ const handleUpdateAnnc = () => {
     else {
       data.value = {
         title: anncForm.title,
+        top: anncForm.top,
         startDate: anncForm.postingPeriod[0],
         endDate: anncForm.postingPeriod[1],
         detail: contents,
@@ -147,30 +152,34 @@ onMounted(async () => {
           :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')"
           :readonly="updateMode" />
       </FormItem>
-      <div class="form__item">
-        <FormItem :label="t('common.label.create-user')" :required="!updateMode">
-          <CustomInput v-model="anncForm.createUser" readonly />
-        </FormItem>
-        <FormItem :label="t('common.label.create-date')" :required="!updateMode">
-          <CustomInput v-model="anncForm.createDate" readonly />
-        </FormItem>
-      </div>
-      <div class="form__item">
-        <FormItem :label="t('common.label.update-user')" :required="!updateMode">
-          <CustomInput v-model="anncForm.updateUser" readonly />
-        </FormItem>
-        <FormItem :label="t('common.label.update-date')" :required="!updateMode">
-          <CustomInput v-model="anncForm.updateDate" readonly />
-        </FormItem>
-      </div>
-      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
-        <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
+      <FormItem :label="t('annc.label.top-status')">
+        <el-checkbox v-model="anncForm.top" :label="t('annc.label.top')" true-value="Y" false-value="N"
+          :disabled="updateMode" />
       </FormItem>
       <FormItem :label="t('common.label.content')" :required="!updateMode">
         <Editor v-model:content="contents" toolbar="full" theme="snow"
           :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
           :read-only="updateMode" />
       </FormItem>
+      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
+      </FormItem>
+      <div class="form__item">
+        <FormItem :label="t('common.label.create-user')">
+          <CustomInput v-model="anncForm.createUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-date')">
+          <CustomInput v-model="anncForm.createDate" readonly />
+        </FormItem>
+      </div>
+      <div class="form__item">
+        <FormItem :label="t('common.label.update-user')">
+          <CustomInput v-model="anncForm.updateUser" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-date')">
+          <CustomInput v-model="anncForm.updateDate" readonly />
+        </FormItem>
+      </div>
     </form>
     <div class="content__btns">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoAnncPage">

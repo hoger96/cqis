@@ -47,6 +47,7 @@ declare module 'vue-router/auto-routes' {
     '/examples/file': RouteRecordInfo<'/examples/file', '/examples/file', Record<never, never>, Record<never, never>>,
     '/examples/form': RouteRecordInfo<'/examples/form', '/examples/form', Record<never, never>, Record<never, never>>,
     '/examples/icon-example': RouteRecordInfo<'/examples/icon-example', '/examples/icon-example', Record<never, never>, Record<never, never>>,
+    'menu-example': RouteRecordInfo<'menu-example', '/examples/menu-admin-example', Record<never, never>, Record<never, never>>,
     '/examples/popup': RouteRecordInfo<'/examples/popup', '/examples/popup', Record<never, never>, Record<never, never>>,
     '/examples/selector': RouteRecordInfo<'/examples/selector', '/examples/selector', Record<never, never>, Record<never, never>>,
     '/examples/table': RouteRecordInfo<'/examples/table', '/examples/table', Record<never, never>, Record<never, never>>,
