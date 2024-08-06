@@ -33,34 +33,34 @@ $dropdown-size: (
     height: $form-height-md;
     padding: 13px 15px;
     background: $white;
-    border: 1px solid $input-border-color;
-    border-radius: $radius-sm;
-    color: $input-color;
+    border: 1px solid $textfield-border-color;
+    border-radius: $textfield-radius;
+    color: $textfield-color;
     transition: $transition;
 
     &:focus:not(:read-only) {
-      border-color: $input-focus-border-color;
+      border-color: $textfield-focus-border-color;
     }
 
     &::placeholder {
-      color: $input-placeholder-color;
+      color: $textfield-placeholder-color;
     }
 
     &.custom-input__error {
-      border-color: $error;
+      border-color: $textfield-validation-color;
       &:focus {
-        border-color: $error;
+        border-color: $textfield-validation-color;
       }
     }
 
     &:read-only {
-      background: $input-readonly-bg-color;
+      background: $textfield-readonly-bg-color;
       cursor: default;
     }
 
     &:disabled {
-      border-color: $input-disabled-border-color;
-      color: $input-placeholder-color;
+      border-color: $textfield-disabled-border-color;
+      color: $textfield-placeholder-color;
       cursor: not-allowed;
     }
   }
@@ -96,9 +96,8 @@ $dropdown-size: (
   }
 
   &__valid {
-    @apply flex items-center;
-    @include typo($line-height: 24px);
-    color: $error;
+    @include flex-box(items-center);
+    @include typo($color: $textfield-validation-color, $line-height: 24px);
   }
 
   &[size='sm'] {
@@ -146,47 +145,46 @@ $dropdown-size: (
     height: 100%;
     padding: 15px;
     background-color: $white;
-    border: 1px solid $input-border-color;
-    border-radius: $radius-sm;
-    color: $input-color;
+    border: 1px solid $textfield-border-color;
+    border-radius: $textfield-radius;
+    color: $textfield-color;
     transition: $transition;
     resize: none;
 
     &:focus:not(:read-only) {
-      border-color: $input-focus-border-color;
+      border-color: $textfield-focus-border-color;
     }
 
     &::placeholder {
-      color: $input-placeholder-color;
+      color: $textfield-placeholder-color;
     }
 
     &.custom-textarea__error {
-      border-color: $error;
+      border-color: $textfield-validation-color;
       &:focus {
-        border-color: $error;
+        border-color: $textfield-validation-color;
       }
     }
 
     &:read-only {
-      background-color: $input-readonly-bg-color;
+      background-color: $textfield-readonly-bg-color;
       cursor: default;
     }
 
     &:disabled {
-      border-color: $input-disabled-border-color;
-      color: $input-placeholder-color;
+      border-color: $textfield-disabled-border-color;
+      color: $textfield-placeholder-color;
       cursor: not-allowed;
     }
   }
 
   &__wrap {
-    @apply flex flex-col;
+    @include flex-box(column);
   }
 
   &__valid {
-    @apply flex items-center;
-    @include typo($line-height: 24px);
-    color: $error;
+    @include flex-box(items-center);
+    @include typo($line-height: 24px, $color: $textfield-validation-color);
   }
 }
 
@@ -198,20 +196,20 @@ $dropdown-size: (
     &__wrapper {
       height: 100%;
       padding: 6px 10px 6px 15px;
-      border: 1px solid $input-border-color;
-      border-radius: $radius-sm;
+      border: 1px solid $textfield-border-color;
+      border-radius: $textfield-radius;
       box-shadow: none !important;
 
       &.is-focused {
-        border: 1px solid $input-focus-border-color;
+        border: 1px solid $textfield-focus-border-color;
       }
 
       &.is-disabled {
-        border: 1px solid $input-disabled-border-color;
-        background: $input-disabled-bg-color;
+        border: 1px solid $textfield-disabled-border-color;
+        background: $textfield-disabled-bg-color;
 
         .el-select__selected-item {
-          @include typo($color: $input-placeholder-color);
+          @include typo($color: $textfield-placeholder-color);
         }
 
         .el-select__suffix {
@@ -236,9 +234,9 @@ $dropdown-size: (
     }
 
     &__placeholder {
-      @include typo($color: $input-color);
+      @include typo($color: $textfield-color);
       &.is-transparent {
-        @include typo($color: $input-placeholder-color);
+        @include typo($color: $textfield-placeholder-color);
       }
     }
   }
@@ -247,7 +245,7 @@ $dropdown-size: (
     pointer-events: none;
 
     .el-select__wrapper {
-      background: $input-readonly-bg-color;
+      background: $textfield-readonly-bg-color;
 
       .el-select__suffix {
         @include icon($name: arrow-b__line--999);
@@ -265,7 +263,7 @@ $dropdown-size: (
       box-shadow: 3px 4px 6px 0px rgba(0, 0, 0, 0.1);
 
       .el-select-dropdown {
-        border-radius: $radius-sm;
+        border-radius: $textfield-radius;
 
         &__list {
           padding: 0;
@@ -285,7 +283,7 @@ $dropdown-size: (
           }
 
           &.is-disabled {
-            @include typo($color: $input-disabled-color);
+            @include typo($color: $textfield-disabled-color);
           }
 
           &.is-selected {

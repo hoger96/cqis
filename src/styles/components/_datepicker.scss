@@ -47,7 +47,7 @@
       }
     }
     &:has(.el-range-input[readonly]) {
-      background-color: $input-disabled-bg-color;
+      background-color: $textfield-disabled-bg-color;
     }
   }
 }

@@ -58,14 +58,16 @@ $form-height-sm: 32px;
 $form-height-md: 36px;
 $form-height-lg: 40px;
 
-$input-color: $gray-330;
-$input-border-color: $gray-90;
-$input-placeholder-color: $gray-180;
-$input-focus-border-color: $gray-400;
-$input-disabled-color: $gray-180;
-$input-disabled-border-color: $gray-45;
-$input-disabled-bg-color: $gray-30;
-$input-readonly-bg-color: $gray-30;
+$textfield-radius: 2px;
+$textfield-color: $gray-330;
+$textfield-border-color: $gray-90;
+$textfield-placeholder-color: $gray-180;
+$textfield-focus-border-color: $gray-400;
+$textfield-disabled-color: $gray-180;
+$textfield-disabled-border-color: $gray-45;
+$textfield-disabled-bg-color: $gray-30;
+$textfield-readonly-bg-color: $gray-30;
+$textfield-validation-color: $error;
 
 // Radius
 $radius-sm: 2px;
