@@ -92,36 +92,37 @@ onMounted(async () => {
     <h2 class="title">
       {{ t('annc.title') }}
     </h2>
-    <div class="content__box">
-      <form class="form">
-        <FormItem :label="t('common.label.title')">
-          <CustomInput v-model="anncForm.title" readonly />
-        </FormItem>
-        <FormItem :label="t('common.label.period')">
-          <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~"
-            value-format="YYYY-MM-DD" :start-placeholder="t('common.label.start-date')"
-            :end-placeholder="t('common.label.end-date')" readonly />
-        </FormItem>
+    <form class="form form__table">
+      <FormItem :label="t('common.label.title')">
+        <CustomInput v-model="anncForm.title" readonly />
+      </FormItem>
+      <FormItem :label="t('common.label.period')">
+        <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
+          :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" readonly />
+      </FormItem>
+      <div class="form__item">
         <FormItem :label="t('common.label.create-user')">
           <CustomInput v-model="anncForm.createUser" readonly />
         </FormItem>
         <FormItem :label="t('common.label.create-date')">
           <CustomInput v-model="anncForm.createDate" readonly />
         </FormItem>
+      </div>
+      <div class="form__item">
         <FormItem :label="t('common.label.update-user')">
           <CustomInput v-model="anncForm.updateUser" readonly />
         </FormItem>
         <FormItem :label="t('common.label.update-date')">
           <CustomInput v-model="anncForm.updateDate" readonly />
         </FormItem>
-        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
-          <FileUpload @file-change="onFileChange" :show="questionUpload" :file="attachedFile" />
-        </FormItem>
-        <FormItem :label="t('common.label.content')">
-          <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
-        </FormItem>
-      </form>
-    </div>
+      </div>
+      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" :show="questionUpload" :file="attachedFile" />
+      </FormItem>
+      <FormItem :label="t('common.label.content')">
+        <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
+      </FormItem>
+    </form>
     <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoAnncPage">
         {{ t('common.button.confirm') }}

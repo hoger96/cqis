@@ -19,6 +19,7 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/admin/components/AdminAuthPopup': RouteRecordInfo<'/admin/components/AdminAuthPopup', '/admin/components/AdminAuthPopup', Record<never, never>, Record<never, never>>,
     '/admin/components/BatchPopup': RouteRecordInfo<'/admin/components/BatchPopup', '/admin/components/BatchPopup', Record<never, never>, Record<never, never>>,
     '/admin/components/CodePopup': RouteRecordInfo<'/admin/components/CodePopup', '/admin/components/CodePopup', Record<never, never>, Record<never, never>>,
     '/admin/components/CorPopup': RouteRecordInfo<'/admin/components/CorPopup', '/admin/components/CorPopup', Record<never, never>, Record<never, never>>,
@@ -26,6 +27,7 @@ declare module 'vue-router/auto-routes' {
     '/admin/components/LineagePopup': RouteRecordInfo<'/admin/components/LineagePopup', '/admin/components/LineagePopup', Record<never, never>, Record<never, never>>,
     '/admin/components/UserAuthPopup': RouteRecordInfo<'/admin/components/UserAuthPopup', '/admin/components/UserAuthPopup', Record<never, never>, Record<never, never>>,
     '/admin/components/UserPopup': RouteRecordInfo<'/admin/components/UserPopup', '/admin/components/UserPopup', Record<never, never>, Record<never, never>>,
+    '/admin/pages/admin-auth': RouteRecordInfo<'/admin/pages/admin-auth', '/admin/pages/admin-auth', Record<never, never>, Record<never, never>>,
     '/admin/pages/batch-history': RouteRecordInfo<'/admin/pages/batch-history', '/admin/pages/batch-history', Record<never, never>, Record<never, never>>,
     '/admin/pages/batch-mgmt': RouteRecordInfo<'/admin/pages/batch-mgmt', '/admin/pages/batch-mgmt', Record<never, never>, Record<never, never>>,
     '/admin/pages/common-code': RouteRecordInfo<'/admin/pages/common-code', '/admin/pages/common-code', Record<never, never>, Record<never, never>>,
@@ -47,6 +49,7 @@ declare module 'vue-router/auto-routes' {
     '/examples/file': RouteRecordInfo<'/examples/file', '/examples/file', Record<never, never>, Record<never, never>>,
     '/examples/form': RouteRecordInfo<'/examples/form', '/examples/form', Record<never, never>, Record<never, never>>,
     '/examples/icon-example': RouteRecordInfo<'/examples/icon-example', '/examples/icon-example', Record<never, never>, Record<never, never>>,
+    'menu-example': RouteRecordInfo<'menu-example', '/examples/menu-admin-example', Record<never, never>, Record<never, never>>,
     '/examples/popup': RouteRecordInfo<'/examples/popup', '/examples/popup', Record<never, never>, Record<never, never>>,
     '/examples/selector': RouteRecordInfo<'/examples/selector', '/examples/selector', Record<never, never>, Record<never, never>>,
     '/examples/table': RouteRecordInfo<'/examples/table', '/examples/table', Record<never, never>, Record<never, never>>,

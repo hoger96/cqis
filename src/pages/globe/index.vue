@@ -101,36 +101,32 @@ const handleChangeImage = (num: number) => {
 }
 
 onMounted(() => {
-  console.log('1', imageUrl.value)
   if (imageUrl.value === '') {
     imageUrl.value = getImageUrl(1)
   }
-  console.log('2', imageUrl.value)
   handleLoadGlobe(imageUrl.value)
 });
 </script>
 
 <template>
-  <div class="flex">
-    <button type="button" class="btn__primary-line--md" @click="handleStopGlobe">
-      지구본 멈추기
-    </button>
-    <button type="button" class="btn__primary-line--md" @click="handleActiveGlobe">
-      지구본 돌기
-    </button>
-    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(1)">
-      1
-    </button>
-    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(2)">
-      2
-    </button>
-    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(3)">
-      3
-    </button>
-    <button type="button" class="btn__primary-line--md" @click="handleChangeImage(4)">
-      4
-    </button>
-  </div>
+  <button type="button" class="btn__primary-line--md" @click="handleStopGlobe">
+    지구본 멈추기
+  </button>
+  <button type="button" class="btn__primary-line--md" @click="handleActiveGlobe">
+    지구본 돌기
+  </button>
+  <button type="button" class="btn__primary-line--md" @click="handleChangeImage(1)">
+    1
+  </button>
+  <button type="button" class="btn__primary-line--md" @click="handleChangeImage(2)">
+    2
+  </button>
+  <button type="button" class="btn__primary-line--md" @click="handleChangeImage(3)">
+    3
+  </button>
+  <button type="button" class="btn__primary-line--md" @click="handleChangeImage(4)">
+    4
+  </button>
   <div v-if="imageUrl" class="globe-wrapper">
     <div ref="globeDiv"></div>
   </div>

@@ -12,6 +12,7 @@ const attachedFile = ref<File[]>([])
 
 const anncForm = reactive({
   title: '',
+  top: 'N',
   postingPeriod: '',
 })
 
@@ -29,11 +30,14 @@ const handleCreateAnnc = () => {
     const data = ref({})
     if (attachedFile.value.length) {
       const formData = new FormData()
-      formData.append('file', attachedFile.value[0])
+      attachedFile.value.forEach(i => {
+        formData.append('file', i)
+      })
       data.value = {
         title: anncForm.title,
         startDate: anncForm.postingPeriod[0],
         endDate: anncForm.postingPeriod[1],
+        top: anncForm.top,
         detail: contents,
         file: formData
       }
@@ -43,6 +47,7 @@ const handleCreateAnnc = () => {
         title: anncForm.title,
         startDate: anncForm.postingPeriod[0],
         endDate: anncForm.postingPeriod[1],
+        top: anncForm.top,
         detail: contents,
       }
     }
@@ -71,6 +76,9 @@ const onFileChange = (file: File[]) => {
       <FormItem :label="t('common.label.period')" required>
         <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
           :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" />
+      </FormItem>
+      <FormItem :label="t('annc.label.top-status')">
+        <el-checkbox v-model="anncForm.top" label="최상위 노출" true-value="Y" false-value="N" />
       </FormItem>
       <FormItem :label="t('common.label.content')" required class="flex-1">
         <Editor v-model:content="contents" toolbar="full" theme="snow"

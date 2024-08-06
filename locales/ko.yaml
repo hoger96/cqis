@@ -1,4 +1,15 @@
+admin-auth:
+  label:
+    admin-group: 관리자 그룹
+  title: 관리자 권한 관리
 annc:
+  label:
+    annc: 공지
+    category: 카테고리
+    guide: 안내
+    period: 게시기간
+    top: 최상위노출
+    top-status: 최상위노출 여부
   admin-title: 공지사항 관리자
   title: 공지사항
 batch:
@@ -169,6 +180,10 @@ data-visual:
   title: 데이터 시각화 관리
 faq:
   admin-title: FAQ 관리자
+  label:
+    hide: 숨김
+    out: 노출
+    output: 노출 여부
   title: FAQ
 menu-admin:
   menu-placeholder: 메뉴명을 입력하세요.

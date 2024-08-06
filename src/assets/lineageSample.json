@@ -1,0 +1,76 @@
+{
+  "nodeList": [
+    {
+      "tblName": "TB_TEST_01",
+      "description": "첫번째 테이블 설명입니다.",
+      "clmnList": [
+        {
+          "clmnName": "TEST_01_CLMN01",
+          "desc": "PK 컬럼입니다."
+        },
+        {
+          "clmnName": "TEST_01_CLMN_A",
+          "desc": "A 데이터 값입니다."
+        },
+        {
+          "clmnName": "TEST_01_CLMN_KK",
+          "desc": "기초 데이터가 존재합니다."
+        }
+      ]
+    },
+    {
+      "tblName": "TB_SALES_AA",
+      "description": "판매데이터 설명입니다.",
+      "clmnList": [
+        {
+          "clmnName": "SALES_CLMN_AA",
+          "desc": "판매 PK 컬럼입니다."
+        },
+        {
+          "clmnName": "SALES_DT",
+          "desc": "판매일자 입니다."
+        }
+      ]
+    },
+    {
+      "tblName": "TB_CDR_AA",
+      "description": "CDR데이터 설명입니다."
+    },
+    {
+      "tblName": "TB_QC_AA",
+      "description": "품질 데이터 테이블 설명입니다.",
+      "clmnList": [
+        {
+          "clmnName": "TTTTT",
+          "desc": "테스트 정보 컬럼입니다."
+        }
+      ]
+    },
+    {
+      "tblName": "TB_STATICS_AA",
+      "description": "통계 데이터 테이블입니다."
+    }
+  ],
+  "links": [
+    {
+      "from": "TB_TEST_01",
+      "to": "TB_STATICS_AA"
+    },
+    {
+      "from": "TB_SALES_AA",
+      "to": "TB_TEST_01"
+    },
+    {
+      "from": "TB_CDR_AA",
+      "to": "TB_TEST_01"
+    },
+    {
+      "from": "TB_CDR_AA",
+      "to": "TB_QC_AA"
+    },
+    {
+      "from": "TB_QC_AA",
+      "to": "TB_STATICS_AA"
+    }
+  ]
+}

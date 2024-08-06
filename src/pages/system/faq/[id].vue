@@ -83,25 +83,25 @@ onMounted(() => {
     <h2 class="title">
       {{ t('faq.title') }}
     </h2>
-    <div class="content__box">
-      <form class="form">
-        <FormItem :label="t('common.label.title')">
-          <CustomInput v-model="faqForm.title" readonly />
-        </FormItem>
+    <form class="form form__table">
+      <FormItem :label="t('common.label.title')">
+        <CustomInput v-model="faqForm.title" readonly />
+      </FormItem>
+      <div class="form__item">
         <FormItem :label="t('common.label.create-user')">
           <CustomInput v-model="faqForm.createUser" readonly />
         </FormItem>
         <FormItem :label="t('common.label.create-date')">
           <CustomInput v-model="faqForm.createDate" readonly />
         </FormItem>
-        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
-          <FileUpload @file-change="onFileChange" :show="noUpload" :file="attachedFile" />
-        </FormItem>
-        <FormItem :label="t('common.label.content')">
-          <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
-        </FormItem>
-      </form>
-    </div>
+      </div>
+      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" :show="noUpload" :file="attachedFile" />
+      </FormItem>
+      <FormItem :label="t('common.label.content')">
+        <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
+      </FormItem>
+    </form>
     <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoFaqPage">
         {{ t('common.button.confirm') }}

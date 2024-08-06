@@ -16,6 +16,7 @@ const dataLoaded = ref(false)
 
 const faqForm = reactive({
   title: '',
+  output: '',
   createUser: '',
   createDate: '',
   updateUser: '',
@@ -39,6 +40,7 @@ const getFaqDetail = async () => {
     // })
     const res = await {
       title: '[전사공지] 안전관리',
+      output: 'out',
       createUser: '김영현',
       createDate: '2024-07-18',
       detail: '안전관리에 대하여 알려드리겠습니다.',
@@ -60,6 +62,7 @@ const setFaqDetail = async () => {
   const data = await getFaqDetail()
   if (data) {
     faqForm.title = data.title
+    faqForm.output = data.output
     faqForm.createUser = data.createUser
     faqForm.createDate = data.createDate
     faqForm.updateUser = data.updateUser ? data.updateUser : '-'
@@ -85,6 +88,7 @@ const handleUpdateFaq = () => {
       formData.append('file', attachedFile.value[0])
       data.value = {
         title: faqForm.title,
+        output: faqForm.output,
         detail: contents,
         file: formData
       }
@@ -92,6 +96,7 @@ const handleUpdateFaq = () => {
     else {
       data.value = {
         title: faqForm.title,
+        output: faqForm.output,
         detail: contents,
       }
     }
@@ -130,33 +135,39 @@ onMounted(async () => {
     <h2 class="title">
       {{ t('faq.admin-title') }}
     </h2>
-    <div class="content__box">
-      <form class="form">
-        <FormItem :label="t('common.label.title')" :required="!updateMode">
-          <CustomInput v-model="faqForm.title" :readonly="updateMode" />
-        </FormItem>
-        <FormItem :label="t('common.label.create-user')" :required="!updateMode">
+    <form class="form form__table">
+      <FormItem :label="t('common.label.title')" :required="!updateMode">
+        <CustomInput v-model="faqForm.title" :readonly="updateMode" />
+      </FormItem>
+      <FormItem :label="t('faq.label.output')">
+        <el-checkbox v-model="faqForm.output" :label="t('faq.label.out')" true-value="out" false-value="hide"
+          :disabled="updateMode" />
+      </FormItem>
+      <FormItem :label="t('common.label.content')" :required="!updateMode">
+        <Editor v-model:content="contents" toolbar="full" theme="snow"
+          :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
+          :read-only="updateMode" />
+      </FormItem>
+      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
+      </FormItem>
+      <div class="form__item">
+        <FormItem :label="t('common.label.create-user')">
           <CustomInput v-model="faqForm.createUser" readonly />
         </FormItem>
-        <FormItem :label="t('common.label.create-date')" :required="!updateMode">
+        <FormItem :label="t('common.label.create-date')">
           <CustomInput v-model="faqForm.createDate" readonly />
         </FormItem>
-        <FormItem :label="t('common.label.update-user')" :required="!updateMode">
+      </div>
+      <div class="form__item">
+        <FormItem :label="t('common.label.update-user')">
           <CustomInput v-model="faqForm.updateUser" readonly />
         </FormItem>
-        <FormItem :label="t('common.label.update-date')" :required="!updateMode">
+        <FormItem :label="t('common.label.update-date')">
           <CustomInput v-model="faqForm.updateDate" readonly />
         </FormItem>
-        <FormItem v-if="dataLoaded" :label="t('common.label.file')">
-          <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
-        </FormItem>
-        <FormItem :label="t('common.label.content')" :required="!updateMode">
-          <Editor v-model:content="contents" toolbar="full" theme="snow"
-            :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
-            :read-only="updateMode" />
-        </FormItem>
-      </form>
-    </div>
+      </div>
+    </form>
     <div class="content__btns">
       <button v-if="updateMode" type="button" class="btn__secondary-line--lg" @click="handleGoFaqPage">
         {{ t('common.button.cancel') }}
