@@ -113,6 +113,12 @@ const menuList = reactive([
     menuIndex: '17',
     menuUrl: '/admin/pages/admin-auth',
   },
+  {
+    menuId: '리니지',
+    menuName: '리니지',
+    menuIndex: '18',
+    menuUrl: '/admin/pages/lineage',
+  },
 ])
 
 const router = useRouter()
