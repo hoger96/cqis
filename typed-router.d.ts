@@ -38,6 +38,7 @@ declare module 'vue-router/auto-routes' {
     '/admin/pages/data-visual/': RouteRecordInfo<'/admin/pages/data-visual/', '/admin/pages/data-visual', Record<never, never>, Record<never, never>>,
     '/admin/pages/data-visual/[id]': RouteRecordInfo<'/admin/pages/data-visual/[id]', '/admin/pages/data-visual/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/admin/pages/data-visual/create': RouteRecordInfo<'/admin/pages/data-visual/create', '/admin/pages/data-visual/create', Record<never, never>, Record<never, never>>,
+    '/admin/pages/lineage': RouteRecordInfo<'/admin/pages/lineage', '/admin/pages/lineage', Record<never, never>, Record<never, never>>,
     '/admin/pages/user-auth': RouteRecordInfo<'/admin/pages/user-auth', '/admin/pages/user-auth', Record<never, never>, Record<never, never>>,
     '/admin/pages/user-mgmt': RouteRecordInfo<'/admin/pages/user-mgmt', '/admin/pages/user-mgmt', Record<never, never>, Record<never, never>>,
     'ui-examples': RouteRecordInfo<'ui-examples', '/examples', Record<never, never>, Record<never, never>>,
