@@ -198,19 +198,21 @@ onMounted(() => {
     <h2 class="title">
       {{ t('user.title') }}
     </h2>
-    <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-      <SearchItem>
-        <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
-        <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
-          @keyup.enter="handleSearch" />
-      </SearchItem>
-      <SearchItem :label="t('user.label.admin-state')">
-        <basic-select-box v-model="searchParam.adminState" :options="userStateOptions" />
-      </SearchItem>
-      <SearchItem :label="t('common.search-bar.use')">
-        <basic-select-box v-model="searchParam.use" :options="useStateOptions" />
-      </SearchItem>
-    </SearchForm>
+    <div class="my-10">
+      <SearchForm use-reset @search="handleSearch" @clear="handleReset">
+        <SearchItem>
+          <basic-select-box v-model="searchParam.searchCondition" :options="searchConditionOptions" />
+          <CustomInput v-model="searchParam.keyword" :placeholder="t('common.search-bar.placeholder')"
+            @keyup.enter="handleSearch" />
+        </SearchItem>
+        <SearchItem :label="t('user.label.admin-state')">
+          <basic-select-box v-model="searchParam.adminState" :options="userStateOptions" />
+        </SearchItem>
+        <SearchItem :label="t('common.search-bar.use')">
+          <basic-select-box v-model="searchParam.use" :options="useStateOptions" />
+        </SearchItem>
+      </SearchForm>
+    </div>
     <div class="content__box">
       <div class="total">
         <span>
