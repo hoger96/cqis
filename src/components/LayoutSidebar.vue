@@ -107,6 +107,12 @@ const menuList = reactive([
     menuIndex: '16',
     menuUrl: '/admin/pages/common-code',
   },
+  {
+    menuId: '관리자 권한 관리',
+    menuName: '관리자 권한 관리',
+    menuIndex: '17',
+    menuUrl: '/admin/pages/admin-auth',
+  },
 ])
 
 const router = useRouter()

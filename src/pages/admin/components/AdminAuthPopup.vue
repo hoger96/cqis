@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { IUserAuthDetail, IUserAuthPopup } from '../types/user-auth.ts'
-import { useRouter } from 'vue-router'
+import { IAdminAuthDetail } from '../types/admin-auth.ts'
+import { adminouter } from 'vue-router'
 import { MODAL_SIZE } from '../../../types/modal.ts'
 import CustomTextarea from '../../../examples/components/custom-textarea/CustomTextarea.vue'
 
@@ -9,34 +9,34 @@ import CustomTextarea from '../../../examples/components/custom-textarea/CustomT
 const { t } = useI18n()
 const props = defineProps<{
   modelValue: boolean
-  userId: string
+  adminId: string
 }>()
 const emits = defineEmits<{
   (e: 'update:modelValue', modelValue: boolean): void
   (e: 'cancel'): void
-  (e: 'confirm', value: { userInfo: IUserDetail }): void
+  (e: 'confirm', value: { adminInfo: IAdminDetail }): void
 }>()
 
 const mockupAuth = ref([
   {
     value: 'admin',
-    label: '관리자'
+    label: '관리자 그룹1'
   },
   {
     value: 'user',
-    label: '사용자'
+    label: '관리자 그룹2'
   },
   {
     value: 'visitor',
-    label: '방문자'
+    label: '관리자 그룹3'
   },
   {
     value: 'robot',
-    label: '로봇'
+    label: '관리자 그룹4'
   },
 ])
-const userId = ref('')
-const userInfo = reactive<IUserDetail>({
+const adminId = ref('')
+const adminInfo = reactive<IAdminDetail>({
   name: '',
   auth: [],
   reason: ''
@@ -52,7 +52,7 @@ const setAuthOption = () => {
     // FIXME: api 연결
     // const res = await request({
     //   method: 'GET',
-    //   url: '/user/auth',
+    //   url: '/admin/auth',
     // })
     authOptions.value = mockupAuth.value
   }
@@ -61,38 +61,38 @@ const setAuthOption = () => {
   }
 }
 
-const setUserDetail = () => {
+const setAdminDetail = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
     //   method: 'GET',
-    //   url: '/user/${props.userId}',
-    //   userInfo,
+    //   url: '/admin/${props.adminId}',
+    //   adminInfo,
     // })
     const auth = ['admin', 'user', 'robot']
-    userInfo.name = '홍길동'
-    userInfo.auth = auth
-    userInfo.reason = '그냥'
+    adminInfo.name = '홍길동'
+    adminInfo.auth = auth
+    adminInfo.reason = '그냥'
   }
   catch (error) {
     console.error(error)
   }
 }
 
-const handleUpdateUserAuth = () => {
+const handleUpdateAdminAuth = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
     //   method: 'POST',
-    //   url: '/user/${props.userId}',
-    //   userInfo,
+    //   url: '/admin/${props.adminId}',
+    //   adminInfo,
     // })
     // const data = {
-    //   use: userInfo.use,
-    //   reason: userInfo.reason
+    //   use: adminInfo.use,
+    //   reason: adminInfo.reason
     // }
     // console.log('수정', data)
-    emits('confirm', { userInfo })
+    emits('confirm', { adminInfo })
     emits('cancel')
   }
   catch (error) {
@@ -110,11 +110,11 @@ const isShow = computed({
 })
 
 watchEffect(() => {
-  userId.value = props.userId
-  if (!userId.value) {
+  adminId.value = props.adminId
+  if (!adminId.value) {
     return
   }
-  setUserDetail()
+  setAdminDetail()
 })
 
 onMounted(() => {
@@ -123,21 +123,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <common-modal v-model="isShow" :title="t('user-auth.popup.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
+  <common-modal v-model="isShow" :title="t('admin-auth.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
     <template #content>
       <form class="form">
         <FormItem :label="t('common.label.name')">
-          <CustomInput v-model="userInfo.name" max-length="10" readonly />
+          <CustomInput v-model="adminInfo.name" max-length="10" readonly />
         </FormItem>
         <FormItem :label="t('user-auth.popup.auth')">
-          <el-checkbox-group v-model="userInfo.auth">
+          <el-checkbox-group v-model="adminInfo.auth">
             <el-checkbox v-for="(auth, index) in authOptions" :key="auth.value" :value="auth.value">
               {{ auth.label }}
             </el-checkbox>
           </el-checkbox-group>
         </FormItem>
         <FormItem :label="t('common.label.reason')">
-          <CustomTextarea v-model="userInfo.reason" max-length="20" />
+          <CustomTextarea v-model="adminInfo.reason" max-length="20" />
         </FormItem>
       </form>
     </template>
@@ -145,7 +145,7 @@ onMounted(() => {
       <button type="button" class="btn__negative--md" @click="handleCancel">
         {{ t('common.button.cancel') }}
       </button>
-      <button type="button" class="btn__secondary--md" @click="handleUpdateUserAuth">
+      <button type="button" class="btn__secondary--md" @click="handleUpdateAdminAuth">
         {{ t('common.button.save') }}
       </button>
     </template>

@@ -1,3 +1,7 @@
+admin-auth:
+  label:
+    admin-group: 관리자 그룹
+  title: 관리자 권한 관리
 annc:
   label:
     annc: 공지
