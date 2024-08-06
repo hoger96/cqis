@@ -29,7 +29,9 @@ const handleCreateAnnc = () => {
     const data = ref({})
     if (attachedFile.value.length) {
       const formData = new FormData()
-      formData.append('file', attachedFile.value[0])
+      attachedFile.value.forEach(i => {
+        formData.append('file', i)
+      })
       data.value = {
         title: anncForm.title,
         startDate: anncForm.postingPeriod[0],

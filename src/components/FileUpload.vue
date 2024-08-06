@@ -4,11 +4,9 @@ import { IUploadProps } from '../examples/types/upload.ts'
 const { t } = useI18n()
 
 const dropZoneRef = ref<HTMLDivElement>()
-const attachedFile = ref<File>([])
+const attachedFiles = ref<File[]>([])
 const fileRef = ref<HTMLInputElement | null>(null)
-const fileName = ref('')
-const fileExtension = ref('')
-const fileUrl = ref('')
+const files = ref<[]>([])
 
 const props = withDefaults(defineProps<IUploadProps>(), {
   show: true,
@@ -36,18 +34,15 @@ const openFileUpload = (e: Event) => {
 }
 
 const setFileName = () => {
-  if (attachedFile.value.length > 0) {
-    const fullName = attachedFile.value[0].name
+  attachedFiles.value.forEach((file, index) => {
+    const fullName = file.name
     const lastDotIndex = fullName.lastIndexOf('.')
-    fileName.value = fullName.slice(0, lastDotIndex)
-    fileExtension.value = fullName.slice(lastDotIndex + 1)
-  }
+    const fileName = fullName.slice(0, lastDotIndex)
+    const fileExtension = fullName.slice(lastDotIndex + 1)
+    const fileUrl = URL.createObjectURL(file)
+    attachedFiles.value[index] = Object.assign(file, { fileName, fileExtension, fileUrl })
+  })
 }
-
-const createDownloadLink = (file: File) => {
-  const url = URL.createObjectURL(file);
-  fileUrl.value = url;
-};
 
 const uploadFile = (e: Event | DragEvent, dropFile?: File[]) => {
   const target = e.target as HTMLInputElement
@@ -56,21 +51,20 @@ const uploadFile = (e: Event | DragEvent, dropFile?: File[]) => {
   if (!files)
     return
 
-  attachedFile.value = files as any
+  attachedFiles.value = files as any
   setFileName()
-  if (attachedFile.value.length > 0) {
-    createDownloadLink(attachedFile.value[0]);
-  }
-  emit('file-change', attachedFile.value);
+  emit('file-change', attachedFiles.value)
+}
+
+const removeFile = (fileIndex: number) => {
+  attachedFiles.value.splice(fileIndex, 1)
+  emit('file-change', attachedFiles.value)
 }
 
 onMounted(() => {
   if (props.file) {
-    attachedFile.value = props.file
+    attachedFiles.value = props.file
     setFileName()
-    if (attachedFile.value.length > 0) {
-      createDownloadLink(attachedFile.value[0]);
-    }
   }
 })
 </script>
@@ -82,12 +76,15 @@ onMounted(() => {
         <icon name="file__line--bbb" width="32" height="32" :alt="t('common.button.file')" />
       </button>
       <p class="mt-2">{{ t('common.label.file-placeholder') }}</p>
-      <input id="file-upload" ref="fileRef" type="file" style="display: none;" @change="uploadFile">
+      <input id="file-upload" ref="fileRef" type="file" style="display: none;" multiple @change="uploadFile">
     </div>
-    <div v-if="fileName.length > 0" class="form__upload--file">
-      <Icon class="mr-1" :name="`file__${fileExtension}`" :key="fileExtension" width="16" height="16" alt=""
-        area-hidden="true" />
-      <a :href="fileUrl" :download="fileName">{{ fileName }}.{{ fileExtension }}</a>
+    <div v-if="attachedFiles.length > 0" class="form__upload--file" v-for="(file, index) in attachedFiles" :key="index">
+      <Icon class="mr-1" :name="`file__${file.fileExtension}`" :key="file.fileExtension" width="16" height="16" alt=""
+        aria-hidden="true" />
+      <a :href="file.fileUrl" :download="file.fileName">{{ file.fileName }}.{{ file.fileExtension }}</a>
+      <button type="button" class="ml-2.5" @click="removeFile(index)">
+        <Icon name="delete__circle--eae" width="16" height="16" alt="첨부파일 삭제" />
+      </button>
     </div>
   </div>
 </template>
