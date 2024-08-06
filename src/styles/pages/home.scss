@@ -1,0 +1,21 @@
+.home {
+  &__table-wrap {
+    @include flex-box(flex);
+    height: 50%;
+    .home__table {
+      width: calc(50% - 15px);
+      height: 100%;
+    }
+    @include space-x(30px);
+  }
+
+  &__table {
+    @include flex-box(column);
+    height: 50%;
+    margin-top: 0;
+  }
+  .title--sm {
+    margin-bottom: 20px;
+  }
+  @include space-y(30px);
+}
