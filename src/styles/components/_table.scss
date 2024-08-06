@@ -6,7 +6,6 @@
 // Table
 .total {
   @include flex-box(items-end justify-between);
-  @apply flex items-end justify-between;
   margin-bottom: 10px;
   em {
     @include typo($color: $purple-50);
@@ -38,12 +37,15 @@
 
     &__body {
       .el-table__cell {
-        @include typo(14px, $color: gray-400);
+        @include typo(14px, $color: $gray-400);
         height: 56px;
         padding: 10px 0;
         border-bottom: 1px solid $gray-80;
         &:has(.el-checkbox) {
-          @apply flex items-center justify-center;
+          @include flex-box(items-center justify-center);
+        }
+        .cell {
+          @include truncate;
         }
       }
 

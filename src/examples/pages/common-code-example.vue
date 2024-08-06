@@ -1,8 +1,8 @@
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue'
-const keyword = ref('어쩌구')
+const keyword = ref('')
 const useStates = ref('Y')
-const groupCode = ref(1)
+const groupCode = ref('1')
 const groupCodeOption = [
   {
     value: '1',
@@ -25,12 +25,12 @@ const groupCodeList = [
 ]
 const codeList = [
   {
-    code: '',
-    codeName: '',
-    codeValue: '',
-    desc: '',
-    sequence: '',
-    useStatus: '',
+    code: 'Alfreds',
+    codeName: 'Futterkiste',
+    codeValue: 'Futterkiste',
+    desc: 'AlfredsAlfredsAlfredsAlfredsAlfreds',
+    sequence: '20',
+    useStatus: '사용',
   }
 ]
 
@@ -39,11 +39,11 @@ const handleReset = () => { }
 </script>
 <template>
   <div class="common-code">
-    <h1 class="title">공통 코드 관리</h1>
+    <h2 class="title">공통 코드 관리</h2>
     <div class="common-code__wrap">
       <div class="common-code__content">
         <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-          <h2 class="title--sm">그룹 코드 검색</h2>
+          <h3 class="title--sm">그룹 코드 검색</h3>
           <SearchItem label="사용여부">
             <el-radio-group v-model="useStates">
               <el-radio value="Y">
@@ -64,22 +64,22 @@ const handleReset = () => { }
             <span>
               총<em>{{ totalCount }}</em>건
             </span>
-            <button type="button" class="btn__primary--md">
+            <button type="button" class="btn__secondary--sm">
               그룹 코드 등록
             </button>
           </div>
           <el-table :data="groupCodeList" style="width: 100%">
-            <el-table-column prop="code" label="그룹코드" />
-            <el-table-column prop="codeName" label="그룹코드명" />
-            <el-table-column prop="desc" label="설명" />
-            <el-table-column prop="useStatus" label="사용여부" align="center" />
+            <el-table-column prop="code" label="그룹코드" min-width="20" />
+            <el-table-column prop="codeName" label="그룹코드명" min-width="20" />
+            <el-table-column prop="desc" label="설명" min-width="45" />
+            <el-table-column prop="useStatus" label="사용여부" min-width="15" align="center" />
           </el-table>
           <Pagination v-model="totalCount" />
         </div>
       </div>
       <div class="common-code__content">
         <SearchForm use-reset @search="handleSearch" @clear="handleReset">
-          <h2 class="title--sm">코드 검색</h2>
+          <h3 class="title--sm">코드 검색</h3>
           <SearchItem label="사용여부">
             <el-radio-group v-model="useStates">
               <el-radio value="Y">
@@ -100,17 +100,17 @@ const handleReset = () => { }
             <span>
               총<em>{{ totalCount }}</em>건
             </span>
-            <button type="button" class="btn__primary--md">
+            <button type="button" class="btn__secondary--sm">
               코드 등록
             </button>
           </div>
           <el-table :data="codeList" style="width: 100%">
-            <el-table-column prop="code" label="그룹코드" />
-            <el-table-column prop="codeName" label="그룹코드명" />
-            <el-table-column prop="codeValue" label="코드값" />
-            <el-table-column prop="desc" label="설명" />
-            <el-table-column prop="sequence" label="순서" />
-            <el-table-column prop="useStatus" label="사용여부" align="center" />
+            <el-table-column prop="code" label="그룹코드" min-width="15" />
+            <el-table-column prop="codeName" label="그룹코드명" min-width="20" />
+            <el-table-column prop="codeValue" label="코드값" min-width="20" />
+            <el-table-column prop="desc" label="설명" min-width="20" />
+            <el-table-column prop="sequence" label="순서" min-width="10" align="center" />
+            <el-table-column prop="useStatus" label="사용여부" min-width="15" align="center" />
           </el-table>
           <Pagination v-model="totalCount" />
         </div>
