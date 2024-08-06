@@ -10,7 +10,7 @@
   background-color: $white;
 
   .ql-toolbar {
-    border-color: $input-border-color !important;
+    border-color: $textfield-border-color !important;
     border-radius: 2px 2px;
   }
   .ql-container {
@@ -18,7 +18,7 @@
     overflow-y: auto;
     min-height: 100px;
     height: 100%;
-    border-color: $input-border-color !important;
+    border-color: $textfield-border-color !important;
     border-radius: 0 0 2px 2px;
     word-break: break-all;
   }

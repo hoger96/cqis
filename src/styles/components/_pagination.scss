@@ -4,37 +4,36 @@
 
 /* ========================== Styles ========================== */
 .pagination {
-  @apply flex justify-center;
+  @include flex-box(justify-center);
   margin-top: 20px;
   .pagination-container {
-    @apply flex;
+    @include flex-box(flex);
     column-gap: 2px;
     > li {
       height: 32px;
     }
     .paginate-buttons {
+      @include typo($color: $gray-330);
       width: 32px;
       height: 32px;
       border: 0;
       border-radius: $radius-sm;
-      color: $gray-330;
       transition: $transition;
       &:hover {
-        background: $white;
+        background: transparent;
       }
       &.active-page {
-        @include typo($font-weight: 600);
+        @include typo($font-weight: 600, $color: $white);
         background: $purple-50;
-        color: $white;
       }
       &.back-button {
+        @include typo($color: transparent);
         @include icon($name: 'arrow-l__line--555');
-        color: transparent;
       }
       &.next-button {
+        @include typo($color: transparent);
         @include icon($name: 'arrow-l__line--555');
         transform: rotate(180deg);
-        color: transparent;
       }
     }
   }

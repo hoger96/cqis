@@ -32,11 +32,11 @@ const emit = defineEmits(['clear', 'search'])
       </div>
     </div>
     <div class="search-form__btn-area">
-      <button v-if="useReset" type="button" class="btn__primary-line--md" @click="emit('clear')">
+      <button v-if="useReset" type="button" class="btn__primary-line--md has-icon" @click="emit('clear')">
         <Icon name="reset__line--9e4" width="24" height="24" alt="" area-hidden="true" />
         {{ resetText }}
       </button>
-      <button type="button" class="btn__primary--md" @click="emit('search')">
+      <button type="button" class="btn__primary--md has-icon" @click="emit('search')">
         <Icon name="search__line--fff" width="24" height="24" alt="" area-hidden="true" />
         {{ searchText }}
       </button>

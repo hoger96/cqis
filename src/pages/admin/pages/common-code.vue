@@ -262,13 +262,13 @@ onMounted(() => {
 </script>
 <template>
   <div class="common-code">
-    <h1 class="title">
+    <h2 class="title">
       {{ t('comm-code.title') }}
-    </h1>
+    </h2>
     <div class="common-code__wrap">
       <div class="common-code__content">
         <SearchForm use-reset @search="handleSearchGroupCode" @clear="handleResetGroupCode">
-          <h2 class="title--sm">{{ t('comm-code.label.group-code-search') }}</h2>
+          <h3 class="title--sm">{{ t('comm-code.label.group-code-search') }}</h3>
           <SearchItem :label="t('common.search-bar.use')">
             <el-radio-group v-model="searchParamGroup.use">
               <el-radio value="Y">
@@ -289,20 +289,21 @@ onMounted(() => {
             <span>
               {{ t('common.label.total') }} <em>{{ totalGroupCode }}</em>{{ t('common.label.count') }}
             </span>
-            <button type="button" class="btn__primary--md" @click="handleAddGroupCode">
+            <button type="button" class="btn__secondary--sm" @click="handleAddGroupCode">
               {{ t('common.button.create') }}
             </button>
           </div>
           <el-table :data="groupCodeList" style="width: 100%" @row-dblclick="handleGroupCodeDetail"
             @row-click="handleSearchCode">
-            <el-table-column prop="groupCode" :label="t('comm-code.label.group-code')" align="center" />
-            <el-table-column prop="groupCodeName" :label="t('comm-code.label.group-code-name')" align="center" />
-            <el-table-column prop="groupCodeDesc" :label="t('comm-code.label.description')" align="center" />
-            <el-table-column prop="useStatus" :label="t('common.search-bar.use')" align="center">
+            <el-table-column prop="groupCode" :label="t('comm-code.label.group-code')" min-width="20" align="center" />
+            <el-table-column prop="groupCodeName" :label="t('comm-code.label.group-code-name')" min-width="20"
+              align="center" />
+            <el-table-column prop="groupCodeDesc" :label="t('comm-code.label.description')" min-width="45" />
+            <el-table-column prop="useStatus" :label="t('common.search-bar.use')" min-width="15" align="center">
               <template v-slot="scope">
                 <p>
                   {{ scope.row.useStatus === 'Y' ? t('common.label.use-yes') :
-                    t('common.label.use-no')
+        t('common.label.use-no')
                   }}
                 </p>
               </template>
@@ -314,7 +315,7 @@ onMounted(() => {
       </div>
       <div class="common-code__content">
         <SearchForm use-reset @search="handleSearchCode" @clear="handleResetCode">
-          <h2 class="title--sm">{{ t('comm-code.label.code-search') }}</h2>
+          <h3 class="title--sm">{{ t('comm-code.label.code-search') }}</h3>
           <SearchItem :label="t('common.search-bar.use')">
             <el-radio-group v-model="searchParamCode.use">
               <el-radio value="Y">
@@ -335,21 +336,21 @@ onMounted(() => {
             <span>
               {{ t('common.label.total') }} <em>{{ totalCode }}</em>{{ t('common.label.count') }}
             </span>
-            <button type="button" class="btn__primary--md" @click="handleAddCode">
+            <button type="button" class="btn__secondary--sm" @click="handleAddCode">
               {{ t('common.button.create') }}
             </button>
           </div>
           <el-table :data="codeList" style="width: 100%" @row-dblclick="handleCodeDetail">
-            <el-table-column prop="code" :label="t('comm-code.label.code')" align="center" min-width="80" />
-            <el-table-column prop="codeName" :label="t('comm-code.label.code-name')" align="center" min-width="80" />
-            <el-table-column prop="codeValue" :label="t('comm-code.label.code-value')" align="center" min-width="80" />
-            <el-table-column prop="codeDesc" :label="t('comm-code.label.description')" align="center" min-width="80" />
-            <el-table-column prop="codeSeq" :label="t('comm-code.label.sequence')" align="center" min-width="50" />
-            <el-table-column prop="useStatus" :label="t('common.search-bar.use')" align="center" min-width="80">
+            <el-table-column prop="code" :label="t('comm-code.label.code')" align="center" min-width="15" />
+            <el-table-column prop="codeName" :label="t('comm-code.label.code-name')" align="center" min-width="20" />
+            <el-table-column prop="codeValue" :label="t('comm-code.label.code-value')" align="center" min-width="20" />
+            <el-table-column prop="codeDesc" :label="t('comm-code.label.description')" min-width="20" />
+            <el-table-column prop="codeSeq" :label="t('comm-code.label.sequence')" align="center" min-width="10" />
+            <el-table-column prop="useStatus" :label="t('common.search-bar.use')" align="center" min-width="15">
               <template v-slot="scope">
                 <p>
                   {{ scope.row.useStatus === 'Y' ? t('common.label.use-yes') :
-                    t('common.label.use-no')
+        t('common.label.use-no')
                   }}
                 </p>
               </template>

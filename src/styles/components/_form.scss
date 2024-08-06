@@ -5,7 +5,6 @@
 /* ========================== Styles ========================== */
 .form {
   @include flex-box(column);
-
   &--col {
     @include flex-box(column);
 
@@ -17,17 +16,10 @@
   &__item {
     @include flex-box(flex);
     width: 100%;
-    & + & {
-      margin-top: 20px;
-    }
 
     .el-checkbox-group {
       margin-top: 10px;
-      .el-checkbox {
-        & + .el-checkbox {
-          margin-top: 10px;
-        }
-      }
+      @include space-y(10px);
     }
   }
 
@@ -52,21 +44,19 @@
   }
 
   &__group {
-    @include flex-box(flex);
-    flex: 1 1 0%;
-    @include space-x(10px);
+    @include flex-box(1);
     .el-select {
       max-width: 167px;
     }
     &--col {
-      flex: 1 1 0%;
+      @include flex-box(column 1);
       @include space-y(10px);
     }
+    @include space-x(10px);
   }
 
   &__upload {
-    @include flex-box(column);
-    flex: 1 1 0%;
+    @include flex-box(column 1);
     &-area {
       @include flex-box(column items-center justify-center);
       @include box(25px 0, $gray-90, 2px);
@@ -95,12 +85,9 @@
     .form {
       &__item {
         @include flex-box(items-center);
+        overflow-y: hidden;
         padding-right: 15px;
-        &:has(.editor) {
-          flex: 1 1 0%;
-        }
         & + .form__item {
-          margin-top: 0;
           border-top: 1px solid $gray-240;
         }
         // row에 form__item 두개 들어간 경우
@@ -120,7 +107,9 @@
         }
       }
     }
+    @include space-y(0px);
   }
+  @include space-y(20px);
 }
 .search-form {
   @include flex-box(justify-between items-end);
@@ -136,18 +125,27 @@
   }
 
   &__items {
-    @include flex-box(wrap items-center 1);
+    @include flex-box(wrap items-center);
     width: 100%;
     padding-right: 10px;
     @include gap-margin(30px, 20px);
+    & > :last-child {
+      margin-right: 0;
+    }
   }
 
   &__item {
     @include flex-box(items-center);
-    @include space-x(10px);
-    &:has(.custom-input) {
-      flex: 1 1 0%;
+    .custom-input {
+      @include flex-box(1);
     }
+    &:last-child {
+      @include flex-box(1);
+      .custom-input {
+        @include flex-box(1);
+      }
+    }
+    @include space-x(10px);
   }
 
   &__label {
@@ -158,12 +156,8 @@
   }
 
   &__btn-area {
-    @include flex-box(items-center);
-    flex: 1 1 0%;
-
-    button + button {
-      margin-left: 10px;
-    }
+    @include flex-box(items-center 1);
+    @include space-x(10px);
   }
   .el-select {
     width: 167px;

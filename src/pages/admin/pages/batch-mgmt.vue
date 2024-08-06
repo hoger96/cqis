@@ -241,7 +241,7 @@ onMounted(() => {
       </div>
       <el-table :data="batchList" style="width: 100%" @row-dblclick="handleBatchDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" />
+        <el-table-column type="selection" align="center" width="55" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="batchCode" :label="t('batch.label.code')" min-width="150" align="center" />
         <el-table-column prop="batchName" :label="t('batch.label.name')" min-width="150" align="center" />

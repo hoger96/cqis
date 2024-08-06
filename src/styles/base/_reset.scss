@@ -103,7 +103,7 @@ button {
     cursor: not-allowed;
   }
 
-  &:has(img) {
+  .icon {
     min-width: fit-content;
   }
 }

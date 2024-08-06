@@ -193,7 +193,7 @@ onMounted(() => {
       </div>
       <el-table :data="announcementList" style="width: 100%" @row-dblclick="handleAnncDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" min-width="10" />
+        <el-table-column type="selection" align="center" min-width="10" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
         <el-table-column prop="category" :label="t('annc.label.category')" min-width="30" align="center">
           <template v-slot="scope">

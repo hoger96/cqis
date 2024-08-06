@@ -1,8 +1,7 @@
-import type { ESize } from './enums'
 
 export interface ISelectProps<T> {
   options: T[]
-  size?: ESize.EMPTY | ESize.LARGE | ESize.DEFAULT | ESize.LARGE
+  size?: 'sm' | 'md' | 'lg'
   clearable?: boolean
   multiple?: boolean
   disabled?: boolean

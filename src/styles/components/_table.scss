@@ -10,6 +10,9 @@
   em {
     @include typo($color: $purple-50);
   }
+  button {
+    margin-top: -10px;
+  }
   & + .el-table {
     margin-top: 10px;
   }
@@ -41,9 +44,6 @@
         height: 56px;
         padding: 10px 0;
         border-bottom: 1px solid $gray-80;
-        &:has(.el-checkbox) {
-          @include flex-box(items-center justify-center);
-        }
         .cell {
           @include truncate;
         }

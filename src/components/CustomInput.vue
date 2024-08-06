@@ -5,6 +5,7 @@ const props = withDefaults(defineProps<IInputProps>(), {
   modelValue: '',
   type: 'text',
   width: '100%',
+  size: 'md',
   maxLength: '',
   prefixIcon: '',
   placeholder: '',
@@ -72,15 +73,17 @@ defineExpose({
 </script>
 
 <template>
-  <div :style="{ width: `${props.width}` }" class="custom-input">
+  <div :style="{ width: `${props.width}` }" class="custom-input"
+    :class="{ 'custom-input--sm': size === 'sm', 'custom-input--lg': size === 'lg' }">
     <div class="custom-input__wrap">
-      <span v-if="props.prefixIcon" @click="inputModelValueRef?.focus()">
+      <span v-if="props.prefixIcon" class="custom-input__prefix" @click="inputModelValueRef?.focus()">
         <Icon :name="props.prefixIcon" width="16" height="16" alt="" />
       </span>
       <input ref="inputModelValueRef" :value="modelValue" :type="getInputType" :readonly="props.readonly"
         :disabled="props.disabled" :maxlength="props.maxLength" :placeholder="props.placeholder"
-        :class="{ 'custom-input__error': props.validMessage }" :title="modelValue?.toLocaleString() ?? ''"
-        @blur="emit('blur')" @focus="emit('focus')" @input="getInputValue" @keyup.enter="() => emit('keyupEnter')">
+        :class="{ 'custom-input__error': props.validMessage, '!pr-9': props.useDelete || props.useShowPassword, '!pl-8': props.prefixIcon }"
+        :title="modelValue?.toLocaleString() ?? ''" @blur="emit('blur')" @focus="emit('focus')" @input="getInputValue"
+        @keyup.enter="() => emit('keyupEnter')">
       <button v-if="props.useDelete && modelValue && !props.useCount && !props.disabled && !props.readonly"
         type="button" class="custom-input__reset" @click="clearInput">
         <Icon name="delete__circle--eae" width="16" height="16" alt="내용 초기화" />
