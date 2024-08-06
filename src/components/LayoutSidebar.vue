@@ -101,6 +101,12 @@ const menuList = reactive([
     menuIndex: '15',
     menuUrl: '/admin/pages/corporation',
   },
+  {
+    menuId: '공통 코드 관리',
+    menuName: '공통 코드 관리',
+    menuIndex: '16',
+    menuUrl: '/admin/pages/common-code',
+  },
 ])
 
 const router = useRouter()
