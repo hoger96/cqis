@@ -5,8 +5,6 @@
 /* ========================== Styles ========================== */
 .form {
   @include flex-box(column);
-  @include space-y(20px);
-
   &--col {
     @include flex-box(column);
 
@@ -20,8 +18,8 @@
     width: 100%;
 
     .el-checkbox-group {
-      @include space-y(10px);
       margin-top: 10px;
+      @include space-y(10px);
     }
   }
 
@@ -47,7 +45,6 @@
 
   &__group {
     @include flex-box(1);
-    @include space-x(10px);
     .el-select {
       max-width: 167px;
     }
@@ -55,6 +52,7 @@
       @include flex-box(column 1);
       @include space-y(10px);
     }
+    @include space-x(10px);
   }
 
   &__upload {
@@ -80,7 +78,6 @@
   }
 
   &__table {
-    @include space-y(0px);
     height: 100%;
     background-color: $white;
     border: 1px solid $gray-240;
@@ -110,7 +107,9 @@
         }
       }
     }
+    @include space-y(0px);
   }
+  @include space-y(20px);
 }
 .search-form {
   @include flex-box(justify-between items-end);
@@ -137,7 +136,6 @@
 
   &__item {
     @include flex-box(items-center);
-    @include space-x(10px);
     .custom-input {
       @include flex-box(1);
     }
@@ -147,6 +145,7 @@
         @include flex-box(1);
       }
     }
+    @include space-x(10px);
   }
 
   &__label {
