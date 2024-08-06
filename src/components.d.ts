@@ -34,6 +34,7 @@ declare module 'vue' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTimeSelect: typeof import('element-plus/es')['ElTimeSelect']
+    ElTree: typeof import('element-plus/es')['ElTree']
     FileUpload: typeof import('./components/FileUpload.vue')['default']
     FormItem: typeof import('./components/FormItem.vue')['default']
     Globe: typeof import('./components/Globe.vue')['default']
