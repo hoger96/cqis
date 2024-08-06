@@ -6,21 +6,6 @@
   background-color: $purple-50;
 }
 
-/* ========================== Drag and drop(파일첨부) ========================== */
-// .el-upload {
-//   .el-upload-dragger {
-//     @apply flex flex-col items-center justify-center;
-//     height: 130px;
-//     border: 1px solid $gray-90 !important;
-//     border-radius: 2px;
-//     .el-upload__text {
-//       @apply flex flex-col items-center justify-center;
-//       @include typo($font-size: 13, $line-height: 18px);
-//       color: $gray-300;
-//     }
-//   }
-// }
-
 /* ========================== page ========================== */
 .title {
   @include typo(36px, 700, $gray-430);
@@ -36,12 +21,6 @@
     @include box(40px, $radius: $radius-lg);
     width: 100%;
     margin-top: 30px;
-
-    &:has(.total) {
-      &:has(button) {
-        padding-top: 30px;
-      }
-    }
   }
 
   &__btns {

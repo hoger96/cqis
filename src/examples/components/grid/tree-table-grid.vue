@@ -366,13 +366,15 @@ onMounted(() => {
     <el-table :key="parentTableKey" :data="rowList" :row-key="rowIdKey" border style="width: 100%"
       :empty-text="noDataText" :row-class-name="setChildTableRowClass" @expand-change="changeExpand"
       @selection-change="changeParentCheckedSelection">
-      <el-table-column v-if="internalParentUseCheckBox" type="selection" class-name="filter-column-drag" />
+      <el-table-column v-if="internalParentUseCheckBox" type="selection" align="center"
+        class-name="filter-column-drag" />
       <el-table-column type="expand" class-name="filter-column-drag">
         <template #default="parentRows">
           <div v-if="!isEmpty(parentRows.row.childList)" class="m-4 bg-slate-200">
             <el-table :key="childTableKey" :data="parentRows.row.childList" border
               @selection-change="(selection) => changeChildCheckedSelection(selection, parentRows.row[rowIdKey])">
-              <el-table-column v-if="internalChildUseCheckBox" type="selection" class-name="filter-column-drag" />
+              <el-table-column v-if="internalChildUseCheckBox" type="selection" align="center"
+                class-name="filter-column-drag" />
               <el-table-column v-for="(childColumn) of childColumns"
                 :key="`tree-child-grid-column-${childColumn.property}`" :label="childColumn.label"
                 :prop="childColumn.type ? '' : childColumn.property" :min-width="childColumn.minWidth"

@@ -82,13 +82,14 @@
     padding: 0 20px;
   }
   // 아이콘 버튼인 경우
-  &:has(img) {
-    padding: 0 10px;
+  &.icon {
     @if $size == 'sm' {
+      padding: 0 10px;
       min-width: 75px;
     } @else if $size == 'md' {
       min-width: 80px;
     } @else if $size == 'lg' {
+      padding: 0 10px;
       min-width: 85px;
     }
   }

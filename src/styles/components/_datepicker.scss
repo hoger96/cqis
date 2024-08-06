@@ -46,7 +46,7 @@
         @include typo($color: $gray-330);
       }
     }
-    &:has(.el-range-input[readonly]) {
+    &:read-only {
       background-color: $textfield-disabled-bg-color;
     }
   }

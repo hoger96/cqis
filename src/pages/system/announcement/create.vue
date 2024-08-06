@@ -72,7 +72,7 @@ const onFileChange = (file: File[]) => {
         <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
           :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" />
       </FormItem>
-      <FormItem :label="t('common.label.content')" required>
+      <FormItem :label="t('common.label.content')" required class="flex-1">
         <Editor v-model:content="contents" toolbar="full" theme="snow"
           :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
       </FormItem>

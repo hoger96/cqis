@@ -166,7 +166,7 @@ onMounted(async () => {
       <FormItem v-if="dataLoaded" :label="t('common.label.file')">
         <FileUpload @file-change="onFileChange" :show="!updateMode" :file="attachedFile" />
       </FormItem>
-      <FormItem :label="t('common.label.content')" :required="!updateMode">
+      <FormItem :label="t('common.label.content')" :required="!updateMode" class="flex-1">
         <Editor v-model:content="contents" toolbar="full" theme="snow"
           :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
           :read-only="updateMode" />

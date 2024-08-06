@@ -59,24 +59,13 @@ $textfield-size: (
 
   &__wrap {
     position: relative;
+    width: 100%;
+  }
 
-    &:has(button) {
-      input {
-        padding: 13px 35px 13px 15px;
-      }
-    }
-
-    &:has(span > img) {
-      input {
-        padding-left: 31px;
-      }
-
-      span {
-        position: absolute;
-        top: 50%;
-        transform: translate(10px, -50%);
-      }
-    }
+  &__prefix {
+    position: absolute;
+    top: 50%;
+    transform: translate(10px, -50%);
   }
 
   &__reset {

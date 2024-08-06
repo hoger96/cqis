@@ -88,10 +88,8 @@
     .form {
       &__item {
         @include flex-box(items-center);
+        overflow-y: hidden;
         padding-right: 15px;
-        &:has(.editor) {
-          @include flex-box(1);
-        }
         & + .form__item {
           border-top: 1px solid $gray-240;
         }
@@ -128,17 +126,26 @@
   }
 
   &__items {
-    @include flex-box(wrap items-center 1);
+    @include flex-box(wrap items-center);
     width: 100%;
     padding-right: 10px;
     @include gap-margin(30px, 20px);
+    & > :last-child {
+      margin-right: 0;
+    }
   }
 
   &__item {
     @include flex-box(items-center);
     @include space-x(10px);
-    &:has(.custom-input) {
+    .custom-input {
       @include flex-box(1);
+    }
+    &:last-child {
+      @include flex-box(1);
+      .custom-input {
+        @include flex-box(1);
+      }
     }
   }
 

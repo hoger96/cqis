@@ -197,7 +197,7 @@ onMounted(() => {
       </div>
       <el-table :data="dataSetList" style="width: 100%" @row-dblclick="handleDataSetDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" />
+        <el-table-column type="selection" align="center" width="55" />
         <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="datasetName" :label="t('data-set.label.data-set')" min-width="150" align="center" />
         <el-table-column prop="job" :label="t('data-visual.label.job')" min-width="150" align="center" />

@@ -105,8 +105,8 @@ const handleReset = () => { }
             </button>
           </div>
           <el-table :data="codeList" style="width: 100%">
-            <el-table-column prop="code" label="그룹코드" min-width="15" />
-            <el-table-column prop="codeName" label="그룹코드명" min-width="20" />
+            <el-table-column prop="code" label="코드" min-width="15" />
+            <el-table-column prop="codeName" label="코드명" min-width="20" />
             <el-table-column prop="codeValue" label="코드값" min-width="20" />
             <el-table-column prop="desc" label="설명" min-width="20" />
             <el-table-column prop="sequence" label="순서" min-width="10" align="center" />

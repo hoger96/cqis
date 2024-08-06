@@ -230,7 +230,7 @@ onMounted(() => {
       </div>
       <el-table :data="corList" style="width: 100%" @row-dblclick="handleCorDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" min-width="50" />
+        <el-table-column type="selection" align="center" min-width="50" />
         <el-table-column prop="corName" :label="t('corporation.label.name')" min-width="80" align="center" />
         <el-table-column prop="continent" :label="t('corporation.label.continent')" min-width="80" align="center" />
         <el-table-column prop="country" :label="t('corporation.label.country')" min-width="100" align="center" />
@@ -246,7 +246,7 @@ onMounted(() => {
           <template v-slot="scope">
             <p>
               {{ scope.row.closeState === 'operate' ? t('corporation.label.operate') :
-                t('corporation.label.close-down')
+        t('corporation.label.close-down')
               }}
             </p>
           </template>

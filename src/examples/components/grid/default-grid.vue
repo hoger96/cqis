@@ -175,7 +175,7 @@ onUnmounted(() => {
   <div>
     <el-table :key="tableKey" :data="rows" row-key="id" border style="width: 100%" :empty-text="noDataText"
       @selection-change="selectRow">
-      <el-table-column v-if="internalUseCheckBox" type="selection" class-name="filter-column-drag" />
+      <el-table-column v-if="internalUseCheckBox" type="selection" align="center" class-name="filter-column-drag" />
       <el-table-column v-if="internalUseRowNum" type="index" class-name="filter-column-drag" />
       <el-table-column v-for="(column) of columns" :key="`common-grid-column-${column.property}`" :label="column.label"
         :prop="column.type ? '' : column.property" :min-width="column.minWidth" :resizable="internalUseColumnResizable"

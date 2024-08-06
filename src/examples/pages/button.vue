@@ -8,6 +8,7 @@
     </h2>
     <div class="flex flex-col gap-2 mt-10 p-10 bg-white rounded-3xl">
       <p>button size는 <em class="font-bold">"sm", "md", "lg"</em>가 있습니다.</p>
+      <p><em class="font-bold">icon 이 들어간 버튼</em>에는 <em class="font-bold">class="icon"</em>을 추가합니다.</p>
       <p>icon 넣을 때 <em class="font-bold">$type이 line인 경우</em> Icon 컴포넌트가 아닌, <em class="font-bold">svg</em>태그를 사용합니다.
       </p>
     </div>
@@ -35,15 +36,15 @@
         <button type="button" class="btn__primary--lg">
           버튼
         </button>
-        <button type="button" class="btn__primary--sm">
+        <button type="button" class="btn__primary--sm icon">
           <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
-        <button type="button" class="btn__primary--md">
+        <button type="button" class="btn__primary--md icon">
           <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
-        <button type="button" class="btn__primary--lg">
+        <button type="button" class="btn__primary--lg icon">
           <Icon name="search__line--fff" width="24" height="24" alt="" />
           버튼
         </button>
