@@ -125,7 +125,7 @@ const getAnnouncementList = (params: ISearchParams) => {
     // FIXME: api 연결
     // const res = await request({
     //   method: 'GET',
-    //   url: '/annc',
+    //   url: '/annc/list',
     //   params,
     // })
     return mockupList.value
@@ -135,8 +135,8 @@ const getAnnouncementList = (params: ISearchParams) => {
   }
 }
 
-const setAnnouncementList = () => {
-  const data = getAnnouncementList()
+const setAnnouncementList = (params: ISearchParams) => {
+  const data = getAnnouncementList(params)
   announcementList.value = data.map(item => ({
     ...item,
     period: `${item.notyStartDt} ~ ${item.notyEndDt}`,

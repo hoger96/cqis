@@ -16,8 +16,10 @@ const noUpload = ref(false)
 
 const faqForm = reactive({
   title: '',
-  createUser: '',
-  createDate: '',
+  crteUserId: '',
+  crteDttm: '',
+  updUserId: '',
+  updDttm: '',
 })
 
 const fileData = {
@@ -30,19 +32,24 @@ const fileData = {
 };
 const getFaqDetail = async () => {
   try {
+    // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: `/annc/${anncId.value}`
+    //   method: 'POST',
+    //   url: '/faq/detail'
+    //   {faqSeq: faqId.value}
     // })
     const res = await {
-      title: '로그인 가이드',
-      createUser: '김영현',
-      createDate: '2024-07-18',
-      detail: '로그인 방법에 대해 알려드리겠습니다.',
-      file: new File([""], fileData.name, {
+      title: '[전사공지] 안전관리',
+      faqDispYn: 'Y',
+      crteUserId: '김영현',
+      crteDttm: '2024-07-18',
+      cont: '안전관리에 대하여 알려드리겠습니다.',
+      fileList: new File([""], fileData.name, {
         type: fileData.type,
         lastModified: fileData.lastModified
-      })
+      }),
+      updDttm: '',
+      updUserId: ''
     }
     return res
   }
@@ -55,11 +62,14 @@ const setFaqDetail = async () => {
   const data = await getFaqDetail()
   if (data) {
     faqForm.title = data.title
-    faqForm.createUser = data.createUser
-    faqForm.createDate = data.createDate
-    contents.value = data.detail
-    if (data.file) {
-      attachedFile.value = [data.file]
+    faqForm.faqDispYn = data.faqDispYn
+    faqForm.crteUserId = data.crteUserId
+    faqForm.crteDttm = data.crteDttm
+    faqForm.updUserId = data.updUserId ? data.updUserId : '-'
+    faqForm.updDttm = data.updDttm ? data.updDttm : '-'
+    contents.value = data.cont
+    if (data.fileList) {
+      attachedFile.value = [data.fileList]
     }
     dataLoaded.value = true
   }
@@ -87,20 +97,28 @@ onMounted(() => {
       <FormItem :label="t('common.label.title')">
         <CustomInput v-model="faqForm.title" readonly />
       </FormItem>
-      <div class="form__item">
-        <FormItem :label="t('common.label.create-user')">
-          <CustomInput v-model="faqForm.createUser" readonly />
-        </FormItem>
-        <FormItem :label="t('common.label.create-date')">
-          <CustomInput v-model="faqForm.createDate" readonly />
-        </FormItem>
-      </div>
-      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
-        <FileUpload @file-change="onFileChange" :show="noUpload" :file="attachedFile" />
-      </FormItem>
       <FormItem :label="t('common.label.content')">
         <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
       </FormItem>
+      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" :show="noUpload" :file="attachedFile" />
+      </FormItem>
+      <div class="form__item">
+        <FormItem :label="t('common.label.create-user')">
+          <CustomInput v-model="faqForm.crteUserId" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-date')">
+          <CustomInput v-model="faqForm.crteDttm" readonly />
+        </FormItem>
+      </div>
+      <div class="form__item">
+        <FormItem :label="t('common.label.update-user')">
+          <CustomInput v-model="faqForm.updUserId" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-date')">
+          <CustomInput v-model="faqForm.updDttm" readonly />
+        </FormItem>
+      </div>
     </form>
     <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoFaqPage">

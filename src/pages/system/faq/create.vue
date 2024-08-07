@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { IFaqCreate } from '../types/faq.ts'
 import type { Delta } from '@vueup/vue-quill'
 import Editor from '../../../components/Editor.vue'
 import FileUpload from '../../../components/FileUpload.vue'
 
 const router = useRouter()
 const { t } = useI18n()
-const title = ref('')
 const contents = ref<string | Delta>()
-const output = ref('hide')
 const attachedFile = ref<File[]>([])
+
+const faqForm = reactive<IFaqCreate>({
+  title: '',
+  faqDispYn: 'N',
+})
 
 const onEditorChange = (value: string) => {
   contents.value = value
@@ -30,19 +34,24 @@ const handleCreateFaq = () => {
         formData.append('file', i)
       })
       data.value = {
-        title: title.value,
-        output: output.value,
-        detail: contents,
-        file: formData
+        title: faqForm.title,
+        faqDispYn: faqForm.faqDispYn,
+        cont: contents.value,
+        fileList: formData
       }
     }
     else {
       data.value = {
-        title: title.value,
-        output: output.value,
-        detail: contents,
+        title: faqForm.title,
+        faqDispYn: faqForm.faqDispYn,
+        cont: contents.value,
       }
     }
+    //  await request({
+    //   method: 'POST',
+    //   url: '/faq/insert',
+    //   data.value
+    // })
     console.log('등록: ', data.value)
     router.push({ path: '/system/faq/admin-index' })
   }
@@ -63,10 +72,10 @@ const onFileChange = (file: File[]) => {
     </h2>
     <form class="form form__table">
       <FormItem :label="t('common.label.title')" required>
-        <CustomInput v-model="title" />
+        <CustomInput v-model="faqForm.title" />
       </FormItem>
       <FormItem :label="t('faq.label.output')">
-        <el-checkbox v-model="output" :label="t('faq.label.out')" true-value="out" false-value="hide" />
+        <el-checkbox v-model="faqForm.faqDispYn" :label="t('faq.label.out')" true-value="Y" false-value="N" />
       </FormItem>
       <FormItem :label="t('common.label.content')" required>
         <Editor v-model:content="contents" toolbar="full" theme="snow"

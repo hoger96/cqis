@@ -35,9 +35,11 @@ const fileData = {
 
 const getAnncDetail = async () => {
   try {
+    // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: `/annc/${notySeq.value}`
+    //   method: 'POST',
+    //   url: `/noty/detail,
+    //   data: {notySeq: notySeq.value}
     // })
     const res = await {
       title: '[전사공지] 안전관리',
@@ -119,6 +121,11 @@ const handleUpdateAnnc = () => {
         cont: contents.value,
       }
     }
+    //  await request({
+    //   method: 'POST',
+    //   url: `/noty/update,
+    //   data
+    // })
     console.log('등록: ', data.value)
     updateMode.value = true
     setAnncDetail()

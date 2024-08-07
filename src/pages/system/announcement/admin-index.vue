@@ -127,8 +127,8 @@ const getAnnouncementList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/annc',
+    //   method: 'POST',
+    //   url: '/annc/list',
     //   params,
     // })
     return mockupList.value
@@ -138,8 +138,8 @@ const getAnnouncementList = (params: ISearchParams) => {
   }
 }
 
-const setAnnouncementList = () => {
-  const data = getAnnouncementList()
+const setAnnouncementList = (params: ISearchParams) => {
+  const data = getAnnouncementList(params)
   announcementList.value = data.map(item => ({
     ...item,
     period: `${item.notyStartDt} ~ ${item.notyEndDt}`,
@@ -173,9 +173,9 @@ const handleDeleteAnnc = () => {
     console.log(Array.from(deletedAnnc.value))
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'DELETE',
-    //   url: '/annc',
-    //   deletedAnnc.value,
+    //   method: 'POST',
+    //   url: '/noty/delete',
+    //   {notySeqList: Array.from(deletedAnnc.value)}
     // })
     handleSearch()
   }
