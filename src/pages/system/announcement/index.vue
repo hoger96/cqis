@@ -135,8 +135,8 @@ const getAnnouncementList = (params: ISearchParams) => {
   }
 }
 
-const setAnnouncementList = () => {
-  const data = getAnnouncementList()
+const setAnnouncementList = (params: ISearchParams) => {
+  const data = getAnnouncementList(params)
   announcementList.value = data.map(item => ({
     ...item,
     period: `${item.notyStartDt} ~ ${item.notyEndDt}`,

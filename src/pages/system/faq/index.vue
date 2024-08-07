@@ -103,7 +103,7 @@ const changePage = async (newPage: number) => {
   searchedParam.currentPage = newPage
   searchParam.currentPage = newPage
   const params = getParams(searchedParam)
-  getFaqList(params)
+  setFaqList(params)
 }
 
 const handleReset = () => {
