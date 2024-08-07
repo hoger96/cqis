@@ -1,24 +1,40 @@
 export interface ISearchParams {
   searchCondition: string
-  keyword: string
-  page?: number
+  keyword?: string
+  currentPage: number
 }
 
 export interface IAdminAuthData{
-  index: number
-  adminId: string
-  name: string
-  adminGroup: string
-  authDate: string
+  rowNum: string
+  userId: string
+  userName: string
+  setYn: string
+  lastRoleMppDttm: string
+  crteUserId : string
+  crteDttm : string
+  updUserId : string
+  updDttm : string
 }
 
 export interface IAdminAuthPopup{
   modelValue: boolean
-  userId?: string
+  userId: string
+}
+
+export interface IAdminRold {
+  mtrRoleId: string
+  mtrRoleName: string    
+  mtrRoleSetYn: string
 }
 
 export interface IAdminAuthDetail{
-  name: string
-  auth: []
-  reason: string
+  userId: string
+  userName: string
+  setYn: string
+  roleGroupList: IAdminRold[]
+  rsn: string
+  crteUserId : string
+  crteDttm : string
+  updUserId : string
+  updDttm : string
 }
