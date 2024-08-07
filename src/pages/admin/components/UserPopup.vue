@@ -29,7 +29,6 @@ const mockupData = {
   crteDttm: '2024-07-01 12:23:12',
   updUserId: 'admin',
   updDttm: '2024-07-01 12:23:12'
-
 }
 
 const userId = ref('')

@@ -12,66 +12,86 @@ const searchCondition = ref('id')
 const useState = ref('Y')
 const keyword = ref('')
 const adminPopupSignal = ref(false)
-const adminId = ref('')
+const userId = ref('')
 
 const searchConditionOptions = [
   {
-    value: 'id',
+    value: 'userId',
     label: '아이디'
   },
   {
-    value: 'name',
+    value: 'userName',
     label: '이름'
   },
 ]
 const mockupList = ref([
   {
-    index: 1,
-    adminId: 'id_1',
-    name: '홍길동',
-    adminGroup: '1번 그룹',
-    authDate: '2024-05-29 10:12:31'
+    rowNum: 1,
+    userId: 'id_1',
+    userName: '홍길동',
+    setYn: 'Y',
+    lastRoleMppDttm: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 2,
-    adminId: 'id_2',
-    name: '김길동',
-    adminGroup: '2번 그룹, 3번그룹',
-    authDate: '2024-05-29 10:12:31'
+    rowNum: 2,
+    userId: 'id_2',
+    userName: '김길동',
+    setYn: 'Y',
+    lastRoleMppDttm: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 3,
-    adminId: 'id_3',
-    name: '남길동',
-    adminGroup: '1번 그룹',
-    authDate: '2024-05-29 10:12:31'
+    rowNum: 3,
+    userId: 'id_3',
+    userName: '남길동',
+    setYn: 'Y',
+    lastRoleMppDttm: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 4,
-    adminId: 'id_4',
-    name: '강길동',
-    adminGroup: '2번그룹',
-    authDate: '2024-05-29 10:12:31'
+    rowNum: 4,
+    userId: 'id_4',
+    userName: '강길동',
+    setYn: 'Y',
+    lastRoleMppDttm: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 5,
-    adminId: 'id_5',
-    name: '마길동',
-    adminGroup: '3번 그룹',
-    authDate: '2024-05-29 10:12:31'
+    rowNum: 5,
+    userId: 'id_5',
+    userName: '마길동',
+    setYn: 'N',
+    lastRoleMppDttm: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   }
 ])
 
 
 const searchParam = reactive<ISearchParams>({
-  searchCondition: 'id',
+  searchCondition: 'userId',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const totalCount = ref(0)
 const adminList = ref<IAdminAuthData[]>([])
@@ -80,14 +100,14 @@ const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
     keyword: searchParam.keyword,
-    page: searchParam.page,
+    currentPage: searchParam.currentPage,
   }
   return params
 }
 
 const changePage = async (newPage: number) => {
-  searchedParam.page = newPage
-  searchParam.page = newPage
+  searchedParam.currentPage = newPage
+  searchParam.currentPage = newPage
   const params = getParams(searchedParam)
   getAdminList(params)
 }
@@ -101,8 +121,8 @@ const getAdminList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/qna',
+    //   method: 'POST',
+    //   url: '/mtrRoleMpp/list',
     //   params,
     // })
     adminList.value = mockupList.value
@@ -117,13 +137,13 @@ const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
-  params.page = 1
-  searchParam.page = 1
+  params.currentPage = 1
+  searchParam.currentPage = 1
   getAdminList(params)
 }
 
 const handleAdminDetail = (data: IAdminAuthData) => {
-  adminId.value = data.adminId
+  userId.value = data.userId
   adminPopupSignal.value = true
 }
 
@@ -134,16 +154,12 @@ const handleCancel = () => {
 const handleUpdateAdmin = (data) => {
   try {
     // FIXME: api 연결
-    const adminInfo = {
-      auth: data.adminInfo.auth,
-      reason: data.adminInfo.reason
-    }
     // const res = await request({
     //   method: 'POST',
-    //   url: '/admin-auth/${adminId.value}',
-    //   adminInfo,
+    //   url: '/mtrRoleMpp/update',
+    //   data,
     // })
-    console.log('수정', adminInfo)
+    console.log('수정', data)
   }
   catch (error) {
     console.error(error)
@@ -172,26 +188,19 @@ onMounted(() => {
         <span>
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
-        <!-- <div class="flex">
-          <button type="button" class="btn__secondary--md" @click="handleDeleteCor">
-            {{ t('common.button.delete') }}
-          </button>
-          <button type="button" class="btn__primary-line--md" @click="handleCreateCor">
-            {{ t('common.button.create') }}
-          </button>
-        </div> -->
       </div>
       <el-table :data="adminList" style="width: 100%" @row-dblclick="handleAdminDetail">
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
-        <el-table-column prop="adminId" :label="t('common.label.id')" min-width="150" align="center" />
-        <el-table-column prop="name" :label="t('common.label.name')" min-width="150" align="center" />
-        <el-table-column prop="adminGroup" :label="t('admin-auth.label.admin-group')" min-width="150" align="center" />
-        <el-table-column prop="authDate" :label="t('user-auth.label.auth-date')" min-width="150" align="center" />
+        <el-table-column prop="rowNum" :label="t('common.label.index')" min-width="50" align="center" />
+        <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />
+        <el-table-column prop="userName" :label="t('common.label.name')" min-width="150" align="center" />
+        <el-table-column prop="setYn" :label="t('admin-auth.label.set')" min-width="150" align="center" />
+        <el-table-column prop="lastRoleMppDttm" :label="t('user-auth.label.auth-date')" min-width="150"
+          align="center" />
       </el-table>
-      <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
+      <Pagination v-model="searchParam.currentPage" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
-    <AdminAuthPopup v-model:model-value="adminPopupSignal" :admin-id="adminId" @cancel="handleCancel"
+    <AdminAuthPopup v-model:model-value="adminPopupSignal" :user-id="userId" @cancel="handleCancel"
       @confirm="handleUpdateAdmin" />
   </div>
 </template>

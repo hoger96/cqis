@@ -9,12 +9,12 @@ import CustomTextarea from '../../../examples/components/custom-textarea/CustomT
 const { t } = useI18n()
 const props = defineProps<{
   modelValue: boolean
-  adminId: string
+  userId: string
 }>()
 const emits = defineEmits<{
   (e: 'update:modelValue', modelValue: boolean): void
   (e: 'cancel'): void
-  (e: 'confirm', value: { adminInfo: IAdminDetail }): void
+  (e: 'confirm', value: { adminInfo }): void
 }>()
 
 const mockupAuth = ref([
@@ -35,11 +35,24 @@ const mockupAuth = ref([
     label: '관리자 그룹4'
   },
 ])
-const adminId = ref('')
-const adminInfo = reactive<IAdminDetail>({
-  name: '',
-  auth: [],
-  reason: ''
+const mockupData = {
+  userId: 'honggildong',
+  userName: '홍길동',
+  setYn: 'Y',
+  roleGroupList: ['admin', 'robot'],
+  useYn: 'Y',
+  rsn: '',
+  crteUserId: 'admin',
+  crteDttm: '2024-07-01 12:23:12',
+  updUserId: 'admin',
+  updDttm: '2024-07-01 12:23:12'
+}
+
+const userId = ref('')
+const adminInfo = reactive({
+  userName: '',
+  roleGroupList: [],
+  rsn: ''
 })
 const authOptions = ref<[]>([])
 
@@ -51,9 +64,13 @@ const setAuthOption = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/admin/auth',
+    //   method: 'POST',
+    //   url: '/mtrRole/list',
     // })
+    // authOptions.value = res.data.map(i => ({
+    //  value: i.mtrRoleId,
+    //  label: i.mtrRoleName
+    // }))
     authOptions.value = mockupAuth.value
   }
   catch (error) {
@@ -61,38 +78,36 @@ const setAuthOption = () => {
   }
 }
 
-const setAdminDetail = () => {
+const getAdminDetail = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/admin/${props.adminId}',
-    //   adminInfo,
+    //   method: 'POST',
+    //   url: '/mtrRoleMpp/detail',
+    //   {userId},
     // })
-    const auth = ['admin', 'user', 'robot']
-    adminInfo.name = '홍길동'
-    adminInfo.auth = auth
-    adminInfo.reason = '그냥'
+    return mockupData
   }
   catch (error) {
     console.error(error)
   }
 }
 
+const setAdminDetail = () => {
+  const data = getAdminDetail()
+  adminInfo.userName = data.userName
+  adminInfo.roleGroupList = data.roleGroupList
+  adminInfo.rsn = data.rsn
+}
+
 const handleUpdateAdminAuth = () => {
   try {
-    // FIXME: api 연결
-    // const res = await request({
-    //   method: 'POST',
-    //   url: '/admin/${props.adminId}',
-    //   adminInfo,
-    // })
-    // const data = {
-    //   use: adminInfo.use,
-    //   reason: adminInfo.reason
-    // }
-    // console.log('수정', data)
-    emits('confirm', { adminInfo })
+    const data = {
+      userId: userId.value,
+      rsn: adminInfo.rsn,
+      mtrRoleList: Array.from(adminInfo.roleGroupList)
+    }
+    emits('confirm', data)
     emits('cancel')
   }
   catch (error) {
@@ -110,8 +125,8 @@ const isShow = computed({
 })
 
 watchEffect(() => {
-  adminId.value = props.adminId
-  if (!adminId.value) {
+  userId.value = props.userId
+  if (!userId.value) {
     return
   }
   setAdminDetail()
@@ -127,17 +142,17 @@ onMounted(() => {
     <template #content>
       <form class="form">
         <FormItem :label="t('common.label.name')">
-          <CustomInput v-model="adminInfo.name" max-length="10" readonly />
+          <CustomInput v-model="adminInfo.userName" max-length="10" readonly />
         </FormItem>
         <FormItem :label="t('user-auth.popup.auth')">
-          <el-checkbox-group v-model="adminInfo.auth">
+          <el-checkbox-group v-model="adminInfo.roleGroupList">
             <el-checkbox v-for="(auth, index) in authOptions" :key="auth.value" :value="auth.value">
               {{ auth.label }}
             </el-checkbox>
           </el-checkbox-group>
         </FormItem>
         <FormItem :label="t('common.label.reason')">
-          <CustomTextarea v-model="adminInfo.reason" max-length="20" />
+          <CustomTextarea v-model="adminInfo.rsn" max-length="20" :placeholder="t('user.popup.reason-placeholder')" />
         </FormItem>
       </form>
     </template>
