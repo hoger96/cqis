@@ -152,7 +152,7 @@ onMounted(async () => {
         <el-checkbox v-model="faqForm.faqDispYn" :label="t('faq.label.out')" true-value="Y" false-value="N"
           :disabled="updateMode" />
       </FormItem>
-      <FormItem :label="t('common.label.content')" :required="!updateMode">
+      <FormItem :label="t('common.label.content')" :required="!updateMode" class="flex-1">
         <Editor v-model:content="contents" toolbar="full" theme="snow"
           :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange"
           :read-only="updateMode" />

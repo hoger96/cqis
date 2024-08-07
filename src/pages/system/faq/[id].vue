@@ -97,7 +97,7 @@ onMounted(() => {
       <FormItem :label="t('common.label.title')">
         <CustomInput v-model="faqForm.title" readonly />
       </FormItem>
-      <FormItem :label="t('common.label.content')">
+      <FormItem :label="t('common.label.content')" class="flex-1">
         <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
       </FormItem>
       <FormItem v-if="dataLoaded" :label="t('common.label.file')">
