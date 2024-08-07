@@ -13,13 +13,13 @@ const userId = ref('')
 
 const searchConditionOptions = [
   {
-    value: 'id',
-    label: '아이디'
-  },
-  {
-    value: 'name',
+    value: 'userName',
     label: '이름'
   },
+  {
+    value: 'userId',
+    label: '아이디'
+  }
 ]
 const userStateOptions = [
   {
@@ -43,66 +43,86 @@ const useStateOptions = [
 ]
 const mockupList = ref([
   {
-    index: 1,
+    rowNum: 1,
     userId: 'id_1',
-    name: '홍길동',
-    adminState: 'user',
-    qlik: 'professional',
-    use: 'Y',
-    loginDate: '2024-05-29 10:12:31'
+    userName: '홍길동',
+    mtrYn: 'Y',
+    qlikUserAuthTp: 'A',
+    useYn: 'Y',
+    lastLoginDt: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 2,
+    rowNum: 2,
     userId: 'id_2',
-    name: '김길동',
-    adminState: 'user',
-    qlik: 'Analyst',
-    use: 'Y',
-    loginDate: '2024-05-29 10:12:31'
+    userName: '김길동',
+    mtrYn: 'Y',
+    qlikUserAuthTp: 'P',
+    useYn: 'Y',
+    lastLoginDt: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 3,
+    rowNum: 3,
     userId: 'id_3',
-    name: '남길동',
-    adminState: 'admin',
-    qlik: 'professional',
-    use: 'N',
-    loginDate: '2024-05-29 10:12:31'
+    userName: '남길동',
+    mtrYn: 'Y',
+    qlikUserAuthTp: 'A',
+    useYn: 'Y',
+    lastLoginDt: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 4,
+    rowNum: 4,
     userId: 'id_4',
-    name: '강길동',
-    adminState: 'user',
-    qlik: 'professional',
-    use: 'N',
-    loginDate: '2024-05-29 10:12:31'
+    userName: '강길동',
+    mtrYn: '',
+    qlikUserAuthTp: 'A',
+    useYn: 'N',
+    lastLoginDt: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 5,
+    rowNum: 5,
     userId: 'id_5',
-    name: '마길동',
-    adminState: 'admin',
-    qlik: 'Analyst',
-    use: 'Y',
-    loginDate: '2024-05-29 10:12:31'
+    userName: '마길동',
+    mtrYn: 'Y',
+    qlikUserAuthTp: 'A',
+    useYn: 'Y',
+    lastLoginDt: '2024-05-29 10:12:31',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   }
 ])
 
 
 const searchParam = reactive<ISearchParams>({
-  searchCondition: 'id',
+  searchCondition: 'userId',
   adminState: 'user',
-  use: 'Y',
+  useYn: 'Y',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
   adminState: '',
-  use: '',
+  useYn: '',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const totalCount = ref(0)
 const userList = ref<IUserData[]>([])
@@ -111,16 +131,16 @@ const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
     adminState: searchParam.adminState,
-    use: searchParam.use,
+    useYn: searchParam.useYn,
     keyword: searchParam.keyword,
-    page: searchParam.page,
+    currentPage: searchParam.currentPage,
   }
   return params
 }
 
 const changePage = async (newPage: number) => {
-  searchedParam.page = newPage
-  searchParam.page = newPage
+  searchedParam.currentPage = newPage
+  searchParam.currentPage = newPage
   const params = getParams(searchedParam)
   getUserList(params)
 }
@@ -128,7 +148,7 @@ const changePage = async (newPage: number) => {
 const handleReset = () => {
   searchParam.searchCondition = 'id',
     searchParam.adminState = 'user',
-    searchParam.use = 'Y'
+    searchParam.useYn = 'Y'
   searchParam.keyword = ''
 }
 
@@ -136,8 +156,8 @@ const getUserList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/qna',
+    //   method: 'POST',
+    //   url: '/user/list',
     //   params,
     // })
     userList.value = mockupList.value
@@ -151,11 +171,11 @@ const getUserList = (params: ISearchParams) => {
 const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
   searchedParam.adminState = searchParam.adminState
-  searchedParam.use = searchParam.use
+  searchedParam.useYn = searchParam.useYn
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
-  params.page = 1
-  searchParam.page = 1
+  params.currentPage = 1
+  searchParam.currentPage = 1
   getUserList(params)
 }
 
@@ -171,17 +191,12 @@ const handleCancel = () => {
 const handleUpdateUser = (data) => {
   try {
     // FIXME: api 연결
-    console.log(data)
-    const userInfo = {
-      use: data.userInfo.use,
-      reason: data.userInfo.reason
-    }
     // const res = await request({
     //   method: 'POST',
-    //   url: '/user/${userId.value}',
-    //   userInfo,
+    //   url: '/user/update',
+    //   data,
     // })
-    console.log('수정', userInfo)
+    console.log('수정', data)
   }
   catch (error) {
     console.error(error)
@@ -209,7 +224,7 @@ onMounted(() => {
           <basic-select-box v-model="searchParam.adminState" :options="userStateOptions" />
         </SearchItem>
         <SearchItem :label="t('common.search-bar.use')">
-          <basic-select-box v-model="searchParam.use" :options="useStateOptions" />
+          <basic-select-box v-model="searchParam.useYn" :options="useStateOptions" />
         </SearchItem>
       </SearchForm>
     </div>
@@ -220,21 +235,33 @@ onMounted(() => {
         </span>
       </div>
       <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
+        <el-table-column prop="rowNum" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />
-        <el-table-column prop="name" :label="t('common.label.name')" min-width="150" align="center" />
-        <el-table-column prop="adminState" :label="t('user.label.admin')" min-width="150" align="center" />
-        <el-table-column prop="qlik" :label="t('user.label.qlik')" min-width="150" align="center" />
-        <el-table-column prop="use" :label="t('common.search-bar.use')" min-width="100" align="center">
+        <el-table-column prop="userName" :label="t('common.label.name')" min-width="150" align="center" />
+        <el-table-column prop="mtrYn" :label="t('user.label.admin-state')" min-width="150" align="center">
           <template v-slot="scope">
             <p>
-              {{ scope.row.use === 'Y' ? t('common.label.use-yes') : t('common.label.use-no') }}
+              {{ scope.row.mtrYn === 'Y' ? t('user.label.admin') : t('user.label.user') }}
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="loginDate" :label="t('common.label.login')" min-width="150" align="center" />
+        <el-table-column prop="qlikUserAuthTp" :label="t('user.label.qlik')" min-width="150" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.qlikUserAuthTp === 'P' ? t('user.label.professional') : t('user.label.analyst') }}
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column prop="useYn" :label="t('common.search-bar.use')" min-width="100" align="center">
+          <template v-slot="scope">
+            <p>
+              {{ scope.row.useYn === 'Y' ? t('common.label.use-yes') : t('common.label.use-no') }}
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column prop="lastLoginDt" :label="t('common.label.login')" min-width="150" align="center" />
       </el-table>
-      <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
+      <Pagination v-model="searchParam.currentPage" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
     <UserPopup v-model:model-value="userPopupSignal" :user-id="userId" @cancel="handleCancel"

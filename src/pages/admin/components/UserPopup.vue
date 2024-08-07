@@ -18,22 +18,28 @@ const emits = defineEmits<{
 }>()
 
 const mockupData = {
-  name: '홍길동',
-  adminState: 'admin',
-  qlik: 'professional',
-  state: 'lock',
-  use: 'Y',
-  reason: ''
+  userId: 'honggildong',
+  userName: '홍길동',
+  mtrYn: 'Y',
+  qlikUserAuthTp: 'P',
+  qlikUserAuthYn: 'Y',
+  useYn: 'Y',
+  rsn: '',
+  crteUserId: 'admin',
+  crteDttm: '2024-07-01 12:23:12',
+  updUserId: 'admin',
+  updDttm: '2024-07-01 12:23:12'
+
 }
 
 const userId = ref('')
-const userInfo = reactive<IUserDetail>({
-  name: '',
-  adminState: '',
-  qlik: '',
-  state: '',
-  use: '',
-  reason: ''
+const userInfo = reactive({
+  userName: '',
+  mtrYn: '',
+  qlikUserAuthTp: '',
+  qlikUserAuthYn: '',
+  useYn: '',
+  rsn: ''
 })
 
 const handleCancel = () => {
@@ -44,9 +50,9 @@ const getUserDetail = () => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/user/${props.userId}',
-    //   userInfo,
+    //   method: 'POST',
+    //   url: '/user/detail',
+    //   {userId: userId.value},
     // })
     return mockupData
   }
@@ -57,28 +63,25 @@ const getUserDetail = () => {
 
 const setUserDetail = () => {
   const data = getUserDetail()
-  userInfo.name = data.name
-  userInfo.adminState = data.adminState
-  userInfo.qlik = data.qlik
-  userInfo.state = data.state
-  userInfo.use = data.use
-  userInfo.reason = data.reason
+  userInfo.userName = data.userName
+  userInfo.mtrYn = data.mtrYn
+  userInfo.qlikUserAuthTp = data.qlikUserAuthTp
+  userInfo.qlikUserAuthYn = data.qlikUserAuthYn
+  userInfo.useYn = data.useYn
+  userInfo.rsn = data.rsn
 }
 
 const handleUpdateUser = () => {
   try {
-    // FIXME: api 연결
-    // const res = await request({
-    //   method: 'POST',
-    //   url: '/user/${props.userId}',
-    //   userInfo,
-    // })
-    // const data = {
-    //   use: userInfo.use,
-    //   reason: userInfo.reason
-    // }
-    // console.log('수정', data)
-    emits('confirm', { userInfo })
+    const data = {
+      userID: userId.value,
+      mtrYn: userInfo.mtrYn,
+      qlikUserAuthTp: userInfo.qlikUserAuthTp,
+      qlikUserAuthYn: userInfo.qlikUserAuthYn,
+      useYn: userInfo.useYn,
+      rsn: userInfo.rsn
+    }
+    emits('confirm', data)
     emits('cancel')
   }
   catch (error) {
@@ -110,15 +113,15 @@ watchEffect(() => {
     <template #content>
       <form class="form">
         <FormItem :label="t('common.label.name')">
-          <CustomInput v-model="userInfo.name" max-length="10" readonly />
+          <CustomInput v-model="userInfo.userName" max-length="10" readonly />
         </FormItem>
         <FormItem :label="t('user.label.admin-state')">
           <div class="form">
-            <el-radio-group v-model="userInfo.adminState">
-              <el-radio value="user">
+            <el-radio-group v-model="userInfo.mtrYn">
+              <el-radio value="N">
                 {{ t('user.label.user') }}
               </el-radio>
-              <el-radio value="admin">
+              <el-radio value="Y">
                 {{ t('user.label.admin') }}
               </el-radio>
             </el-radio-group>
@@ -126,31 +129,31 @@ watchEffect(() => {
         </FormItem>
         <FormItem :label="t('user.label.qlik')">
           <div class="form">
-            <el-radio-group v-model="userInfo.qlik">
-              <el-radio value="analyst">
+            <el-radio-group v-model="userInfo.qlikUserAuthTp">
+              <el-radio value="A">
                 {{ t('user.label.analyst') }}
               </el-radio>
-              <el-radio value="professional">
+              <el-radio value="P">
                 {{ t('user.label.professional') }}
               </el-radio>
             </el-radio-group>
           </div>
         </FormItem>
-        <FormItem :label="t('user.label.state')">
+        <FormItem :label="t('user.label.allow-status')">
           <div class="form">
-            <el-radio-group v-model="userInfo.state">
-              <el-radio value="lock">
-                {{ t('user.label.lock') }}
+            <el-radio-group v-model="userInfo.qlikUserAuthYn">
+              <el-radio value="Y">
+                {{ t('user.label.allow') }}
               </el-radio>
-              <el-radio value="active">
-                {{ t('user.label.active') }}
+              <el-radio value="N">
+                {{ t('user.label.un-allow') }}
               </el-radio>
             </el-radio-group>
           </div>
         </FormItem>
         <FormItem :label="t('common.search-bar.use')">
           <div class="form">
-            <el-radio-group v-model="userInfo.use">
+            <el-radio-group v-model="userInfo.useYn">
               <el-radio value="Y">
                 {{ t('common.label.use-yes') }}
               </el-radio>
@@ -160,8 +163,8 @@ watchEffect(() => {
             </el-radio-group>
           </div>
         </FormItem>
-        <FormItem :label="t('common.label.reason')">
-          <CustomTextarea v-model="userInfo.reason" max-length="20" :placeholder="t('user.popup.reason-placeholder')" />
+        <FormItem :label="t('common.label.reason')" required>
+          <CustomTextarea v-model="userInfo.rsn" :placeholder="t('user.popup.reason-placeholder')" />
         </FormItem>
       </form>
     </template>
