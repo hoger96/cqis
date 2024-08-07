@@ -77,7 +77,7 @@ const onFileChange = (file: File[]) => {
       <FormItem :label="t('faq.label.output')">
         <el-checkbox v-model="faqForm.faqDispYn" :label="t('faq.label.out')" true-value="Y" false-value="N" />
       </FormItem>
-      <FormItem :label="t('common.label.content')" required>
+      <FormItem :label="t('common.label.content')" required class="flex-1">
         <Editor v-model:content="contents" toolbar="full" theme="snow"
           :placeholder="t('common.label.content-placeholder')" content-type="text" @change="onEditorChange" />
       </FormItem>

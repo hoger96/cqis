@@ -76,9 +76,11 @@
       }
     }
   }
+  @include space-y(20px);
 
   &__table {
-    height: 100%;
+    @include flex-box(1);
+    overflow-y: hidden;
     background-color: $white;
     border: 1px solid $gray-240;
 
@@ -107,9 +109,8 @@
         }
       }
     }
-    @include space-y(0px);
+    @include space-y(0);
   }
-  @include space-y(20px);
 }
 .search-form {
   @include flex-box(justify-between items-end);
