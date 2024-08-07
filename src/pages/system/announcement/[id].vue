@@ -8,7 +8,7 @@ import FileUpload from '../../../components/FileUpload.vue'
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const anncId = ref(route.params.id)
+const notySeq = ref(route.params.id)
 const contents = ref<string | Delta>()
 const attachedFile = ref<File[] | []>([])
 const dataLoaded = ref(false)
@@ -16,11 +16,12 @@ const questionUpload = ref(false)
 
 const anncForm = reactive({
   title: '',
-  createUser: '',
-  createDate: '',
-  updateUser: '',
-  updateDate: '',
-  postingPeriod: '',
+  ctg: '',
+  crteUserId: '',
+  crteDttm: '',
+  updUserId: '',
+  updDttm: '',
+  postingPeriod: []
 })
 
 const fileData = {
@@ -35,19 +36,24 @@ const getAnncDetail = async () => {
   try {
     // const res = await request({
     //   method: 'GET',
-    //   url: `/annc/${anncId.value}`
+    //   url: `/annc/${notySeq.value}`
     // })
     const res = await {
       title: '[전사공지] 안전관리',
-      createUser: '김영현',
-      createDate: '2024-07-18',
-      detail: '안전관리에 대하여 알려드리겠습니다.',
+      ctg: '전사공지',
+      crteUserId: '김영현',
+      crteDttm: '2024-07-18',
+      cont: '안전관리에 대하여 알려드리겠습니다.',
       startDate: '2024-07-18',
       endDate: '2024-07-24',
-      file: new File([""], fileData.name, {
+      fileList: new File([""], fileData.name, {
         type: fileData.type,
         lastModified: fileData.lastModified
-      })
+      }),
+      updUserId: '',
+      updDttm: '',
+      notyStartDt: '2024-01-01',
+      notyEndDt: '2024-12-31'
     }
     return res
   }
@@ -59,16 +65,17 @@ const getAnncDetail = async () => {
 const setAnncDetail = async () => {
   const data = await getAnncDetail()
   if (data) {
-    const period = [data.startDate, data.endDate]
+    const period = [data.notyStartDt, data.notyEndDt]
     anncForm.title = data.title
-    anncForm.createUser = data.createUser
-    anncForm.createDate = data.createDate
-    anncForm.updateUser = data.updateUser ? data.updateUser : '-'
-    anncForm.updateDate = data.updateDate ? data.updateDate : '-'
-    contents.value = data.detail
+    anncForm.ctg = data.ctg
+    anncForm.crteUserId = data.crteUserId
+    anncForm.crteDttm = data.crteDttm
+    anncForm.updUserId = data.updUserId ? data.updUserId : '-'
+    anncForm.updDttm = data.updDttm ? data.updDttm : '-'
+    contents.value = data.cont
     anncForm.postingPeriod = period
-    if (data.file) {
-      attachedFile.value = [data.file]
+    if (data.fileList) {
+      attachedFile.value = [data.fileList]
     }
     dataLoaded.value = true
   }
@@ -100,28 +107,31 @@ onMounted(async () => {
         <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
           :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" readonly />
       </FormItem>
-      <div class="form__item">
-        <FormItem :label="t('common.label.create-user')">
-          <CustomInput v-model="anncForm.createUser" readonly />
-        </FormItem>
-        <FormItem :label="t('common.label.create-date')">
-          <CustomInput v-model="anncForm.createDate" readonly />
-        </FormItem>
-      </div>
-      <div class="form__item">
-        <FormItem :label="t('common.label.update-user')">
-          <CustomInput v-model="anncForm.updateUser" readonly />
-        </FormItem>
-        <FormItem :label="t('common.label.update-date')">
-          <CustomInput v-model="anncForm.updateDate" readonly />
-        </FormItem>
-      </div>
-      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
-        <FileUpload @file-change="onFileChange" :show="questionUpload" :file="attachedFile" />
+      <FormItem :label="t('annc.label.category')">
+        <CustomInput v-model="anncForm.ctg" readonly />
       </FormItem>
       <FormItem :label="t('common.label.content')">
         <Editor v-model:content="contents" toolbar="full" theme="snow" content-type="text" :read-only="true" />
       </FormItem>
+      <FormItem v-if="dataLoaded" :label="t('common.label.file')">
+        <FileUpload @file-change="onFileChange" :show="questionUpload" :file="attachedFile" />
+      </FormItem>
+      <div class="form__item">
+        <FormItem :label="t('common.label.create-user')">
+          <CustomInput v-model="anncForm.crteUserId" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.create-date')">
+          <CustomInput v-model="anncForm.crteDttm" readonly />
+        </FormItem>
+      </div>
+      <div class="form__item">
+        <FormItem :label="t('common.label.update-user')">
+          <CustomInput v-model="anncForm.updUserId" readonly />
+        </FormItem>
+        <FormItem :label="t('common.label.update-date')">
+          <CustomInput v-model="anncForm.updDttm" readonly />
+        </FormItem>
+      </div>
     </form>
     <div class="content__btns">
       <button type="button" class="btn__primary--lg" @click="handleGoAnncPage">
