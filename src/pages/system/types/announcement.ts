@@ -2,15 +2,21 @@ import type { Delta } from '@vueup/vue-quill'
 export interface ISearchParams {
   searchCondition: string
   keyword?: string
-  page?: number
+  currentPage: number
 }
 
 export interface IAnnouncementData{
-  index: number
+  notySeq: string
+  rowNum: string
+  ctg: string
   title: string
-  anncId: string
-  createUser: string
-  createDate: string
+  topDispYn: string
+  crteUserId: string
+  notyStartDt: string
+  notyEndDt: string
+  crteDttm: string
+  updUserId: string
+  updDttm: string
 }
 
 export interface IAnnouncementDetail {

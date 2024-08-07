@@ -12,7 +12,8 @@ const attachedFile = ref<File[]>([])
 
 const anncForm = reactive({
   title: '',
-  top: 'N',
+  ctg: '',
+  topDispYn: 'N',
   postingPeriod: '',
 })
 
@@ -35,20 +36,25 @@ const handleCreateAnnc = () => {
       })
       data.value = {
         title: anncForm.title,
-        startDate: anncForm.postingPeriod[0],
-        endDate: anncForm.postingPeriod[1],
-        top: anncForm.top,
-        detail: contents,
-        file: formData
+        ctg: anncForm.ctg,
+        notyStartDt: anncForm.postingPeriod[0],
+        notyEndDt: anncForm.postingPeriod[1],
+        topDispYn: anncForm.topDispYn,
+        cont: contents.value,
+        fileList: formData
       }
+      for (const x of formData.entries()) {
+        console.log(x);
+      };
     }
     else {
       data.value = {
         title: anncForm.title,
-        startDate: anncForm.postingPeriod[0],
-        endDate: anncForm.postingPeriod[1],
-        top: anncForm.top,
-        detail: contents,
+        ctg: anncForm.ctg,
+        notyStartDt: anncForm.postingPeriod[0],
+        notyEndDt: anncForm.postingPeriod[1],
+        topDispYn: anncForm.topDispYn,
+        cont: contents.value,
       }
     }
     console.log('등록: ', data.value)
@@ -77,8 +83,11 @@ const onFileChange = (file: File[]) => {
         <el-date-picker v-model="anncForm.postingPeriod" type="daterange" range-separator="~" value-format="YYYY-MM-DD"
           :start-placeholder="t('common.label.start-date')" :end-placeholder="t('common.label.end-date')" />
       </FormItem>
+      <FormItem :label="t('annc.label.category')" required>
+        <CustomInput v-model="anncForm.ctg" />
+      </FormItem>
       <FormItem :label="t('annc.label.top-status')">
-        <el-checkbox v-model="anncForm.top" label="최상위 노출" true-value="Y" false-value="N" />
+        <el-checkbox v-model="anncForm.topDispYn" :label="t('annc.label.top')" true-value="Y" false-value="N" />
       </FormItem>
       <FormItem :label="t('common.label.content')" required class="flex-1">
         <Editor v-model:content="contents" toolbar="full" theme="snow"

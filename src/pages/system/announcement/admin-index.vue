@@ -8,6 +8,7 @@ const { t } = useI18n()
 const router = useRouter()
 const searchCondition = ref('제목')
 const keyword = ref('')
+const period = ref('')
 const deletedAnnc = ref<string[]>([])
 const searchConditionOptions = [
   {
@@ -15,60 +16,75 @@ const searchConditionOptions = [
     label: '제목'
   },
   {
-    value: 'detail',
+    value: 'cont',
     label: '내용'
   },
 ]
 const mockupList = ref([
   {
-    index: 1,
-    anncId: 'annc_1',
-    category: 'guide',
+    notySeq: '1',
+    rowNum: '1',
+    ctg: '전사공지',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    top: 'Y',
-    createUser: 'admin',
-    period: ['2024-07-18', '2024-08-18'],
-    createDate: '2024-07-18'
+    topDispYn: 'Y',
+    crteUserId: 'admin',
+    notyStartDt: '2024-01-01',
+    notyEndDt: '2024-12-31',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 2,
-    anncId: 'annc_2',
-    category: 'notification',
+    notySeq: '2',
+    rowNum: '2',
+    ctg: '전사공지',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    top: 'Y',
-    createUser: 'admin',
-    period: ['2024-07-18', '2024-08-18'],
-    createDate: '2024-07-18'
+    topDispYn: 'Y',
+    crteUserId: 'admin',
+    notyStartDt: '2024-01-01',
+    notyEndDt: '2024-12-31',
+    crteDttm: ' 2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: ' 2024-07-01 12:23:12'
   },
   {
-    index: 3,
-    anncId: 'annc_3',
-    category: 'notification',
+    notySeq: '3',
+    rowNum: '3',
+    ctg: '전사공지',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    top: 'Y',
-    createUser: 'admin',
-    period: ['2024-07-18', '2024-08-18'],
-    createDate: '2024-07-18'
+    topDispYn: 'Y',
+    crteUserId: 'admin',
+    notyStartDt: '2024-01-01',
+    notyEndDt: '2024-12-31',
+    crteDttm: ' 2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: ' 2024-07-01 12:23:12'
   },
   {
-    index: 4,
-    anncId: 'annc_4',
-    category: 'notification',
+    notySeq: '4',
+    rowNum: '4',
+    ctg: '긴급공지',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    top: '',
-    createUser: 'admin',
-    period: ['2024-07-18', '2024-08-18'],
-    createDate: '2024-07-18'
+    topDispYn: '',
+    crteUserId: 'admin',
+    notyStartDt: '2024-01-01',
+    notyEndDt: '2024-12-31',
+    crteDttm: ' 2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: ' 2024-07-01 12:23:12'
   },
   {
-    index: 5,
-    anncId: 'annc_5',
-    category: 'notification',
+    notySeq: '5',
+    rowNum: '5',
+    ctg: '전사공지',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    top: 'Y',
-    createUser: 'admin',
-    period: ['2024-07-18', '2024-08-18'],
-    createDate: '2024-07-18'
+    topDispYn: 'Y',
+    crteUserId: 'admin',
+    notyStartDt: '2024-01-01',
+    notyEndDt: '2024-12-31',
+    crteDttm: ' 2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: ' 2024-07-01 12:23:12'
   }
 ])
 
@@ -76,12 +92,12 @@ const mockupList = ref([
 const searchParam = reactive<ISearchParams>({
   searchCondition: 'title',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const totalCount = ref(0)
 const announcementList = ref<IAnnouncementData[]>([])
@@ -90,16 +106,16 @@ const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
     keyword: searchParam.keyword,
-    page: searchParam.page,
+    currentPage: searchParam.currentPage,
   }
   return params
 }
 
 const changePage = async (newPage: number) => {
-  searchedParam.page = newPage
-  searchParam.page = newPage
+  searchedParam.currentPage = newPage
+  searchParam.currentPage = newPage
   const params = getParams(searchedParam)
-  getAnnouncementList(params)
+  setAnnouncementList(params)
 }
 
 const handleReset = () => {
@@ -115,44 +131,52 @@ const getAnnouncementList = (params: ISearchParams) => {
     //   url: '/annc',
     //   params,
     // })
-    announcementList.value = mockupList.value
-    totalCount.value = announcementList.value.length
+    return mockupList.value
   }
   catch (error) {
     console.error(error)
   }
 }
 
+const setAnnouncementList = () => {
+  const data = getAnnouncementList()
+  announcementList.value = data.map(item => ({
+    ...item,
+    period: `${item.notyStartDt} ~ ${item.notyEndDt}`,
+  }))
+  totalCount.value = announcementList.value.length
+}
+
 const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
-  params.page = 1
-  searchParam.page = 1
-  getAnnouncementList(params)
+  params.currentPage = 1
+  searchParam.currentPage = 1
+  setAnnouncementList(params)
 }
 
 const handleAnncDetail = (e: IAnnouncementData) => {
-  router.push({ path: `/system/announcement/admin-${e.anncId}` })
+  router.push({ path: `/system/announcement/admin-${e.notySeq}` })
 }
 
 const handleCreateAnnc = () => {
   router.push({ path: '/system/announcement/create' })
 }
 
-const handleSelectionChange = (target: IAnnouncementData[]) => {
-  deletedAnnc.value = target.map(i => i.anncId)
+const handleSelectionChange = (target: IAnnouncementData) => {
+  deletedAnnc.value = Object.values(target).map(item => item.notySeq);
 }
 
 const handleDeleteAnnc = () => {
   try {
+    console.log(Array.from(deletedAnnc.value))
     // FIXME: api 연결
     // const res = await request({
     //   method: 'DELETE',
     //   url: '/annc',
     //   deletedAnnc.value,
     // })
-    console.log(deletedAnnc.value)
     handleSearch()
   }
   catch (error) {
@@ -193,33 +217,15 @@ onMounted(() => {
       </div>
       <el-table :data="announcementList" style="width: 100%" @row-dblclick="handleAnncDetail"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" align="center" min-width="10" />
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
-        <el-table-column prop="category" :label="t('annc.label.category')" min-width="30" align="center">
-          <template v-slot="scope">
-            <p>
-              {{ scope.row.category === 'guide' ? t('annc.label.guide') : t('annc.label.annc') }}
-            </p>
-          </template>
-        </el-table-column>
+        <el-table-column type="selection" min-width="10" />
+        <el-table-column prop="rowNum" :label="t('common.label.index')" min-width="10" align="center" />
+        <el-table-column prop="ctg" :label="t('annc.label.category')" min-width="20" align="center" />
         <el-table-column prop="title" :label="t('common.label.title')" min-width="50" align="center" />
-        <el-table-column prop="top" :label="t('annc.label.top')" min-width="20" align="center">
-          <template v-slot="scope">
-            <p>
-              {{ scope.row.top === 'Y' ? scope.row.top : '' }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column prop="period" :label="t('annc.label.period')" min-width="30" align="center">
-          <template v-slot="scope">
-            <p>
-              {{ scope.row.period[0] + '~' + scope.row.period[1] }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="30" align="center" />
+        <el-table-column prop="topDispYn" :label="t('annc.label.top')" min-width="20" align="center" />
+        <el-table-column prop="period" :label="t('annc.label.period')" min-width="40" align="center" />
+        <el-table-column prop="crteDttm" :label="t('common.label.create-date')" min-width="30" align="center" />
       </el-table>
-      <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
+      <Pagination v-model="searchParam.currentPage" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
   </div>
