@@ -2,28 +2,34 @@ import type { Delta } from '@vueup/vue-quill'
 export interface ISearchParams {
   searchCondition: string
   keyword?: string
-  page?: number
+  currentPage: number
 }
 
 export interface IFaqData{
-  index: number
+  rowNum: string
+  faqSeq: string
   title: string
   faqId: string
-  output: string
-  createDate: string
+  faqDispYn: string
+  crteUserId : string
+  crteDttm : string
+  updUserId : string
+  updDttm : string
 }
 
 export interface IFaqDetail {
-  faqId: string
+  faqSeq: string
   title: string
-  createUser: string
-  createDate: string
-  detail: string | Delta
-  file? : File[]
+  cont: string
+  fileList: File[]
+  faqDispYn: string
+  crteUserId: string
+  crteDttm: string
+  updUserId: string
+  updDttm: string
 }
 
 export interface IFaqCreate {
   title: string
-  detail: string | Delta
-  file?: File[]
+  faqDispYn: string
 }

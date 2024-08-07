@@ -57,6 +57,11 @@ const handleCreateAnnc = () => {
         cont: contents.value,
       }
     }
+    //  await request({
+    //   method: 'POST',
+    //   url: '/noty/insert',
+    //   data.value
+    // })
     console.log('등록: ', data.value)
     router.push({ path: '/system/announcement/admin-index' })
   }

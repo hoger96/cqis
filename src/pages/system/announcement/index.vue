@@ -125,7 +125,7 @@ const getAnnouncementList = (params: ISearchParams) => {
     // FIXME: api 연결
     // const res = await request({
     //   method: 'GET',
-    //   url: '/annc',
+    //   url: '/annc/list',
     //   params,
     // })
     return mockupList.value

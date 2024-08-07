@@ -16,11 +16,11 @@ const dataLoaded = ref(false)
 
 const faqForm = reactive({
   title: '',
-  output: '',
-  createUser: '',
-  createDate: '',
-  updateUser: '',
-  updateDate: '',
+  faqDispYn: '',
+  crteUserId: '',
+  crteDttm: '',
+  updUserId: '',
+  updDttm: '',
 })
 
 const fileData = {
@@ -35,21 +35,22 @@ const fileData = {
 const getFaqDetail = async () => {
   try {
     // const res = await request({
-    //   method: 'GET',
-    //   url: `/faq/${faqId.value}`
+    //   method: 'POST',
+    //   url: '/faq/detail'
+    //   {faqSeq: faqId.value}
     // })
     const res = await {
       title: '[전사공지] 안전관리',
-      output: 'out',
-      createUser: '김영현',
-      createDate: '2024-07-18',
-      detail: '안전관리에 대하여 알려드리겠습니다.',
-      file: new File([""], fileData.name, {
+      faqDispYn: 'Y',
+      crteUserId: '김영현',
+      crteDttm: '2024-07-18',
+      cont: '안전관리에 대하여 알려드리겠습니다.',
+      fileList: new File([""], fileData.name, {
         type: fileData.type,
         lastModified: fileData.lastModified
       }),
-      updateDate: '',
-      updateUser: ''
+      updDttm: '',
+      updUserId: ''
     }
     return res
   }
@@ -62,14 +63,14 @@ const setFaqDetail = async () => {
   const data = await getFaqDetail()
   if (data) {
     faqForm.title = data.title
-    faqForm.output = data.output
-    faqForm.createUser = data.createUser
-    faqForm.createDate = data.createDate
-    faqForm.updateUser = data.updateUser ? data.updateUser : '-'
-    faqForm.updateDate = data.updateDate ? data.updateDate : '-'
-    contents.value = data.detail
-    if (data.file) {
-      attachedFile.value = [data.file]
+    faqForm.faqDispYn = data.faqDispYn
+    faqForm.crteUserId = data.crteUserId
+    faqForm.crteDttm = data.crteDttm
+    faqForm.updUserId = data.updUserId ? data.updUserId : '-'
+    faqForm.updDttm = data.updDttm ? data.updDttm : '-'
+    contents.value = data.cont
+    if (data.fileList) {
+      attachedFile.value = [data.fileList]
     }
     dataLoaded.value = true
   }
@@ -87,20 +88,28 @@ const handleUpdateFaq = () => {
       const formData = new FormData()
       formData.append('file', attachedFile.value[0])
       data.value = {
+        faqSeq: faqId.value,
         title: faqForm.title,
-        output: faqForm.output,
-        detail: contents,
-        file: formData
+        faqDispYn: faqForm.faqDispYn,
+        cont: contents.value,
+        fileList: formData
       }
     }
     else {
       data.value = {
+        faqSeq: faqId.value,
         title: faqForm.title,
-        output: faqForm.output,
-        detail: contents,
+        faqDispYn: faqForm.faqDispYn,
+        cont: contents.value,
       }
     }
-    console.log('등록: ', data.value)
+    // FIXME: api 연결
+    //  await request({
+    //   method: 'POST',
+    //   url: `/faq/update,
+    //   data
+    // })
+    console.log('수정: ', data.value)
     updateMode.value = true
     setFaqDetail()
   }
@@ -140,7 +149,7 @@ onMounted(async () => {
         <CustomInput v-model="faqForm.title" :readonly="updateMode" />
       </FormItem>
       <FormItem :label="t('faq.label.output')">
-        <el-checkbox v-model="faqForm.output" :label="t('faq.label.out')" true-value="out" false-value="hide"
+        <el-checkbox v-model="faqForm.faqDispYn" :label="t('faq.label.out')" true-value="Y" false-value="N"
           :disabled="updateMode" />
       </FormItem>
       <FormItem :label="t('common.label.content')" :required="!updateMode">
@@ -153,18 +162,18 @@ onMounted(async () => {
       </FormItem>
       <div class="form__item">
         <FormItem :label="t('common.label.create-user')">
-          <CustomInput v-model="faqForm.createUser" readonly />
+          <CustomInput v-model="faqForm.crteUserId" readonly />
         </FormItem>
         <FormItem :label="t('common.label.create-date')">
-          <CustomInput v-model="faqForm.createDate" readonly />
+          <CustomInput v-model="faqForm.crteDttm" readonly />
         </FormItem>
       </div>
       <div class="form__item">
         <FormItem :label="t('common.label.update-user')">
-          <CustomInput v-model="faqForm.updateUser" readonly />
+          <CustomInput v-model="faqForm.updUserId" readonly />
         </FormItem>
         <FormItem :label="t('common.label.update-date')">
-          <CustomInput v-model="faqForm.updateDate" readonly />
+          <CustomInput v-model="faqForm.updDttm" readonly />
         </FormItem>
       </div>
     </form>

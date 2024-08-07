@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { type ISearchParams, type IFaqData } from '../types/faq.ts'
+import { ISearchParams, IFaqData } from '../types/faq.ts'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
@@ -14,45 +14,66 @@ const searchConditionOptions = [
     label: '제목'
   },
   {
-    value: 'detail',
+    value: 'cont',
     label: '내용'
   },
 ]
 const mockupList = ref([
   {
-    index: 1,
+    rowNum: '1',
+    faqSeq: '1',
     faqId: 'faq_1',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    output: 'out',
-    createDate: '2024-07-18'
+    faqDispYn: 'Y',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
+
   },
   {
-    index: 2,
+    rowNum: '2',
+    faqSeq: '2',
     faqId: 'faq_2',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    output: 'out',
-    createDate: '2024-07-18'
+    faqDispYn: 'Y',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 3,
+    rowNum: '3',
+    faqSeq: '3',
     faqId: 'faq_3',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    output: 'out',
-    createDate: '2024-07-18'
+    faqDispYn: 'Y',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 4,
+    rowNum: '4',
+    faqSeq: '4',
     faqId: 'faq_4',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    output: 'out',
-    createDate: '2024-07-18'
+    faqDispYn: 'Y',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 5,
+    rowNum: '5',
+    faqSeq: '5',
     faqId: 'faq_5',
     title: '[보안공지]전사 보안규정/지침/가이드안내',
-    output: 'hide',
-    createDate: '2024-07-18'
+    faqDispYn: 'Y',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   }
 ])
 
@@ -60,12 +81,12 @@ const mockupList = ref([
 const searchParam = reactive<ISearchParams>({
   searchCondition: 'title',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const totalCount = ref(0)
 const faqList = ref<IFaqData[]>([])
@@ -74,16 +95,16 @@ const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
     keyword: searchParam.keyword,
-    page: searchParam.page,
+    currentPage: searchParam.currentPage,
   }
   return params
 }
 
 const changePage = async (newPage: number) => {
-  searchedParam.page = newPage
-  searchParam.page = newPage
+  searchedParam.currentPage = newPage
+  searchParam.currentPage = newPage
   const params = getParams(searchedParam)
-  getFaqList(params)
+  setFaqList(params)
 }
 
 const handleReset = () => {
@@ -95,25 +116,30 @@ const getFaqList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/annc',
+    //   method: 'POST',
+    //   url: '/faq/list',
     //   params,
     // })
-    faqList.value = mockupList.value
-    totalCount.value = faqList.value.length
+    return mockupList.value
   }
   catch (error) {
     console.error(error)
   }
 }
 
+const setFaqList = (params: ISearchParams) => {
+  const data = getFaqList(params)
+  faqList.value = data
+  totalCount.value = faqList.value.length
+}
+
 const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
-  params.page = 1
-  searchParam.page = 1
-  getFaqList(params)
+  params.currentPage = 1
+  searchParam.currentPage = 1
+  setFaqList(params)
 }
 
 const handleFaqDetail = (e: IFaqData) => {
@@ -124,19 +150,19 @@ const handleCreateFaq = () => {
   router.push({ path: '/system/faq/create' })
 }
 
-const handleSelectionChange = (target: IFaqData[]) => {
-  deletedFaq.value = target.map(i => i.faqId)
+const handleSelectionChange = (target: IFaqData) => {
+  deletedFaq.value = Object.values(target).map(item => item.faqSeq);
 }
 
 const handleDeleteFaq = () => {
   try {
+    console.log(Array.from(deletedFaq.value))
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'DELETE',
-    //   url: '/faq',
-    //   deletedFaq.value,
+    //   method: 'POST',
+    //   url: '/faq/delete',
+    //   {faqSeqList: Array.from(deletedFaq.value)}
     // })
-    console.log(deletedFaq.value)
     handleSearch()
   }
   catch (error) {
@@ -178,18 +204,18 @@ onMounted(() => {
       <el-table :data="faqList" style="width: 100%" @row-dblclick="handleFaqDetail"
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" align="center" min-width="5" />
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="10" align="center" />
+        <el-table-column prop="rowNum" :label="t('common.label.index')" min-width="10" align="center" />
         <el-table-column prop="title" :label="t('common.label.title')" min-width="50" align="center" />
-        <el-table-column prop="output" :label="t('faq.label.output')" min-width="10" align="center">
+        <el-table-column prop="faqDispYn" :label="t('faq.label.output')" min-width="10" align="center">
           <template v-slot="scope">
             <p>
-              {{ scope.row.output === 'out' ? t('faq.label.out') : t('faq.label.hide') }}
+              {{ scope.row.faqDispYn === 'Y' ? t('faq.label.out') : t('faq.label.hide') }}
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="15" align="center" />
+        <el-table-column prop="crteDttm" :label="t('common.label.create-date')" min-width="15" align="center" />
       </el-table>
-      <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
+      <Pagination v-model="searchParam.currentPage" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
   </div>
