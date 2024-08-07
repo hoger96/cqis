@@ -196,17 +196,19 @@ menu-admin:
     api: API
     api-name: api 명
     url: URL
-
   title: 메뉴 관리
 user:
   label:
     active: 활성화
     admin: 관리자
     admin-state: 관리자 여부
+    allow: 승인
+    allow-status: QLIK 승인 여부
     analyst: Analyst
     lock: 잠김
     professional: professional
     state: 상태
+    un-allow: 미승인
     user: 일반
     qlik: QLIK 권한타입
   popup:

@@ -1,19 +1,23 @@
 export interface ISearchParams {
   searchCondition: string
   adminState: string
-  use: string
+  useYn: string
   keyword: string
-  page?: number
+  currentPage?: number
 }
 
 export interface IUserData{
-  index: number
+  rowNum: string
   userId: string
-  name: string
-  adminState: string
-  qlik: string
-  use: string
-  loginDate: string
+  userName: string
+  mtrYn: string
+  qlikUserAuthTp: string
+  useYn: string
+  lastLoginDt: string
+  crteUserId: string
+  crteDttm: string
+  updUserId: string
+  updDttm: string
 }
 
 export interface IUserPopup{
@@ -22,7 +26,15 @@ export interface IUserPopup{
 }
 
 export interface IUserDetail{
-  name: string
-  use: string
-  reason: string
+  userId: string
+  userName: string
+  mtrYn: string
+  qlikUserAuthTp: string
+  qlikUserAuthYn: string
+  useYn: string
+  rsn: string
+  crteUserId: string
+  crteDttm: string
+  updUserId: string
+  updDttm: string
 }
