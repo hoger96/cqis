@@ -215,15 +215,15 @@ onMounted(() => {
       </SearchItem>
     </SearchForm>
     <div class="content__box">
-      <div class="total">
-        <span>
+      <div class="table-header">
+        <span class="table-header__total">
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
-        <div class="flex">
-          <button type="button" class="btn__secondary--md" @click="handleDeleteCor">
+        <div class="table-header__btn">
+          <button type="button" class="btn__secondary-line--md" @click="handleDeleteCor">
             {{ t('common.button.delete') }}
           </button>
-          <button type="button" class="btn__primary-line--md" @click="handleCreateCor">
+          <button type="button" class="btn__secondary--md" @click="handleCreateCor">
             {{ t('common.button.create') }}
           </button>
         </div>
