@@ -1,24 +1,29 @@
 export interface ISearchParams {
   searchCondition: string
-  batchKind: string
-  keyword: string
-  page: number
+  batTp: string
+  keyword?: string
+  currentPage: number
 }
 
 export interface IBatchData{
-  index: number
-  batchId: string
-  batchCode: string
-  batchName: string
-  batchKind: string
-  createDate: string
+  rowNum: string
+  batSeq: string
+  batName: string
+  batTp: string
+  crteUserId: string
+  crteDttm: string
+  updUserId: string
+  updDttm: string
 }
 
 export interface IBatchDetail{
-  batchId: string
-  batchCode: string
-  batchName: string
-  batchKind: string
-  batchTime: string
-  batchDescription: string
+  batSeq: string
+  batName: string
+  batTp: string
+  batTime: string
+  batDesc: string
+  crteUserId: string
+  crteDttm: string
+  updUserId: string
+  updDttm: string
 }

@@ -15,11 +15,11 @@ const popupMode = ref('')
 
 const searchConditionOptions = [
   {
-    value: 'name',
+    value: 'batName',
     label: '배치 이름'
   },
   {
-    value: 'code',
+    value: 'batCode',
     label: '배치 코드'
   },
 ]
@@ -47,59 +47,69 @@ const kindStateOptions = [
 ]
 const mockupList = ref([
   {
-    index: 1,
-    batchId: 'batch_1',
-    batchCode: 'B001',
-    batchName: '배치 이름1',
-    batchKind: '일',
-    createDate: '2024-05-29'
+    batSeq: '1',
+    rowNum: '1',
+    batName: '배치 이름1',
+    batTp: '일',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 2,
-    batchId: 'batch_2',
-    batchCode: 'B002',
-    batchName: '배치 이름2',
-    batchKind: '일',
-    createDate: '2024-05-29'
+    batSeq: '2',
+    rowNum: '2',
+    batName: '배치 이름2',
+    batTp: '일',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 3,
-    batchId: 'batch_3',
-    batchCode: 'B003',
-    batchName: '배치 이름3',
-    batchKind: '년',
-    createDate: '2024-05-29'
+    batSeq: '3',
+    rowNum: '3',
+    batName: '배치 이름3',
+    batTp: '일',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 4,
-    batchId: 'batch_4',
-    batchCode: 'B004',
-    batchName: '배치 이름4',
-    batchKind: '일',
-    createDate: '2024-05-29'
+    batSeq: '4',
+    rowNum: '4',
+    batName: '배치 이름4',
+    batTp: '일',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   },
   {
-    index: 5,
-    batchId: 'batch_5',
-    batchCode: 'B005',
-    batchName: '배치 이름5',
-    batchKind: '월',
-    createDate: '2024-05-29'
+    batSeq: '5',
+    rowNum: '5',
+    batName: '배치 이름5',
+    batTp: '일',
+    crteUserId: 'admin',
+    crteDttm: '2024-07-01 12:23:12',
+    updUserId: 'admin',
+    updDttm: '2024-07-01 12:23:12'
   }
 ])
 
 
 const searchParam = reactive<ISearchParams>({
-  searchCondition: 'name',
-  batchKind: 'all',
+  searchCondition: 'batName',
+  batTp: 'all',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const searchedParam = reactive<ISearchParams>({
   searchCondition: '',
-  batchKind: '',
+  batTp: '',
   keyword: '',
-  page: 1,
+  currentPage: 1,
 })
 const totalCount = ref(0)
 const batchList = ref<IBatchData[]>([])
@@ -107,23 +117,23 @@ const batchList = ref<IBatchData[]>([])
 const getParams = (searchParam: ISearchParams) => {
   const params = {
     searchCondition: searchParam.searchCondition,
-    batchKind: searchParam.batchKind,
+    batTp: searchParam.batTp,
     keyword: searchParam.keyword,
-    page: searchParam.page,
+    currentPage: searchParam.currentPage,
   }
   return params
 }
 
 const changePage = async (newPage: number) => {
-  searchedParam.page = newPage
-  searchParam.page = newPage
+  searchedParam.currentPage = newPage
+  searchParam.currentPage = newPage
   const params = getParams(searchedParam)
   getBatchList(params)
 }
 
 const handleReset = () => {
   searchParam.searchCondition = 'name',
-    searchParam.batchKind = 'all',
+    searchParam.batTp = 'all',
     searchParam.keyword = ''
 }
 
@@ -131,8 +141,8 @@ const getBatchList = (params: ISearchParams) => {
   try {
     // FIXME: api 연결
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/qna',
+    //   method: 'POST',
+    //   url: '/batch/list',
     //   params,
     // })
     batchList.value = mockupList.value
@@ -145,11 +155,11 @@ const getBatchList = (params: ISearchParams) => {
 
 const handleSearch = () => {
   searchedParam.searchCondition = searchParam.searchCondition
-  searchedParam.batchKind = searchParam.batchKind
+  searchedParam.batTp = searchParam.batTp
   searchedParam.keyword = searchParam.keyword
   const params = getParams(searchedParam)
-  params.page = 1
-  searchParam.page = 1
+  params.currentPage = 1
+  searchParam.currentPage = 1
   getBatchList(params)
 }
 
@@ -160,7 +170,7 @@ const handleCreateBatch = () => {
 }
 
 const handleBatchDetail = (data: IUserData) => {
-  batchId.value = data.batchId
+  batchId.value = data.batSeq
   popupSignal.value = true
   popupMode.value = 'Detail'
 }
@@ -172,13 +182,12 @@ const handleCancel = () => {
 const handleUpdateBatch = (data) => {
   try {
     // FIXME: api 연결
-    console.log(data)
     // const res = await request({
     //   method: 'POST',
-    //   url: '/user/${userId.value}',
-    //   userInfo,
+    //   url: '/batch/delete',
+    //   {batSeqList},
     // })
-    console.log('수정 or 등록')
+    console.log('수정 or 등록', data)
   }
   catch (error) {
     console.error(error)
@@ -186,18 +195,19 @@ const handleUpdateBatch = (data) => {
 }
 
 const handleSelectionChange = (target: IBatchData[]) => {
-  deletedBatch.value = target.map(i => i.batchId)
+  deletedBatch.value = Object.values(target).map(item => item.batSeq);
 }
 
 const handleDeleteBatch = () => {
   try {
     // FIXME: api 연결
+    const batSeqList = Array.from(deletedBatch.value)
     // const res = await request({
-    //   method: 'DELETE',
-    //   url: '/faq',
-    //   deletedFaq.value,
+    //   method: 'POST',
+    //   url: '/batch/delete',
+    //   {batSeqList},
     // })
-    console.log(deletedBatch.value)
+    console.log(batSeqList)
     handleSearch()
   }
   catch (error) {
@@ -222,7 +232,7 @@ onMounted(() => {
           @keyup.enter="handleSearch" />
       </SearchItem>
       <SearchItem :label="t('batch.label.kind')">
-        <basic-select-box v-model="searchParam.batchKind" :options="kindStateOptions" />
+        <basic-select-box v-model="searchParam.batTp" :options="kindStateOptions" />
       </SearchItem>
     </SearchForm>
     <div class="content__box">
@@ -240,15 +250,14 @@ onMounted(() => {
         </div>
       </div>
       <el-table :data="batchList" style="width: 100%" @row-dblclick="handleBatchDetail"
-        @selection-change="handleSelectionChange">
+        @selection-change="handleSelectionChange" :empty-text="t('common.label.no-data')">
         <el-table-column type="selection" align="center" width="55" />
-        <el-table-column prop="index" :label="t('common.label.index')" min-width="50" align="center" />
-        <el-table-column prop="batchCode" :label="t('batch.label.code')" min-width="150" align="center" />
-        <el-table-column prop="batchName" :label="t('batch.label.name')" min-width="150" align="center" />
-        <el-table-column prop="batchKind" :label="t('batch.label.kind')" min-width="150" align="center" />
-        <el-table-column prop="createDate" :label="t('common.label.create-date')" min-width="150" align="center" />
+        <el-table-column prop="rowNum" :label="t('common.label.index')" min-width="50" align="center" />
+        <el-table-column prop="batName" :label="t('batch.label.name')" min-width="150" align="center" />
+        <el-table-column prop="batTp" :label="t('batch.label.kind')" min-width="150" align="center" />
+        <el-table-column prop="crteDttm" :label="t('common.label.create-date')" min-width="150" align="center" />
       </el-table>
-      <Pagination v-model="searchParam.page" :total-count="totalCount" :limit="10" below-limit-shown
+      <Pagination v-model="searchParam.currentPage" :total-count="totalCount" :limit="10" below-limit-shown
         @update:model-value="changePage" />
     </div>
     <BatchPopup v-model:model-value="popupSignal" :batch-id="batchId" @cancel="handleCancel"
