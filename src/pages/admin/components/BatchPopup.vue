@@ -15,15 +15,15 @@ const props = defineProps<{
 const emits = defineEmits<{
   (e: 'update:modelValue', modelValue: boolean): void
   (e: 'cancel'): void
-  (e: 'confirm', value: { batchInfo: IBatchDetail }): void
+  (e: 'confirm', value: { popupMode: string }): void
 }>()
 
 const mockupData = {
-  batchCode: 'B001',
-  batchName: '배치 이름1',
-  batchKind: 'minute',
-  batchTime: '15:30',
-  batchDescription: '배치 1 입니다.'
+  batSeq: props.batchId,
+  batName: '배치 이름1',
+  batTp: 'minute',
+  batTime: '15:30',
+  batDesc: '배치 1 입니다.'
 }
 const batchKindOptions = [
   {
@@ -47,19 +47,17 @@ const batchKindOptions = [
 const batchId = ref('')
 const popupMode = ref('')
 const batchInfo = reactive<IBatchDetail>({
-  batchCode: '',
-  batchName: '',
-  batchKind: 'year',
-  batchTime: '',
-  batchDescription: ''
+  batName: '',
+  batTp: 'year',
+  batTime: '',
+  batDesc: ''
 })
 
 const resetForm = () => {
-  batchInfo.batchCode = '',
-    batchInfo.batchName = '',
-    batchInfo.batchKind = 'year',
-    batchInfo.batchTime = '',
-    batchInfo.batchDescription = ''
+  batchInfo.batName = '',
+    batchInfo.batTp = 'year',
+    batchInfo.batTime = '',
+    batchInfo.batDesc = ''
 }
 
 const handleCancel = () => {
@@ -69,9 +67,13 @@ const handleCancel = () => {
 const getBatchDetail = () => {
   try {
     // FIXME: api 연결
+    // const param = {
+    //   corpSeq: batchId.value
+    // }
     // const res = await request({
-    //   method: 'GET',
-    //   url: '/batch/${batchId.value}',
+    //   method: 'POST',
+    //   url: '/batch/detail',
+    //   param
     // })
     return mockupData
   }
@@ -83,15 +85,38 @@ const getBatchDetail = () => {
 const setBatchDetail = () => {
   const data = getBatchDetail()
   batchInfo.batchCode = data.batchCode
-  batchInfo.batchName = data.batchName
-  batchInfo.batchKind = data.batchKind
-  batchInfo.batchTime = data.batchTime
-  batchInfo.batchDescription = data.batchDescription
+  batchInfo.batName = data.batName
+  batchInfo.batTp = data.batTp
+  batchInfo.batTime = data.batTime
+  batchInfo.batDesc = data.batDesc
 }
 
 const handleUpdateBatch = () => {
-  emits('confirm', { batchInfo })
-  emits('cancel')
+  try {
+    if (popupMode.value === 'Create') {
+      // FIXME: api 연결
+      // const res = await request({
+      //   method: 'POST',
+      //   url: '/batch/insert',
+      //   {batchInfo},
+      // })
+      console.log('등록', batchInfo)
+    }
+    else if (popupMode.value === 'Update') {
+      // FIXME: api 연결
+      // const res = await request({
+      //   method: 'POST',
+      //   url: '/batch/update',
+      //   {batchInfo},
+      // })
+      console.log('수정', batchInfo)
+    }
+    emits('confirm', popupMode.value)
+    emits('cancel')
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
 const handleChangeMode = () => {
@@ -124,24 +149,23 @@ watchEffect(() => {
   <common-modal v-model="isShow" :title="t('batch.title')" :size="MODAL_SIZE.MEDIUM" @cancel="handleCancel">
     <template #content>
       <form class="form">
-        <FormItem :label="t('batch.label.code')">
+        <!-- <FormItem :label="t('batch.label.code')">
           <CustomInput v-model="batchInfo.batchCode" :placeholder="t('batch.placeholder.code')"
             :readonly="popupMode === 'Detail'" />
-        </FormItem>
+        </FormItem> -->
         <FormItem :label="t('batch.label.name')">
-          <CustomInput v-model="batchInfo.batchName" :placeholder="t('batch.placeholder.name')"
+          <CustomInput v-model="batchInfo.batName" :placeholder="t('batch.placeholder.name')"
             :readonly="popupMode === 'Detail'" />
         </FormItem>
         <FormItem :label="t('batch.label.kind')">
-          <basic-select-box v-model="batchInfo.batchKind" :options="batchKindOptions"
-            :readonly="popupMode === 'Detail'" />
+          <basic-select-box v-model="batchInfo.batTp" :options="batchKindOptions" :readonly="popupMode === 'Detail'" />
         </FormItem>
         <FormItem :label="t('batch.label.time')">
-          <el-time-select v-model="batchInfo.batchTime" :placeholder="t('batch.placeholder.time')"
+          <el-time-select v-model="batchInfo.batTime" :placeholder="t('batch.placeholder.time')"
             :readonly="popupMode === 'Detail'" />
         </FormItem>
         <FormItem :label="t('batch.label.description')">
-          <CustomTextarea v-model="batchInfo.batchDescription" :placeholder="t('batch.placeholder.description')"
+          <CustomTextarea v-model="batchInfo.batDesc" :placeholder="t('batch.placeholder.description')"
             :readonly="popupMode === 'Detail'" />
         </FormItem>
       </form>
