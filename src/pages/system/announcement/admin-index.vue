@@ -207,10 +207,10 @@ onMounted(() => {
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
         <div class="flex">
-          <button type="button" class="btn__secondary--md" @click="handleDeleteAnnc">
+          <button type="button" class="btn__secondary-line--md" @click="handleDeleteAnnc">
             {{ t('common.button.delete') }}
           </button>
-          <button type="button" class="btn__primary-line--md" @click="handleCreateAnnc">
+          <button type="button" class="btn__secondary--md" @click="handleCreateAnnc">
             {{ t('common.button.create') }}
           </button>
         </div>

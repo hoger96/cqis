@@ -195,10 +195,10 @@ onMounted(() => {
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
         <div class="flex">
-          <button type="button" class="btn__secondary--md" @click="handleDeleteDataset">
+          <button type="button" class="btn__secondary-line--md" @click="handleDeleteDataset">
             {{ t('common.button.delete') }}
           </button>
-          <button type="button" class="btn__primary-line--md" @click="handleCreateDataSet">
+          <button type="button" class="btn__secondary--md" @click="handleCreateDataSet">
             {{ t('common.button.create') }}
           </button>
         </div>
