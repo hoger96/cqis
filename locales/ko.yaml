@@ -1,4 +1,6 @@
 admin-auth:
+  error:
+    rsn: 사유를 입력하세요.
   label:
     admin-group: 관리자 그룹
     set: 권한 부여 여부
@@ -68,6 +70,7 @@ common:
     index: 번호
     login: 최근 로그인 일시
     name: 이름
+    no-data: 검색된 결과가 없습니다.
     period: 게시기간
     reason: 사유
     state: 상태
