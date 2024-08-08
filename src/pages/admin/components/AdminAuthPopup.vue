@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { IAdminAuthDetail } from '../types/admin-auth.ts'
-import { adminouter } from 'vue-router'
 import { MODAL_SIZE } from '../../../types/modal.ts'
 import CustomTextarea from '../../../examples/components/custom-textarea/CustomTextarea.vue'
+import { openToast } from '../../../composables/utils.ts'
+import { IToastType } from '../../../types/modal.ts'
 
 
 const { t } = useI18n()
@@ -102,6 +103,14 @@ const setAdminDetail = () => {
 
 const handleUpdateAdminAuth = () => {
   try {
+    if (adminInfo.rsn === '') {
+      openToast({
+        message: t('admin-auth.error.rsn'),
+        type: IToastType.ERROR,
+        showClose: false,
+      })
+      return
+    }
     const data = {
       userId: userId.value,
       rsn: adminInfo.rsn,
@@ -151,8 +160,8 @@ onMounted(() => {
             </el-checkbox>
           </el-checkbox-group>
         </FormItem>
-        <FormItem :label="t('common.label.reason')">
-          <CustomTextarea v-model="adminInfo.rsn" max-length="20" :placeholder="t('user.popup.reason-placeholder')" />
+        <FormItem :label="t('common.label.reason')" required>
+          <CustomTextarea v-model="adminInfo.rsn" :placeholder="t('user.popup.reason-placeholder')" />
         </FormItem>
       </form>
     </template>

@@ -4,7 +4,8 @@ import { IUserDetail, IUserPopup } from '../types/user-mgmt.ts'
 import { useRouter } from 'vue-router'
 import { MODAL_SIZE } from '~/types/modal.ts'
 import CustomTextarea from '~/examples/components/custom-textarea/CustomTextarea.vue'
-
+import { openToast } from '../../../composables/utils.ts'
+import { IToastType } from '../../../types/modal.ts'
 
 const { t } = useI18n()
 const props = defineProps<{
@@ -72,6 +73,14 @@ const setUserDetail = () => {
 
 const handleUpdateUser = () => {
   try {
+    if (userInfo.rsn === '') {
+      openToast({
+        message: t('admin-auth.error.rsn'),
+        type: IToastType.ERROR,
+        showClose: false,
+      })
+      return
+    }
     const data = {
       userID: userId.value,
       mtrYn: userInfo.mtrYn,
