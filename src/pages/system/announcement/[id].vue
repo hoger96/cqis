@@ -101,7 +101,7 @@ onMounted(async () => {
     <h2 class="title">
       {{ t('annc.title') }}
     </h2>
-    <form class="form form__table">
+    <form class="form content__box">
       <FormItem :label="t('common.label.title')">
         <CustomInput v-model="anncForm.title" readonly />
       </FormItem>

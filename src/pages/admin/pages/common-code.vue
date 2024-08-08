@@ -259,6 +259,18 @@ const handleUpdateCode = (data) => {
 onMounted(() => {
   handleSearchGroupCode()
 })
+
+// FIXME :: 퍼블리싱 수정 영역
+const searchStatusOption = [
+  {
+    label: '사용',
+    value: 'Y'
+  },
+  {
+    label: '사용 중지',
+    value: 'N'
+  },
+] 
 </script>
 <template>
   <div class="common-code">
@@ -268,19 +280,22 @@ onMounted(() => {
     <div class="common-code__wrap">
       <div class="common-code__content">
         <SearchForm use-reset @search="handleSearchGroupCode" @clear="handleResetGroupCode">
-          <h3 class="title--sm">{{ t('comm-code.label.group-code-search') }}</h3>
+          <h3 class="title--sm">{{ t('comm-code.label.group-code') }}</h3>
+          <SearchItem :label="t('common.search-bar.condition')">
+            <basic-select-box v-model="searchParamGroup.searchCondition" :options="groupCodeOption" />
+          </SearchItem>
           <SearchItem :label="t('common.search-bar.use')">
-            <el-radio-group v-model="searchParamGroup.use">
+            <basic-select-box v-model="searchParamGroup.use" :options="searchStatusOption" />
+            <!-- <el-radio-group v-model="searchParamGroup.use">
               <el-radio value="Y">
                 {{ t('common.label.use-yes') }}
               </el-radio>
               <el-radio value="N">
                 {{ t('common.label.use-no') }}
               </el-radio>
-            </el-radio-group>
+            </el-radio-group> -->
           </SearchItem>
-          <SearchItem>
-            <basic-select-box v-model="searchParamGroup.searchCondition" :options="groupCodeOption" />
+          <SearchItem :label="t('common.search-bar.keyword')">
             <CustomInput v-model="searchParamGroup.keyword" :placeholder="t('common.search-bar.placeholder')" />
           </SearchItem>
         </SearchForm>
@@ -315,19 +330,22 @@ onMounted(() => {
       </div>
       <div class="common-code__content">
         <SearchForm use-reset @search="handleSearchCode" @clear="handleResetCode">
-          <h3 class="title--sm">{{ t('comm-code.label.code-search') }}</h3>
+          <h3 class="title--sm">{{ t('comm-code.label.code') }}</h3>
+          <SearchItem :label="t('common.search-bar.condition')">
+            <basic-select-box v-model="searchParamCode.searchCondition" :options="codeOption" />
+          </SearchItem>
           <SearchItem :label="t('common.search-bar.use')">
-            <el-radio-group v-model="searchParamCode.use">
+            <basic-select-box v-model="searchParamCode.use" :options="searchStatusOption" />
+            <!-- <el-radio-group v-model="searchParamCode.use">
               <el-radio value="Y">
                 {{ t('common.label.use-yes') }}
               </el-radio>
               <el-radio value="N">
                 {{ t('common.label.use-no') }}
               </el-radio>
-            </el-radio-group>
+            </el-radio-group> -->
           </SearchItem>
-          <SearchItem>
-            <basic-select-box v-model="searchParamCode.searchCondition" :options="codeOption" />
+          <SearchItem :label="t('common.search-bar.keyword')">
             <CustomInput v-model="searchParamCode.keyword" :placeholder="t('common.search-bar.placeholder')" />
           </SearchItem>
         </SearchForm>

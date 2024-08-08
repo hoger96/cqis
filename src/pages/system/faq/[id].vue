@@ -93,7 +93,7 @@ onMounted(() => {
     <h2 class="title">
       {{ t('faq.title') }}
     </h2>
-    <form class="form form__table">
+    <form class="form content__box">
       <FormItem :label="t('common.label.title')">
         <CustomInput v-model="faqForm.title" readonly />
       </FormItem>

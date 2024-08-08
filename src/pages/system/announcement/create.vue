@@ -80,7 +80,7 @@ const onFileChange = (file: File[]) => {
     <h2 class="title">
       {{ t('annc.title') }} {{ t('common.button.create') }}
     </h2>
-    <form class="form form__table">
+    <form class="form content__box">
       <FormItem :label="t('common.label.title')" required>
         <CustomInput v-model="anncForm.title" />
       </FormItem>
