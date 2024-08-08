@@ -232,7 +232,8 @@ onMounted(() => {
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
       </div>
-      <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail">
+      <el-table :data="userList" style="width: 100%" @row-dblclick="handleUserDetail"
+        :empty-text="t('common.label.no-data')">
         <el-table-column prop="rowNum" :label="t('common.label.index')" min-width="50" align="center" />
         <el-table-column prop="userId" :label="t('common.label.id')" min-width="150" align="center" />
         <el-table-column prop="userName" :label="t('common.label.name')" min-width="150" align="center" />
