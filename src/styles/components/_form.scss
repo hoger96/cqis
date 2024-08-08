@@ -4,7 +4,8 @@
 
 /* ========================== Styles ========================== */
 .form {
-  @include flex-box(column);
+  @include flex-box(column 1);
+  overflow-y: hidden;
   &--col {
     @include flex-box(column);
 
@@ -20,6 +21,13 @@
     .el-checkbox-group {
       margin-top: 10px;
       @include space-y(10px);
+    }
+
+    // row에 form__item 두개 들어간 경우
+    .form__item {
+      & + .form__item {
+        padding-left: 30px;
+      }
     }
   }
 
@@ -56,7 +64,7 @@
   }
 
   &__upload {
-    @include flex-box(column 1);
+    @include flex-box(column justify-center 1);
     &-area {
       @include flex-box(column items-center justify-center);
       @include box(25px 0, $gray-90, 2px);
@@ -77,48 +85,12 @@
     }
   }
   @include space-y(20px);
-
-  &__table {
-    @include flex-box(1);
-    overflow-y: hidden;
-    background-color: $white;
-    border: 1px solid $gray-240;
-
-    .form {
-      &__item {
-        @include flex-box(items-center);
-        overflow-y: hidden;
-        padding-right: 15px;
-        & + .form__item {
-          border-top: 1px solid $gray-240;
-        }
-        // row에 form__item 두개 들어간 경우
-        .form__item {
-          border-top: 0;
-          &:last-child {
-            padding-right: 0;
-          }
-        }
-      }
-      &__label-wrap {
-        padding: 10px 0 10px 30px;
-        height: 100%;
-        background-color: $gray-45;
-        & + div {
-          padding: 10px 0;
-        }
-      }
-    }
-    @include space-y(0);
-  }
 }
 .search-form {
   @include flex-box(justify-between items-end);
   @include box(20px 40px);
   width: 100%;
-  & + .table {
-    margin-top: 30px;
-  }
+  margin-top: 30px;
 
   &__form-area {
     @include flex-box(row);

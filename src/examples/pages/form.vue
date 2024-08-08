@@ -270,33 +270,6 @@ onMounted(() => {
       </div>
     </div>
     <hr>
-    <!-- Form Table -->
-    <div class="my-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        Form table (form__table)
-      </mark>
-      <div class="flex flex-col gap-2 my-10 p-10 bg-white rounded-3xl">
-        <p><em class="font-bold">한줄에 두개의 form이 들어가는 경우</em>에는 <em class="font-bold">form__item</em>으로 묶어줍니다.</p>
-        <!-- <p><em class="font-bold">form-col</em> 일때만<em class="font-bold">use-btn</em>사용이 가능합니다.</p> -->
-      </div>
-      <form class="form form__table">
-        <FormItem label="Basic">
-          <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
-        </FormItem>
-        <FormItem label="Required" required>
-          <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
-        </FormItem>
-        <div class="form__item">
-          <FormItem label="Basic">
-            <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
-          </FormItem>
-          <FormItem label="Required" required>
-            <CustomInput v-model="form.input" max-length="10" placeholder="10글자 내로 입력하세요." />
-          </FormItem>
-        </div>
-      </form>
-    </div>
-    <hr>
     <!-- Search Form -->
     <div class="my-10">
       <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">

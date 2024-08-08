@@ -144,7 +144,7 @@ onMounted(async () => {
     <h2 class="title">
       {{ t('faq.admin-title') }}
     </h2>
-    <form class="form form__table">
+    <form class="form content__box">
       <FormItem :label="t('common.label.title')" :required="!updateMode">
         <CustomInput v-model="faqForm.title" :readonly="updateMode" />
       </FormItem>
