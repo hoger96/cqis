@@ -4,17 +4,21 @@
 
 /* ========================== Styles ========================== */
 // Table
-.total {
-  @include flex-box(items-end justify-between);
-  margin-bottom: 10px;
-  em {
-    @include typo($color: $purple-50);
-  }
-  button {
-    margin-top: -10px;
-  }
-  & + .el-table {
-    margin-top: 10px;
+.table {
+  &-header {
+    @include flex-box(items-end justify-between);
+    margin-bottom: 10px;
+
+    &__total {
+      em {
+        @include typo($color: $purple-50);
+      }
+    }
+
+    &__btn {
+      @include flex-box(flex);
+      margin-top: -10px;
+    }
   }
 }
 

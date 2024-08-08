@@ -285,11 +285,11 @@ onMounted(() => {
           </SearchItem>
         </SearchForm>
         <div class="content__box">
-          <div class="total">
-            <span>
+          <div class="table-header">
+            <span class="table-header__total">
               {{ t('common.label.total') }} <em>{{ totalGroupCode }}</em>{{ t('common.label.count') }}
             </span>
-            <button type="button" class="btn__secondary--sm" @click="handleAddGroupCode">
+            <button type="button" class="table-header__btn btn__secondary--sm" @click="handleAddGroupCode">
               {{ t('common.button.create') }}
             </button>
           </div>
@@ -332,11 +332,11 @@ onMounted(() => {
           </SearchItem>
         </SearchForm>
         <div class="content__box">
-          <div class="total">
-            <span>
+          <div class="table-header">
+            <span class="table-header__total">
               {{ t('common.label.total') }} <em>{{ totalCode }}</em>{{ t('common.label.count') }}
             </span>
-            <button type="button" class="btn__secondary--sm" @click="handleAddCode">
+            <button type="button" class="table-header__btn btn__secondary--sm" @click="handleAddCode">
               {{ t('common.button.create') }}
             </button>
           </div>

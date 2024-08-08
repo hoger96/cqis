@@ -227,8 +227,8 @@ onMounted(() => {
       </SearchItem>
     </SearchForm>
     <div class="content__box">
-      <div class="total">
-        <span>
+      <div class="table-header">
+        <span class="table-header__total">
           {{ t('common.label.total') }} <em>{{ totalCount }}</em>{{ t('common.label.count') }}
         </span>
       </div>

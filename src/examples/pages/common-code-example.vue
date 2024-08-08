@@ -60,11 +60,11 @@ const handleReset = () => { }
           </SearchItem>
         </SearchForm>
         <div class="content__box">
-          <div class="total">
-            <span>
+          <div class="table-header">
+            <span class="table-header__total">
               총<em>{{ totalCount }}</em>건
             </span>
-            <button type="button" class="btn__secondary--sm">
+            <button type="button" class="table-header__btn btn__secondary--sm">
               그룹 코드 등록
             </button>
           </div>
@@ -96,11 +96,11 @@ const handleReset = () => { }
           </SearchItem>
         </SearchForm>
         <div class="content__box">
-          <div class="total">
-            <span>
+          <div class="table-header">
+            <span class="table-header__total">
               총<em>{{ totalCount }}</em>건
             </span>
-            <button type="button" class="btn__secondary--sm">
+            <button type="button" class="table-header__btn btn__secondary--sm">
               코드 등록
             </button>
           </div>
