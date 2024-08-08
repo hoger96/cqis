@@ -54,6 +54,7 @@
       }
 
       .el-table__row {
+        cursor: pointer;
         &:hover {
           td.el-table__cell {
             background: $purple-5;
